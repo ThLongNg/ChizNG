@@ -26,32 +26,8 @@ h1 {
   margin-top: 30px;
   text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); /* Thêm hiệu ứng bóng cho tiêu đề */
 }
-#In4 name{
-  font: 30px bold;
-  font-family: 'Great Vibes', cursive;
-}
-#In4 jp{
-  font-family: 'Kaisei Tokumin';
-  font-size: 25px;
-}
 
-#In4 {
-  
-  background: radial-gradient(rgba(255, 227, 241, 0.5), rgba(222, 247, 255, 0.8) );
-  padding: 20px;
-  border-radius: 20px;
-  margin: 20px auto;
-  width: 80vw;
-  max-width: 600px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  color: #6d4c8d; /* Màu tím nhẹ cho thông tin */
-  font-size: 1.2rem;
-}
 
-#In4 br {
-  margin-bottom: 10px;
-}
-/* Định dạng phần Contact */
 /* Định dạng phần 'Contact me at' */
 #Contact ct {
   font-family: 'Great Vibes', cursive;
@@ -146,6 +122,31 @@ h1 {
 
 #bio a:hover {
   color: #ff63a3;
+}
+#In4 name{
+  font: 30px bold;
+  font-family: 'Great Vibes', cursive;
+}
+#In4 jp{
+  font-family: 'Kaisei Tokumin';
+  font-size: 25px;
+}
+
+#In4 {
+  
+  background: radial-gradient(rgba(255, 227, 241, 0.5), rgba(222, 247, 255, 0.8) );
+  padding: 20px;
+  border-radius: 20px;
+  margin: 20px auto;
+  width: 80vw;
+  max-width: 600px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #6d4c8d; /* Màu tím nhẹ cho thông tin */
+  font-size: 1.2rem;
+}
+
+#In4 br {
+  margin-bottom: 10px;
 }
 /* Định dạng hình ảnh */
 #image {
