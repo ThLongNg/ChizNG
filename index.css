@@ -1,4 +1,5 @@
 
+
 body, h1, ul, li, p {
   margin: 0;
   padding: 0;
@@ -14,12 +15,11 @@ body {
 }
 
 /* Header Styling */
-h1 {
-  
+h1 {  
   text-align: center;
   font-size: 5rem;
   font-family: 'Great Vibes', cursive;
-  background: linear-gradient(175deg, #ff6ec7, #ff9a8b); /* Gradient màu hồng và đào */
+  background: linear-gradient(190deg, #f8a5c2, #6a4c9c); /* Gradient màu hồng và đào */
   -webkit-background-clip: text; /* Đảm bảo gradient áp dụng lên chữ */
   background-clip: text; /* Cho phép gradient hiển thị lên văn bản */
   color: transparent; /* Làm cho văn bản trong suốt để chỉ hiển thị gradient */
@@ -51,45 +51,102 @@ h1 {
 #In4 br {
   margin-bottom: 10px;
 }
-
-/* Định dạng phần liên hệ */
-#Contact ct{
-  text-transform: capitalize;
+/* Định dạng phần Contact */
+/* Định dạng phần 'Contact me at' */
+#Contact ct {
   font-family: 'Great Vibes', cursive;
-  font: 20px bold;
+  font-size: 2.5rem; /* Tăng kích thước chữ */
+  
+  color: #6d4c8d; /* Màu chữ */
+  text-transform: capitalize; /* Viết hoa chữ cái đầu mỗi từ */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Thêm lớp bóng cho chữ */
+  margin-bottom: 15px; /* Khoảng cách dưới chữ */
+  display: block; /* Đảm bảo 'Contact me at' chiếm một dòng riêng */
 }
+
 #Contact {
-  text-align:left;
+  
   padding: 20px;
-  background: radial-gradient(rgba(255, 227, 241, 0.7), rgba(222, 247, 255, 0.9) );
+  background: radial-gradient(rgba(255, 227, 241, 0.7), rgba(222, 247, 255, 0.9));
   border-radius: 20px;
   margin: 20px auto;
-  width: 80vw;
-  max-width: 600px;
+  width: 90%; /* Thay đổi độ rộng để lấp đầy khung */
+  max-width: 800px; /* Giới hạn chiều rộng tối đa */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   color: #6d4c8d;
   font-size: 1.2rem;
+  display: flex;
+  flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+  justify-content: center; /* Căn phần tử dọc */
+  align-items: center; /* Căn phần tử ngang */
+  text-align: center; /* Căn chữ vào giữa */
 }
 
+/* Căn chỉnh các nhóm liên hệ vào cùng một hàng và căn giữa */
 #Contact ul {
+  display: flex;
+  flex-wrap: wrap; /* Cho phép phần tử xuống dòng nếu cần */
   list-style: none;
   padding: 0;
+  margin: 10px 0; /* Tạo khoảng cách giữa các nhóm */
+  justify-content: center; /* Căn các phần tử vào giữa */
 }
 
-#Contact li {
-  margin: 1px 0;
+/* Căn chỉnh các liên kết vào giữa trong từng nhóm */
+.contact-group {
+  display: flex;
+  align-items: center;
+  margin: 8px 50px; /* Khoảng cách giữa các nhóm */
+  min-width: 200px; /* Đảm bảo mỗi nhóm có độ rộng tối thiểu */
+  justify-content: left; /* Căn nhóm vào giữa */
 }
 
-/* Thêm kiểu cho các link */
-a {
-  color: #e77bbf; /* Màu hồng cho liên kết */
-  text-decoration: none;
+.contact-group span {
+  margin-right: 10px; /* Khoảng cách giữa nhãn và liên kết */
 }
 
-a:hover {
-  color: #ff63a3; /* Thay đổi màu khi hover */
+#Contact li a {
+  color: #e77bbf;
 }
 
+#Contact li a:hover {
+  color: #ff63a3;
+}
+#bio {
+  background: radial-gradient(rgba(255, 227, 241, 0.7), rgba(222, 247, 255, 0.9));
+  border-radius: 15px;
+  padding: 1px;
+  margin-top: 20px;
+  color: #6d4c8d;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#bio h3 {
+ font-family: 'Great Vibes', cursive;
+  font-size: 2rem; /* Tăng kích thước chữ */
+  color: #FF75BA; /* Màu chữ */
+  text-transform: capitalize; /* Viết hoa chữ cái đầu mỗi từ */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Thêm lớp bóng cho chữ */
+  margin-bottom: 15px; /* Khoảng cách dưới chữ */
+  display: block;
+}
+
+#bio p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  padding-bottom: 15px;
+  padding-left: 19px;
+  padding-right:19px;
+  text-align: justify;
+}
+
+#bio a {
+  color: #e77bbf;
+}
+
+#bio a:hover {
+  color: #ff63a3;
+}
 /* Định dạng hình ảnh */
 #image {
   display: block;
