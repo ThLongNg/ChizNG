@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <title>About Me,</title>
+    <link rel="stylesheet" href="index.css" />
+
+
+    
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Great+Vibes&family=Kaisei+Tokumin&family=Prata&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Great+Vibes&family=Prata&display=swap" rel="stylesheet">
+<script src="/script.js" defer></script>
+  </head>
+  <body>
+<div id="music-container">
+    <img id="cd-disk" src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg" alt="Album Cover" />
+<audio id="background-music">
+    <source src="https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/If%20I%20Can%20Stop%20One%20Heart%20From%20Breaking%20Honkai%20Star%20Rail.mp3?v=1732554406022" type="audio/mp3" />
+    Your browser does not support the audio element.
+</audio>
+    </div>
+    <h1>
+      This is my Personal Profile<br />
+      
+    </h1>
+    <div id="In4">
+      <name>Full Name: Nguyễn Thành Long <br /></name>
+      
+      🫧✨🫧<br/>
+      <jp>グエン・タイン・ロン</jp>
+      <br/>---
+      Studied at: <span> <a href="https://www.facebook.com/FPTU.HCM"> FPT University HCM</a></span>---<br/>
+      Birth Date: 07/10/2005 <br/> 
+      Address: S3.02, Long Thanh My, TP Thu Duc, TP HCM<br />
+      Phone Num: +84399092828<br />
+    </div>
+
+    <div id="Contact">
+      <ct>Contact me at:</ct>
+      
+
+      <ul>
+        <li>
+          Facebook:<span>
+            <a href="https://www.facebook.com/long.nguyen.07102005"
+              >Nguyễn Thành Long</a
+            ></span
+          >
+        </li>
+        <li>Gmail: <span> longnguyenthanh0710@gmail.com</span></li>
+        <li>Discord: <span>chiznguyen71</span></li>
+        <li>
+          Github:
+          <span><a href="https://github.com/ThLongNg">ThLongNg</a></span>
+        </li>
+      </ul>
+    </div>
+    <img
+      id="image"
+      src="https://cdn.discordapp.com/attachments/974685291975680000/1300366853410914354/FB_IMG_1730026091238.jpg?ex=67457e81&is=67442d01&hm=c98927ecabd2a3b7196360307772509b1c71cd891333f2c59cb1abd8939ec8ed&"
+      alt="Image"
+      width="300"
+    />
+    <script>
+const images = [
+  "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/bd29fc8b-4e4a-4c6f-a368-9d92d143b9b0.image.png?v=1732537766567",
+  "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/8913d2b8-9c5d-4a9d-a54b-2542aac2fc75.image.png?v=1732538821112",
+  "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/e8a359f6-4dbc-469d-9557-d3b47fce2d67.image.png?v=1732625976347",
+  "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/390c9654-5b5e-4854-8bd7-87d20c3b71da.image.png?v=1732625980588",
+  "https://www.nautiljon.com/images/perso/00/15/kurokawa_akane_21451.webp?1689612500",
+  "https://i.pinimg.com/736x/50/cc/ca/50cccab5ee9cec684bc85c8fc80df5ba.jpg",,
+  "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/b9d7137a-2372-4c78-aedf-5589ad86f322.image.png?v=1732627802153"
+];
+
+// Create an array to store preloaded images
+const preloadedImages = images.map((src) => {
+  const img = new Image();
+  img.src = src;
+  return img;
+});
+
+let currentIndex = 0;
+
+// Function to update the image
+function updateImage() {
+  document.getElementById("image").src = preloadedImages[currentIndex].src;
+}
+
+function nextImage() {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateImage();
+}
+
+function previousImage() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateImage();
+}
+
+// Initialize first image
+updateImage();
+    </script>
+    <p>
+      <button type="button" onclick="nextImage()">Next</button>
+      <button type="button" onclick="previousImage()">Previous</button>
+    </p>
+
+  <script>
+const audio = document.getElementById('background-music');
+const cdDisk = document.getElementById('cd-disk');
+
+let isPlaying = false;
+
+// Thêm sự kiện click cho đĩa nhạc
+cdDisk.addEventListener('click', () => {
+    if (isPlaying) {
+        audio.pause();
+        cdDisk.classList.remove('playing');
+    } else {
+        audio.play();
+        cdDisk.classList.add('playing');
+    }
+    isPlaying = !isPlaying;
+});
+</script>
+<nbr>
+  Chiz Nguyen
+</nbr>
+  </body>
+</html>

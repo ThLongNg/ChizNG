@@ -1,0 +1,163 @@
+
+body, h1, ul, li, p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Crimson Pro', serif;
+  line-height: 1.6;
+  padding: 20px;
+  background: linear-gradient(to right, #f9a3ca, #ffe3f1);
+  color: #333;
+  text-align: center;
+}
+
+/* Header Styling */
+h1 {
+  
+  text-align: center;
+  font-size: 5rem;
+  font-family: 'Great Vibes', cursive;
+  background: linear-gradient(175deg, #ff6ec7, #ff9a8b); /* Gradient màu hồng và đào */
+  -webkit-background-clip: text; /* Đảm bảo gradient áp dụng lên chữ */
+  background-clip: text; /* Cho phép gradient hiển thị lên văn bản */
+  color: transparent; /* Làm cho văn bản trong suốt để chỉ hiển thị gradient */
+  margin-top: 30px;
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); /* Thêm hiệu ứng bóng cho tiêu đề */
+}
+#In4 name{
+  font: 30px bold;
+  font-family: 'Great Vibes', cursive;
+}
+#In4 jp{
+  font-family: 'Kaisei Tokumin';
+  font-size: 25px;
+}
+
+#In4 {
+  
+  background: radial-gradient(rgba(255, 227, 241, 0.5), rgba(222, 247, 255, 0.8) );
+  padding: 20px;
+  border-radius: 20px;
+  margin: 20px auto;
+  width: 80vw;
+  max-width: 600px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #6d4c8d; /* Màu tím nhẹ cho thông tin */
+  font-size: 1.2rem;
+}
+
+#In4 br {
+  margin-bottom: 10px;
+}
+
+/* Định dạng phần liên hệ */
+#Contact ct{
+  text-transform: capitalize;
+  font-family: 'Great Vibes', cursive;
+  font: 20px bold;
+}
+#Contact {
+  text-align:left;
+  padding: 20px;
+  background: radial-gradient(rgba(255, 227, 241, 0.7), rgba(222, 247, 255, 0.9) );
+  border-radius: 20px;
+  margin: 20px auto;
+  width: 80vw;
+  max-width: 600px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #6d4c8d;
+  font-size: 1.2rem;
+}
+
+#Contact ul {
+  list-style: none;
+  padding: 0;
+}
+
+#Contact li {
+  margin: 1px 0;
+}
+
+/* Thêm kiểu cho các link */
+a {
+  color: #e77bbf; /* Màu hồng cho liên kết */
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff63a3; /* Thay đổi màu khi hover */
+}
+
+/* Định dạng hình ảnh */
+#image {
+  display: block;
+  margin: 30px auto;
+  border-radius: 50%;
+  border: 5px solid #f8c8d4;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Nút Next, Previous */
+button {
+  background-color: #e77bbf;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff63a3; /* Thay đổi màu khi hover */
+}
+nbr {
+  position: fixed; /* Giữ chữ ký cố định trên màn hình */
+  bottom: 120px; /* Căn chữ ký cách đáy 20px */
+  right: 45px; /* Căn chữ ký cách phải 20px */
+  font-size: 18rem; /* Kích thước chữ */
+  font-family: 'Great Vibes', cursive; /* Font chữ thanh lịch */
+  background: linear-gradient(120deg, #e90000, #faa6ff); /* Gradient từ xanh lam, đỏ, đến hồng */
+  -webkit-background-clip: text; /* Gradient áp dụng vào chữ */
+  background-clip: text;
+  color: transparent; /* Làm chữ trong suốt để chỉ hiển thị gradient */
+  transform: rotate(-20deg); /* Nghiêng chữ 45 độ */
+  letter-spacing: 0px; /* Tăng độ rộng giữa các chữ cái */
+  opacity: 0.3; /* Giảm độ đậm của chữ ký (mờ hơn) */
+  z-index: -1; /* Đặt chữ ký dưới tất cả các lớp khác */
+  pointer-events: none; /* Không để chữ ký cản trở thao tác người dùng */
+}
+
+#cd-disk {
+    position: fixed; /* Giữ đĩa nhạc cố định khi cuộn */
+    bottom: 20px; /* Cách mép dưới 20px */
+    right: 20px; /* Cách mép phải 20px */
+    width: 50px; /* Kích thước đĩa nhạc */
+    height: 50px; /* Kích thước đĩa nhạc */
+    border-radius: 50%; /* Biến đĩa nhạc thành hình tròn */
+    border: 4px solid #ccc; /* Viền quanh đĩa */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Hiệu ứng bóng */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Hiệu ứng khi hover hoặc xoay */
+    cursor: pointer; /* Con trỏ khi hover */
+}
+
+#cd-disk:hover {
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5); /* Hiệu ứng bóng đậm hơn khi hover */
+}
+
+#cd-disk.playing {
+    animation: spin 9s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
