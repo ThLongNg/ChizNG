@@ -9,7 +9,7 @@ body {
   font-family: 'Crimson Pro', serif;
   line-height: 1.6;
   padding: 20px;
-  background: linear-gradient(45deg,  #fbd6d4, #f7c2b7, #e8b7d8); /* Gradient hồng phấn và tím nhạt */
+  background: linear-gradient(45deg,  #fbd6d4, #f7c2b7, #e8b7d8); 
   color: #4a4a4a; /* Màu chữ xám đậm */
   text-align: center;
 }
@@ -19,12 +19,12 @@ h1 {
   text-align: center;
   font-size: 5rem;
   font-family: 'Great Vibes', cursive;
-  background: linear-gradient(190deg, #9b1b30, #7d1426); /* Gradient đỏ thẫm */
+  background: linear-gradient(190deg, #9b1b30, #7d1426); 
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   margin-top: 30px;
-  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); /* Hiệu ứng bóng nhẹ */
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); 
 }
 
 /* Phần thông tin (#In4) */
@@ -83,6 +83,7 @@ h1 {
 }
 
 #Contact ul {
+  font-size: 1.5rem;
   display: flex;
   flex-wrap: wrap;
   list-style: none;
