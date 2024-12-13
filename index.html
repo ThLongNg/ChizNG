@@ -6,11 +6,6 @@
     <link rel="icon" href="https://cdn.discordapp.com/emojis/1213803646764978257.webp?size=128" />
     <title>I'm ChizNguyen <3,</title>
     <link rel="stylesheet" href="index.css" />
-
-
-    
-
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,21 +18,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Great+Vibes&family=Prata&display=swap" rel="stylesheet">
 <script src="/script.js" defer></script>
   </head>
-   <body>
-    <div id="music-container">
-      <img
-        id="cd-disk"
-        src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg"
-        alt="Album Cover"
-      />
-      <audio id="background-music">
-        <source
-          src="https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/If%20I%20Can%20Stop%20One%20Heart%20From%20Breaking%20Honkai%20Star%20Rail.mp3?v=1732554406022"
-          type="audio/mp3"
-        />
-        Your browser does not support the audio element.
-      </audio>
-    </div>
+ <body>
+<div id="music-container">
+  <img
+    id="cd-disk"
+    src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg"
+    alt="Album Cover"
+  />
+</div>
+
+<!-- Box để hiển thị tên bài hát -->
+<div id="song-info-box" class="hidden">
+  <p id="song-name"></p>
+</div>
+
+<!-- Phần tử âm thanh -->
+<audio id="background-music" controls>
+  <source src="your-audio-file.mp3" type="audio/mp3" />
+</audio>
+    <script src="script.js"></script>
     <h1>This is my Personal Profile<br /></h1>
     <div id="In4">
       <name>Full Name: Nguyễn Thành Long <br /></name>
@@ -168,6 +167,26 @@
         isPlaying = !isPlaying;
       });
     </script>
+      <script>
+    // Số lượng bông tuyết
+    const numSnowflakes = 100;
+
+    // Tạo và thêm các bông tuyết
+    for (let i = 0; i < numSnowflakes; i++) {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.textContent = "\u2744"; // Unicode ký tự bông tuyết
+
+      // Gán vị trí và kích thước ngẫu nhiên
+      snowflake.style.left = Math.random() * 100 + "vw";
+      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      snowflake.style.animationDelay = Math.random() * 5 + "s";
+
+      document.body.appendChild(snowflake);
+    }
+  </script>
     <nbr> Chiz Nguyen </nbr>
   </body>
 </html>
+
