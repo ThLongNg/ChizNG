@@ -190,12 +190,10 @@ for (let i = 0; i < numSnowflakes; i++) {
   const snowflake = document.createElement("div");
   snowflake.classList.add("snowflake");
   snowflake.textContent = "🌸"; // Unicode ký tự bông hoa
-  
-  snowflake.style.color = "#8A2BE2";
 
   // Gán vị trí và kích thước ngẫu nhiên
   snowflake.style.left = Math.random() * 100 + "vw";
-  snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+  snowflake.style.fontSize = Math.random() * 30 + 10 + "px";
 
   // Làm chậm quá trình rơi
   snowflake.style.animationDuration = Math.random() * 8 + 5 + "s"; // Tăng thời gian rơi từ 5 đến 13 giây
