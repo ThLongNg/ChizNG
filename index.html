@@ -27,7 +27,7 @@
     />
     <script src="/script.js" defer></script>
   </head>
-  <body>
+ <body>
 <div id="music-container">
   <img
     id="cd-disk"
@@ -106,10 +106,9 @@
         </p>
       </div>
     </div>
-
     <img
       id="image"
-      src="https://cdn.discordapp.com/attachments/974685291975680000/1300366853410914354/FB_IMG_1730026091238.jpg?ex=67457e81&is=67442d01&hm=c98927ecabd2a3b7196360307772509b1c71cd891333f2c59cb1abd8939ec8ed&"
+      src="cabd2a3b7196360307772509b1c71cd891333f2c59cb1abd8939ec8ed&"
       alt="Image"
       width="300"
     />
@@ -124,6 +123,7 @@
         ,
         "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/b9d7137a-2372-4c78-aedf-5589ad86f322.image.png?v=1732627802153",
       ];
+
 const preloadedImages = images.map((src) => {
   const img = new Image();
   img.src = src;
@@ -167,17 +167,7 @@ setInterval(nextImage, 3000);
 
 // Initialize first image
 updateImage();
-    </script>
-    <p>
-      <button type="button" onclick="nextImage()">Next</button>
-      <button type="button" onclick="previousImage()">Previous</button>
-    </p>
 
-    <script>
-      const audio = document.getElementById("background-music");
-      const cdDisk = document.getElementById("cd-disk");
-
-      let isPlaying = false;
 
       // Thêm sự kiện click cho đĩa nhạc
       cdDisk.addEventListener("click", () => {
@@ -192,7 +182,7 @@ updateImage();
       });
     </script>
       <script>
-
+    // Số lượng bông tuyết
 const numSnowflakes = 50;
 
 // Tạo và thêm các bông tuyết
