@@ -124,34 +124,49 @@
         ,
         "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/b9d7137a-2372-4c78-aedf-5589ad86f322.image.png?v=1732627802153",
       ];
+const preloadedImages = images.map((src) => {
+  const img = new Image();
+  img.src = src;
+  return img;
+});
 
-      // Create an array to store preloaded images
-      const preloadedImages = images.map((src) => {
-        const img = new Image();
-        img.src = src;
-        return img;
-      });
+let currentIndex = 0;
 
-      let currentIndex = 0;
+// Function to update the image with animation
+function updateImage() {
+  const imageElement = document.getElementById("image");
 
-      // Function to update the image
-      function updateImage() {
-        document.getElementById("image").src =
-          preloadedImages[currentIndex].src;
-      }
+  // Add fade-out animation
+  imageElement.classList.add("fade-out");
 
-      function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateImage();
-      }
+  setTimeout(() => {
+    imageElement.src = preloadedImages[currentIndex].src;
 
-      function previousImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateImage();
-      }
+    // Add fade-in animation after changing image
+    imageElement.classList.remove("fade-out");
+    imageElement.classList.add("fade-in");
 
-      // Initialize first image
-      updateImage();
+    setTimeout(() => {
+      imageElement.classList.remove("fade-in");
+    }, 500);
+  }, 500);
+}
+
+function nextImage() {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateImage();
+}
+
+function previousImage() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateImage();
+}
+
+// Auto-change image every 3 seconds
+setInterval(nextImage, 3000);
+
+// Initialize first image
+updateImage();
     </script>
     <p>
       <button type="button" onclick="nextImage()">Next</button>
@@ -177,23 +192,29 @@
       });
     </script>
       <script>
-    // Số lượng bông tuyết
-    const numSnowflakes = 100;
 
-    // Tạo và thêm các bông tuyết
-    for (let i = 0; i < numSnowflakes; i++) {
-      const snowflake = document.createElement("div");
-      snowflake.classList.add("snowflake");
-      snowflake.textContent = "\u2744"; // Unicode ký tự bông tuyết
+const numSnowflakes = 50;
 
-      // Gán vị trí và kích thước ngẫu nhiên
-      snowflake.style.left = Math.random() * 100 + "vw";
-      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
-      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
-      snowflake.style.animationDelay = Math.random() * 5 + "s";
+// Tạo và thêm các bông tuyết
+for (let i = 0; i < numSnowflakes; i++) {
+  const snowflake = document.createElement("div");
+  snowflake.classList.add("snowflake");
+  snowflake.textContent = "🌸"; // Unicode ký tự bông hoa
+  
+  snowflake.style.color = "#8A2BE2";
 
-      document.body.appendChild(snowflake);
-    }
+  // Gán vị trí và kích thước ngẫu nhiên
+  snowflake.style.left = Math.random() * 100 + "vw";
+  snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+
+  // Làm chậm quá trình rơi
+  snowflake.style.animationDuration = Math.random() * 8 + 5 + "s"; // Tăng thời gian rơi từ 5 đến 13 giây
+  snowflake.style.animationDelay = Math.random() * 5 + "s";
+  snowflake.style.opacity = Math.random() * (0.7 - 0.4) + 0.4; // Đặt độ mờ ngẫu nhiên
+
+  // Thêm snowflake vào body
+  document.body.appendChild(snowflake);
+}
   </script>
     <nbr> Chiz Nguyen </nbr>
   </body>
