@@ -237,23 +237,33 @@ nbr {
   }
 }
 
-    .snowflake {
-      position: fixed;
-      top: -10px;
-      color: white;
-      font-size: 1rem;
-      opacity: 0.8;
-      pointer-events: none;
-      animation: fall linear infinite;
-      margin-top: -10px;
-    }
+.snowflake {
+  position: fixed;
+  top: -30px;
+  color: white;
+  font-size: 1rem;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1; /* Đặt dưới tất cả các phần tử khác */
+  animation: fallAndSpin linear infinite; /* Animation gộp chung */
+}
 
-    @keyframes fall {
-      0% {
-        transform: translateY(-10px);
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0.8;
-      }}
+@keyframes fallAndSpin {
+  0% {
+    transform: translate(0, -10px) rotate(0deg); /* Bắt đầu ở vị trí trên cao và không xoay */
+    opacity: 0.5;
+  }
+  25% {
+    transform: translate(15px, 25vh) rotate(40deg); /* Đong đưa nhẹ sang phải và xoay nhẹ */
+  }
+  50% {
+    transform: translate(-15px, 50vh) rotate(0deg); /* Đong đưa sang trái và xoay về 0 */
+  }
+  75% {
+    transform: translate(15px, 75vh) rotate(-25deg); /* Đong đưa lại sang phải và xoay ngược chiều */
+  }
+  100% {
+    transform: translate(0, 100vh) rotate(0deg); /* Kết thúc ở đáy và quay về vị trí gốc */
+    opacity: 0.8;
+  }
+}
