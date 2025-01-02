@@ -155,22 +155,6 @@ h1 {
 #image:hover {
       transform: scale(1.25);
 }
-button {
-  background-color: #e77bbf;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin: 10px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #ff63a3;
-}
-
 
 nbr {
   position: fixed;
