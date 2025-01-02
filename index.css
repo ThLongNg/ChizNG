@@ -49,7 +49,12 @@ h1 {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   color: #6a4c93;
   font-size: 1.2rem;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
+#In4:hover {
+  transform: scale(1.02);
+}
+
 #In4 name {
   font: 30px bold;
   font-family: "Great Vibes", cursive;
@@ -83,7 +88,10 @@ h1 {
   justify-content: center;
   align-items: center;
   text-align: center;
- 
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+#Contact:hover {
+  transform: scale(1.02);
 }
 #Contact ct {
   font-family: "Great Vibes", cursive;
