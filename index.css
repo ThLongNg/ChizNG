@@ -1,15 +1,16 @@
+
 body, h1, ul, li, p {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Định dạng chung cho body */
+
 body {
   font-family: 'Crimson Pro', serif;
   line-height: 1.6;
   padding: 20px;
-  background: linear-gradient(45deg,  #fbd6d4, #f7c2b7, #e8b7d8); 
+  background: linear-gradient(45deg,  #fbd6d4, #f7c2b7, #e8b7d8); /* Gradient hồng phấn và tím nhạt */
   color: #4a4a4a; /* Màu chữ xám đậm */
   text-align: center;
 }
@@ -19,12 +20,12 @@ h1 {
   text-align: center;
   font-size: 5rem;
   font-family: 'Great Vibes', cursive;
-  background: linear-gradient(190deg, #9b1b30, #7d1426); 
+  background: linear-gradient(190deg, #9b1b30, #7d1426); /* Gradient đỏ thẫm */
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   margin-top: 30px;
-  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); 
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); /* Hiệu ứng bóng nhẹ */
 }
 
 /* Phần thông tin (#In4) */
@@ -137,17 +138,23 @@ h1 {
 #bio a:hover {
   color: #ff63a3;
 }
-
-/* Định dạng hình ảnh */
 #image {
-  display: block;
-  margin: 30px auto;
-  border-radius: 50%;
-  border: 5px solid #f8c8d4;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
+      margin-top: 2rem;
+      width: 397px;
+      height: 360px;
+      border: 10px solid transparent;
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.7);
+      background: linear-gradient(white, white) padding-box,
+                  linear-gradient(45deg, #ffdde1, #ee9ca7) border-box;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      object-fit: cover; 
+      object-position: right; 
+    }
 
-/* Nút Next, Previous */
+#image:hover {
+      transform: scale(1.25);
+}
 button {
   background-color: #e77bbf;
   color: white;
@@ -164,7 +171,7 @@ button:hover {
   background-color: #ff63a3;
 }
 
-/* Chữ ký cố định */
+
 nbr {
   position: fixed;
   bottom: 120px;
@@ -181,7 +188,7 @@ nbr {
   pointer-events: none;
 }
 
-/* Đĩa nhạc cố định */
+
 #cd-disk {
   position: fixed;
   bottom: 20px;
@@ -196,7 +203,7 @@ nbr {
 }
 #song-info-box {
   position: fixed;
-  bottom: 80px; /* Vị trí trên đĩa nhạc */
+  bottom: 80px; 
   left: 20px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -206,12 +213,10 @@ nbr {
   animation: slideUp 2s forwards;
 }
 
-/* Ẩn box tên bài hát khi không có bài hát */
 .hidden {
   display: none;
 }
 
-/* Animation trượt lên */
 @keyframes slideUp {
   0% {
     bottom: -50px;
@@ -223,7 +228,7 @@ nbr {
   }
 }
 
-/* Quay đĩa khi phát nhạc */
+
 #cd-disk.playing {
   animation: spin 9s linear infinite;
 }
@@ -236,7 +241,6 @@ nbr {
     transform: rotate(360deg);
   }
 }
-
 .snowflake {
   position: fixed;
   top: -30px;
@@ -244,26 +248,26 @@ nbr {
   font-size: 1rem;
   opacity: 0.8;
   pointer-events: none;
-  z-index: -1; /* Đặt dưới tất cả các phần tử khác */
-  animation: fallAndSpin linear infinite; /* Animation gộp chung */
+  z-index: -1; 
+  animation: fallAndSpin linear infinite;
 }
 
 @keyframes fallAndSpin {
   0% {
-    transform: translate(0, -10px) rotate(0deg); /* Bắt đầu ở vị trí trên cao và không xoay */
+    transform: translate(0, -10px) rotate(0deg); 
     opacity: 0.5;
   }
   25% {
-    transform: translate(15px, 25vh) rotate(40deg); /* Đong đưa nhẹ sang phải và xoay nhẹ */
+    transform: translate(15px, 25vh) rotate(40deg);
   }
   50% {
-    transform: translate(-15px, 50vh) rotate(0deg); /* Đong đưa sang trái và xoay về 0 */
+    transform: translate(-15px, 50vh) rotate(0deg); 
   }
   75% {
-    transform: translate(15px, 75vh) rotate(-25deg); /* Đong đưa lại sang phải và xoay ngược chiều */
+    transform: translate(15px, 75vh) rotate(-25deg);
   }
   100% {
-    transform: translate(0, 100vh) rotate(0deg); /* Kết thúc ở đáy và quay về vị trí gốc */
+    transform: translate(0, 100vh) rotate(0deg); 
     opacity: 0.8;
   }
 }
