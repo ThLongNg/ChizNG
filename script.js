@@ -9,11 +9,11 @@ const songs = [
     src: "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/9convert.com%20-%20Porter%20Robinson%20%20Everything%20Goes%20On%20Official%20Lyric%20Video%20%20Star%20Guardian%202022.mp3?v=1734087780501"
   },
   {
-    name: "Hope Is The Thing With  - Artist 3",
+    name: "Hope Is The Thing With  - Honkai Star Rail",
     src: "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/9convert.com%20-%20Hope%20Is%20the%20Thing%20With%20Feathers.mp3?v=1734088005075"
   },
   {
-    name: "Had I Not Seen the Sun",
+    name: "Had I Not Seen the Sun - Honkai Star Rail",
     src: "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/9convert.com%20-%20Had%20I%20Not%20Seen%20the%20Sun.mp3?v=1734090661570"
   }
 ];
