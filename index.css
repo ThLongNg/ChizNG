@@ -1,76 +1,43 @@
-body,
-h1,
-ul,
-li,
-p {
+/* Reset & Base Styling */
+body, h1, p, ul, li {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+
 body {
-  font-family: "Crimson Pro", serif;
-  line-height: 1.6;
-  padding: 20px;
-  background: linear-gradient(
-    45deg,
-    #fbd6d4,
-    #f7b6cc,
-    #e8b7d8
-  ); /* Gradient hồng phấn và tím nhạt */
-  color: #4a4a4a; /* Màu chữ xám đậm */
+  font-family: "Kaisei Tokumin", sans-serif;
+  background: linear-gradient(45deg, #fbd6d4, #f7b6cc, #e8b7d8);
+  color: #4a4a4a;
   text-align: center;
+  padding: 40px 20px;
+  overflow-x: hidden;
 }
 
-/* Header Styling */
 h1 {
   text-align: center;
   font-size: 5rem;
   font-family: "Great Vibes", cursive;
-  background: linear-gradient(190deg, #9b1b30, #7d1426); /* Gradient đỏ thẫm */
+  background: linear-gradient(190deg, #9b1b30, #7d1426);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   margin-top: 30px;
-  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); /* Hiệu ứng bóng nhẹ */
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6);
 }
 
-/* Phần thông tin (#In4) */
-#In4 {
-  background: radial-gradient(
-    rgba(255, 227, 241, 0.5),
-    rgba(255, 204, 220, 0.8)
-  );
-  padding: 20px;
-  border-radius: 20px;
-  margin: 20px auto;
-  width: 80vw;
-  max-width: 600px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  color: #6a4c93;
-  font-size: 1.2rem;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-#In4:hover {
-  transform: scale(1.02);
+a {
+  color: #e77bbf;
+  text-decoration: none;
 }
 
-#In4 name {
-  font: 30px bold;
-  font-family: "Great Vibes", cursive;
+a:hover {
+  color: #ff63a3;
 }
 
-#In4 jp {
-  font-family: "Kaisei Tokumin";
-  font-size: 25px;
-}
-
-#In4 br {
-  margin-bottom: 10px;
-}
-
-/* Định dạng phần Contact */
-#Contact {
+/* Info Card */
+section.info-card {
   padding: 20px;
   background: radial-gradient(
     rgba(255, 227, 234, 0.7),
@@ -82,7 +49,7 @@ h1 {
   max-width: 800px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   color: #6a4c93;
-  font-size: 1.2rem;
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -90,151 +57,76 @@ h1 {
   text-align: center;
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
-#Contact:hover {
-  transform: scale(1.02);
-}
-#Contact ct {
+
+section.info-card h2 {
   font-family: "Great Vibes", cursive;
-  font-size: 2.5rem;
   color: #c71585;
-  text-transform: capitalize;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  margin-bottom: 15px;
-  display: block;
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-#Contact ul {
-  font-size: 1.5rem;
-  display: flex;
-  flex-wrap: wrap;
+.contact-list {
   list-style: none;
   padding: 0;
+}
+
+.contact-list li {
   margin: 10px 0;
-  justify-content: center;
 }
 
-.contact-group {
-  display: flex;
+/* Chizuru Glitch Effect */
+.char-container {
+  
+  flex-direction: column;
   align-items: center;
-  margin: 8px 50px;
-  min-width: 200px;
-  justify-content: left;
+  gap: 30px;
+  margin: 40px 0;
 }
 
-.contact-group span {
-  margin-right: 10px;
-}
-
-#Contact li a {
-  color: #e77bbf;
-}
-
-#Contact li a:hover {
-  color: #ff63a3;
-}
-
-/* Phần Bio */
-#bio {
-  background: radial-gradient(
-    rgba(255, 227, 241, 0.7),
-    rgba(255, 204, 220, 0.9)
-  );
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 20px;
-  color: #6a4c93;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-#bio p {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  padding: 0 19px 15px 19px;
-  text-align: justify;
-}
-
-#bio a {
-  color: #e77bbf;
-}
-
-#bio a:hover {
-  color: #ff63a3;
-}
-#image {
-  margin-top: 2rem;
-  width: 397px;
-  height: 360px;
-  border: 10px solid transparent;
-  border-radius: 20px;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.7);
-  background: linear-gradient(white, white) padding-box,
-    linear-gradient(45deg, #ffdde1, #ee9ca7) border-box;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  object-fit: cover;
-  object-position: right;
-}
-
-#image:hover {
-  transform: scale(1.25);
-}
-
-nbr {
-  position: fixed;
-  bottom: 250px;
-  left: 45px;
-  font-size: 18rem;
-  font-family: "Great Vibes", cursive;
-  background: linear-gradient(0deg, #bd0c06, #8c06bd);
+.char-container .char {
+  position: relative;
+  font-size: 64px;
+  font-weight: bold;
+  background: linear-gradient(270deg, #ff0080, #bb047b, #2afadf, #00ffb9);
+  background-size: 600% 600%;
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  transform: rotate(-20deg);
-  opacity: 0.05;
-  z-index: -5;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite, fadeIn 1s ease forwards;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.char-container .char::before {
+  content: 'guem';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  color: rgba(165, 12, 12, 0.315);
   pointer-events: none;
 }
 
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* CD Disk */
 #cd-disk {
   position: fixed;
-  bottom: 20px;
+  bottom: 45px;
   right: 20px;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   border: 4px solid #f8c8d4;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   cursor: pointer;
-}
-#cd-disk:hover {
-  transform: scale(1.3);
-}
-
-#song-info-box {
-  position: fixed;
-  bottom: 80px;
-  left: 20px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  display: none;
-  animation: slideUp 2s forwards;
-}
-
-.hidden {
-  display: none;
-}
-
-@keyframes slideUp {
-  0% {
-    bottom: -50px;
-    opacity: 0;
-  }
-  100% {
-    bottom: 80px;
-    opacity: 1;
-  }
 }
 
 #cd-disk.playing {
@@ -242,21 +134,38 @@ nbr {
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
 }
+
+/* Decorative Images */
+.image {
+  position: fixed;
+  z-index: -1;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.image1 { top: 2%; left: 2%; width: 390px; }
+.image2 { top: 0%; right: 2%; width: 400px; }
+.image3 { bottom: 2%; left: 1%; width: 320px; }
+.image4 { bottom: 0%; right: -4%; width: 350px; }
+
+.i5 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 100%;
+  opacity: 0.2;
+}
+
+/* Sakura Snow */
 .snowflake {
   position: fixed;
   top: -50px;
-  color: white;
-  font-size: 1rem;
-  opacity: 0.8;
   pointer-events: none;
-  z-index: -3;
+  z-index: -2;
   animation: fallAndSpin linear infinite;
 }
 
@@ -279,50 +188,114 @@ nbr {
     opacity: 0.8;
   }
 }
-.image {
-  width: 450px;
-  position: fixed;
-  z-index: -2;
-  opacity: 70%;
-  pointer-events: none;
-}
 
-/* Ảnh 1 - Nửa trên, bên trái */
-.image2 {
-  top: -3%;
-  left: -40px;
-}
-
-/* Ảnh 2 - Nửa dưới, bên trái */
-.image1 {
-  width: 550px;
-  bottom: -10%;
-  left: -40px;
-}
-
-/* Ảnh 3 - Nửa trên, bên phải */
-.image3 {
-  top: -80px;
-  right: -40px;
-}
-
-/* Ảnh 4 - Nửa dưới, bên phải */
-.image4 {
-  bottom: 0.1%;
-  right: 1%;
-}
-.i5 {
+/* Audio Wave Visualizer */
+#wave-container {
   position: fixed;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-height: 100%;
-  object-fit: contain;
-  z-index: -1;
-  opacity: 0.35;
+  left: calc(100% + 10px); /* nằm bên phải cd-disk */
+  transform: translateY(-50%);
+  width: 120px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px;
   pointer-events: none;
 }
-@media (max-width: 1300px) {
+
+
+.wave-bar {
+  width: 4px;
+  background: linear-gradient(180deg, #f77ca3, #b388ff);
+  border-radius: 10px;
+  height: 10%;
+  transition: height 0.1s ease;
+}
+
+/* Music Control Box (fixed & working) */
+#music-controls {
+  position: fixed;
+  bottom: 50px;
+  right: 90px;
+  background: rgba(246, 223, 255, 0.756);
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  gap: 10px;
+  z-index: 99;
+  min-width: 220px;
+  font-family: "Kaisei Tokumin", sans-serif;
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#music-controls.show-controls {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#music-controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+
+#music-controls input[type="range"] {
+  width: 100%;
+  accent-color: #f77ca3;
+}
+
+#music-controls div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+#music-controls button {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  background: linear-gradient(to right, #f7a6c3, #f47aab);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#music-controls button:hover {
+  background: linear-gradient(to right, #f2689d, #f03282);
+}
+#music-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#song-info-box {
+  position: fixed;
+  
+  bottom: 10px;
+  right: 10px;
+  z-index: -1;
+}
+
+#song-info-box.hidden {
+  display: none;
+}
+@media (max-width: 1100px) {
   .image {
     display: none;
   }
