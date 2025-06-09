@@ -1,235 +1,60 @@
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="https://cdn.discordapp.com/emojis/1313856298240053268.webp?size=128" />
-    <title>About Me,</title>
-    <link rel="stylesheet" href="index.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Great+Vibes&family=Kaisei+Tokumin&family=Prata&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Great+Vibes&family=Prata&display=swap"
-      rel="stylesheet"
-    />
-    <script src="/script.js" defer></script>
-  </head>
-  <body>
-    <div id="music-container">
-      <img
-        id="cd-disk"
-        src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg"
-        alt="Album Cover"
-      />
-    </div>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Me</title>
+  <link rel="icon" href="https://cdn.discordapp.com/emojis/1313856298240053268.webp?size=128" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kaisei+Tokumin&family=Prata&display=swap" rel="stylesheet" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+ <div id="music-container">
+    <img id="cd-disk" src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg" alt="Album Cover" />
+    <audio id="background-music" crossorigin="anonymous"></audio>
+  </div>
 
-    <!-- Box để hiển thị tên bài hát -->
-    <div id="song-info-box" class="hidden">
-      <p id="song-name"></p>
-    </div>
+  <div id="song-info-box" class="hidden">
+    <p id="song-name"></p>
+  </div>
 
-    <!-- Phần tử âm thanh -->
-    <audio id="background-music" controls>
-      <source src="your-audio-file.mp3" type="audio/mp3" />
-    </audio>
-    <script src="script.js"></script>
-    <h1>This is my Personal Profile<br /></h1>
-    <div id="In4">
-      <name>Full Name: Nguyễn Thành Long <br /></name>
+  <h1>This is my Personal Profile</h1>
+  <div class="char-container" id="chizuru-glitch"></div>
 
-      🫧✨🫧<br />
-      <jp>グエン・タイン・ロン</jp>
-      <br />--- Studied at:
-      <span>
-        <a href="https://www.facebook.com/FPTU.HCM">
-          FPT University HCM</a
-        ></span
-      >---<br />
-      Birth Date: 07/10/2005 <br />
-      Address: S3.02, Long Thanh My, TP Thu Duc, TP HCM<br />
-      Phone Num: +84399092828<br />
-    </div>
+  <section class="info-card">
+    <h2>Full Name: Nguyễn Thành Long</h2>
+    <p>✨🫧✨</p>
+    <p>グエン・タイン・ロン</p>
+    <p>--- Studied at: <a href="https://www.facebook.com/FPTU.HCM">FPT University HCM</a> ---</p>
+    <p>Birth Date: 07/10/2005</p>
+    <p>Address: S3.02, Long Thanh My, TP Thu Duc, TP HCM</p>
+    <p>Phone Num: +84399092828</p>
+  </section>
 
-    <div id="Contact">
-      <ct>Contact me at:</ct>
-      <ul>
-        <li class="contact-group">
-          <span>Facebook:</span>
-          <a href="https://www.facebook.com/long.nguyen.07102005"
-            >Nguyễn Thành Long</a
-          >
-        </li>
-        <li class="contact-group">
-          <span>Discord:</span>
-          <span>chiznguyen71</span>
-        </li>
-      </ul>
-      <ul>
-        <li class="contact-group">
-          <span>Gmail:</span>
-          <span>
-            <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=longnguyenthanh0710@gmail.com"
-            >
-              Click here to email me!</a
-            ></span
-          >
-        </li>
-        <li class="contact-group">
-          <span>Github:</span>
-          <a href="https://github.com/ThLongNg">ThLongNg</a>
-        </li>
-      </ul>
-      <div id="bio">
-        <ct>My Biography</ct>
-        <p>
-          Hello! My name is Nguyễn Thành Long, and I am currently a student at
-          FPT University in Ho Chi Minh City. I have a strong enthusiasm for
-          technology and coding, which drives me to continuously learn and grow
-          in these fields. I enjoy tackling challenges and developing projects
-          that can provide value to others. In my free time, I actively seek out
-          new hobbies, and I find inspiration in listening to music and playing
-          video games, which help me unwind and foster my creativity.
-        </p>
-      </div>
-    </div>
-    <img
-      id="image"
-      src="cabd2a3b7196360307772509b1c71cd891333f2c59cb1abd8939ec8ed&"
-      alt="Image"
-      width="300"
-    />
-    <script>
-      const images = [
-        "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/bd29fc8b-4e4a-4c6f-a368-9d92d143b9b0.image.png?v=1732537766567",
-        "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/8913d2b8-9c5d-4a9d-a54b-2542aac2fc75.image.png?v=1732538821112",
-        "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/e8a359f6-4dbc-469d-9557-d3b47fce2d67.image.png?v=1732625976347",
-        "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/390c9654-5b5e-4854-8bd7-87d20c3b71da.image.png?v=1732625980588",
-        "https://www.nautiljon.com/images/perso/00/15/kurokawa_akane_21451.webp?1689612500",
-        "https://i.pinimg.com/736x/50/cc/ca/50cccab5ee9cec684bc85c8fc80df5ba.jpg",
-        ,
-        "https://cdn.glitch.global/5a6ae0fa-88dd-4643-a115-3363478e8816/b9d7137a-2372-4c78-aedf-5589ad86f322.image.png?v=1732627802153",
-      ];
+  <section class="info-card">
+    <h2>Contact Me At:</h2>
+    <ul class="contact-list">
+      <li><strong>Facebook:</strong> <a href="https://www.facebook.com/long.nguyen.07102005">Nguyễn Thành Long</a></li>
+      <li><strong>Discord:</strong> chiznguyen71</li>
+      <li><strong>Gmail:</strong> <a href="mailto:longnguyenthanh0710@gmail.com">Click here to email me!</a></li>
+      <li><strong>Github:</strong> <a href="https://github.com/ThLongNg">ThLongNg</a></li>
+    </ul>
+  </section>
 
-      const preloadedImages = images.map((src) => {
-        const img = new Image();
-        img.src = src;
-        return img;
-      });
+  <section class="info-card">
+    <h2>My Biography</h2>
+    <p>Hello! My name is Nguyễn Thành Long, and I am currently a student at FPT University in Ho Chi Minh City. I have a strong enthusiasm for technology and coding, which drives me to continuously learn and grow in these fields. I enjoy tackling challenges and developing projects that can provide value to others. In my free time, I actively seek out new hobbies, and I find inspiration in listening to music and playing video games, which help me unwind and foster my creativity.</p>
+  </section>
 
-      let currentIndex = 0;
-
-      // Function to update the image with animation
-      function updateImage() {
-        const imageElement = document.getElementById("image");
-
-        // Add fade-out animation
-        imageElement.classList.add("fade-out");
-
-        setTimeout(() => {
-          imageElement.src = preloadedImages[currentIndex].src;
-
-          // Add fade-in animation after changing image
-          imageElement.classList.remove("fade-out");
-          imageElement.classList.add("fade-in");
-
-          setTimeout(() => {
-            imageElement.classList.remove("fade-in");
-          }, 500);
-        }, 500);
-      }
-
-      function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateImage();
-      }
-
-      function previousImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateImage();
-      }
-
-      // Auto-change image every 3 seconds
-      setInterval(nextImage, 3000);
-
-      // Initialize first image
-      updateImage();
-      cdDisk.addEventListener("click", () => {
-        if (isPlaying) {
-          audio.pause();
-          cdDisk.classList.remove("playing");
-        } else {
-          audio.play();
-          cdDisk.classList.add("playing");
-        }
-        isPlaying = !isPlaying;
-      });
-    </script>
-    <script>
-      function createSnowflake() {
-        const snowflake = document.createElement("div");
-        snowflake.classList.add("snowflake");
-        snowflake.textContent = "🌸"; // Unicode ký tự bông hoa
-
-        snowflake.style.left = Math.random() * 100 + "vw";
-        snowflake.style.fontSize = Math.random() * 40 + 15 + "px";
-
-        snowflake.style.animationDuration = Math.random() * 8 + 5 + "s"; // 5 đến 13 giây
-        snowflake.style.animationDelay = Math.random() * 5 + "s";
-        snowflake.style.opacity = Math.random() * (0.7 - 0.4) + 0.4; // Đặt độ mờ ngẫu nhiên
-
-        document.body.appendChild(snowflake);
-
-        setTimeout(() => {
-          snowflake.remove();
-        }, (parseFloat(snowflake.style.animationDuration) + parseFloat(snowflake.style.animationDelay)) * 1000);
-      }
-
-      // Tạo với khoảng thời gian ngẫu nhiên
-      setInterval(createSnowflake, 80);
-    </script>
-    <nbr> Chiz Nguyen </nbr>
-    <img
-      class="image image1"
-      src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2024/04/30/5308864/ff86dd232b9da94bcb3740e8e6423c49_7733017154460160147.png?x-oss-process=image%2Fformat%2Cwebp"
-      alt="Image 1"
-    />
-
-    <img
-      class="image image2"
-      src="https://starrail.honeyhunterworld.com/img/eidolon/raindrop-key-eidolon_icon.webp?x73583"
-      alt="Image 2"
-    />
-
-    <img
-      class="image image3"
-      src="https://starrail.honeyhunterworld.com/img/eidolon/moonless-midnight-eidolon_icon.webp?x73583"
-      alt="Image 3"
-    />
-
-    <img
-      class="image image4"
-      src="https://static.mana.wiki/starrail/1309_Rank_2.png"
-      alt="Image 4"
-    />
-    <img
-      class="i5"
-      src="https://upload-os-bbs.hoyolab.com/upload/2024/06/03/29532825/27691a14f88b2c53ad6e4ed06b348002_3742389950389271120.png?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_70"
-      alt="Image 5"
-    />
-  </body>
+  <!-- Static decorative images -->
+  <img class="image image1" src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2024/04/30/5308864/ff86dd232b9da94bcb3740e8e6423c49_7733017154460160147.png?x-oss-process=image%2Fformat%2Cwebp" alt="Image 1" />
+  <img class="image image2" src="https://starrail.honeyhunterworld.com/img/eidolon/raindrop-key-eidolon_icon.webp?x73583" alt="Image 2" />
+  <img class="image image3" src="https://starrail.honeyhunterworld.com/img/eidolon/moonless-midnight-eidolon_icon.webp?x73583" alt="Image 3" />
+  <img class="image image4" src="https://static.mana.wiki/starrail/1309_Rank_2.png" alt="Image 4" />
+  <img class="i5" src="https://upload-os-bbs.hoyolab.com/upload/2024/06/03/29532825/27691a14f88b2c53ad6e4ed06b348002_3742389950389271120.png?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_70" alt="Image 5" />
+</body>
 </html>
-
