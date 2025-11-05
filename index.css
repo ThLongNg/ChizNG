@@ -8,7 +8,9 @@ body, h1, p, ul, li {
 
 body {
   font-family: "Kaisei Tokumin", sans-serif;
-  background: linear-gradient(45deg, #fbd6d4, #f7b6cc, #e8b7d8);
+  background: linear-gradient(45deg, #fbd6d4, #f7b6cc, #e8b7d8, #d4c5f9, #e8b7d8, #f7b6cc);
+  background-size: 300%% 300%%;
+  animation: subtlePurpleShift 20s ease infinite;
   color: #4a4a4a;
   text-align: center;
   padding: 40px 20px;
@@ -134,7 +136,7 @@ h3 ,h2 {
 }
 
 @keyframes fadeIn {
-  to { opacity: 1; }
+  to { opacity: 1; }`n`n@keyframes subtlePurpleShift {`n  0%% { background-position: 0%% 50%%; }`n  50%% { background-position: 100%% 50%%; }`n  100%% { background-position: 0%% 50%%; }`n}
 }
 
 /* CD Disk */
@@ -168,9 +170,9 @@ h3 ,h2 {
 }
 
 .image1 { top: 2%; left: 2%; width: 390px; }
-.image2 { top: 0%; right: 2%; width: 400px; }
-.image3 { bottom: 2%; left: 1%; width: 320px; }
-.image4 { bottom: 0%; right: -4%; width: 350px; }
+.image2 { top: 0%; right: 2%; width: 500px; }
+.image3 { bottom: 2%; left: 1%; width: 420px; }
+.image4 { bottom: 0%; right: 1%; width: 350px; }
 
 .i5 {
   position: fixed;
@@ -215,7 +217,7 @@ h3 ,h2 {
 #wave-container {
   position: fixed;
   top: 50%;
-  left: calc(100% + 10px); /* nằm bên phải cd-disk */
+  left: calc(100% + 10px); /* n?m b�n ph?i cd-disk */
   transform: translateY(-50%);
   width: 120px;
   height: 60px;

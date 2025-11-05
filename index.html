@@ -1,193 +1,369 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About Me</title>
+  <title>Welcome</title>
   <link rel="icon" href="https://cdn.discordapp.com/emojis/1313856298240053268.webp?size=128" />
-  <link rel="stylesheet" href="index.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kaisei+Tokumin&family=Prata&display=swap" rel="stylesheet" />
-  <script src="script.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.cdnfonts.com/css/momo-signature');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      cursor: pointer;
+      font-family: 'Momo Signature', 'Caveat', cursive, 'Arial', sans-serif;
+    }
+
+    .splash-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease;
+    }
+
+    .splash-container.fade-out {
+      opacity: 0;
+    }
+
+    #background-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      filter: blur(3px) brightness(0.6);
+      z-index: 1;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: white;
+      padding: 20px;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    .content h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+      font-family: 'Momo Signature', 'Caveat', cursive;
+      background: linear-gradient(45deg, 
+        #ffb6d9, 
+        #ffc8e8, 
+        #d8b5e8, 
+        #c9a3f0,
+        #e8b7d8,
+        #ffb6d9);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease infinite;
+    }
+
+    .content p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+      font-family: 'Momo Signature', 'Caveat', cursive;
+      background: linear-gradient(90deg, 
+        #ffb6d9, 
+        #d8b5e8, 
+        #ffb6d9);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 3s ease infinite;
+    }
+
+    .click-hint {
+      font-size: 1rem;
+      font-family: 'Momo Signature', 'Caveat', cursive;
+      background: linear-gradient(90deg, 
+        rgba(255, 182, 217, 0.8), 
+        rgba(216, 181, 232, 0.8), 
+        rgba(255, 182, 217, 0.8));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pulse 2s ease-in-out infinite, gradientShift 3s ease infinite;
+      margin-top: 40px;
+    }
+
+    /* Audio Control Button */
+    .audio-control {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9999;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, 
+        rgba(255, 182, 193, 0.3), 
+        rgba(221, 160, 221, 0.3),
+        rgba(255, 192, 203, 0.3));
+      backdrop-filter: blur(15px);
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 
+        0 4px 15px rgba(255, 182, 193, 0.4),
+        0 0 20px rgba(221, 160, 221, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+      animation: crystalGlow 2s ease-in-out infinite;
+    }
+
+    .audio-control:hover {
+      background: linear-gradient(135deg, 
+        rgba(255, 182, 193, 0.5), 
+        rgba(221, 160, 221, 0.5),
+        rgba(255, 192, 203, 0.5));
+      transform: scale(1.1);
+      box-shadow: 
+        0 6px 25px rgba(255, 182, 193, 0.6),
+        0 0 30px rgba(221, 160, 221, 0.5),
+        inset 0 0 25px rgba(255, 255, 255, 0.3);
+    }
+
+    .audio-control svg {
+      width: 30px;
+      height: 30px;
+      fill: url(#crystal-gradient);
+      filter: drop-shadow(0 0 8px rgba(255, 182, 193, 0.8));
+      transition: all 0.3s ease;
+      animation: iconShimmer 3s ease-in-out infinite;
+    }
+
+    .audio-control.muted svg {
+      opacity: 0.4;
+      filter: drop-shadow(0 0 4px rgba(150, 150, 150, 0.5));
+    }
+
+    @keyframes crystalGlow {
+      0%, 100% {
+        box-shadow: 
+          0 4px 15px rgba(255, 182, 193, 0.4),
+          0 0 20px rgba(221, 160, 221, 0.3),
+          inset 0 0 20px rgba(255, 255, 255, 0.2);
+      }
+      50% {
+        box-shadow: 
+          0 6px 25px rgba(255, 182, 193, 0.6),
+          0 0 35px rgba(221, 160, 221, 0.5),
+          inset 0 0 30px rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    @keyframes iconShimmer {
+      0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(255, 182, 193, 0.8));
+      }
+      50% {
+        filter: drop-shadow(0 0 15px rgba(221, 160, 221, 1));
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes gradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .content p {
+        font-size: 1.2rem;
+      }
+      
+      .click-hint {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
- <div id="music-container">
-    <img id="cd-disk" src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg" alt="Album Cover" />
-    <audio id="background-music" crossorigin="anonymous"></audio>
+  <div class="splash-container" id="splash">
+    <!-- Video Background -->
+    <video id="background-video" autoplay muted loop playsinline>
+      <source src="https://cdn.discordapp.com/attachments/974685291975680000/1435752781171654707/Cyrene__uoc_tao_bang_Clipchamp.mp4?ex=690d1c7a&is=690bcafa&hm=9bb1480f1d00d7b1dfb1d15e66968fa48d56b20500e9ab4e8f5ffba585d71ff8&" type="video/mp4">
+    </video>
+
+    <!-- Background Audio -->
+    <audio id="background-audio" loop muted>
+      <source src="https://cdn.discordapp.com/attachments/974685291975680000/1435758849461059615/Video_chua_co_tieu_e_uoc_tao_bang_Clipchamp.m4a?ex=690d2220&is=690bd0a0&hm=8d8a8e0e3f74b06568e9ba4df6224e3fbac13e315f12b848e2bbcf703d151a07&" type="audio/mp4">
+    </audio>
+
+    <!-- Audio Control Button -->
+    <div class="audio-control" id="audio-toggle">
+      <svg id="volume-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <defs>
+          <linearGradient id="crystal-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffb6d9;stop-opacity:1">
+              <animate attributeName="stop-color" values="#ffb6d9;#d8b5e8;#ffc8e8;#ffb6d9" dur="3s" repeatCount="indefinite" />
+            </stop>
+            <stop offset="50%" style="stop-color:#d8b5e8;stop-opacity:1">
+              <animate attributeName="stop-color" values="#d8b5e8;#ffc8e8;#ffb6d9;#d8b5e8" dur="3s" repeatCount="indefinite" />
+            </stop>
+            <stop offset="100%" style="stop-color:#ffc8e8;stop-opacity:1">
+              <animate attributeName="stop-color" values="#ffc8e8;#ffb6d9;#d8b5e8;#ffc8e8" dur="3s" repeatCount="indefinite" />
+            </stop>
+          </linearGradient>
+        </defs>
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      </svg>
+    </div>
+
+    <!-- Dark Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Content -->
+    <div class="content">
+      <h1>Welcome to My Profile</h1>
+      <p>✨ Discover my journey ✨</p>
+      <div class="click-hint">Click anywhere to enter</div>
+    </div>
   </div>
 
-  <div id="song-info-box" class="hidden">
-    <p id="song-name"></p>
-  </div>
+  <script>
+    const splash = document.getElementById('splash');
+    const video = document.getElementById('background-video');
+    const audio = document.getElementById('background-audio');
+    const audioToggle = document.getElementById('audio-toggle');
+    let isMuted = true;
+    let hasInteracted = false;
 
-  <h1>This is my Personal Profile</h1>
-  <div class="char-container" id="chizuru-glitch"></div>
+    // Ensure video plays on mobile devices
+    video.play().catch(err => {
+      console.log('Auto-play prevented:', err);
+    });
 
-  <!-- Featured Song Section -->
-  <section class="info-card">
-    
-    <iframe data-testid="embed-iframe" 
-            style="border-radius:12px" 
-            src="https://open.spotify.com/embed/track/0ct6r3EGTcMLPtrXHDvVjc?utm_source=generator" 
-            width="100%" 
-            height="152" 
-            frameBorder="0" 
-            allowfullscreen="" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy">
-    </iframe>
-  </section>
+    // Try to auto-play audio with muted first (browsers allow this)
+    audio.play().catch(err => {
+      console.log('Audio auto-play prevented:', err);
+    });
 
-  <section class="info-card">
-    <h2>Full Name: Nguyễn Thành Long</h2>
-  
-    <h3>グエン・タイン・ロン</h3>
-    <p>--- Studied at: <a href="https://www.facebook.com/FPTU.HCM">FPT University HCM</a> ---</p>
-    <p>Birth Date: 07/10/2005</p>
-    <p>Address: Long Thanh My, TP Thu Duc, TP HCM</p>
-    <p>Phone Num: +84399092828</p>
-  </section>
-
-  <section class="info-card">
-    <h2>Contact Me At:</h2>
-    <ul class="contact-list">
-      <li><strong>Facebook:</strong> <a href="https://www.facebook.com/long.nguyen.07102005">Nguyễn Thành Long</a></li>
-      <li><strong>Discord:</strong> chiznguyen71</li>
-      <li><strong>Gmail:</strong> <a href="mailto:longnguyenthanh0710@gmail.com">Click here to email me!</a></li>
-      <li><strong>Github:</strong> <a href="https://github.com/ThLongNg">ThLongNg</a></li>
-    </ul>
-  </section>
-
-  <section class="info-card">
-    <h2>My Biography</h2>
-    <p>Hello! My name is Nguyễn Thành Long, and I am currently a student at FPT University in Ho Chi Minh City. I have a strong enthusiasm for technology and coding, which drives me to continuously learn and grow in these fields. I enjoy tackling challenges and developing projects that can provide value to others. In my free time, I actively seek out new hobbies, and I find inspiration in listening to music and playing video games, which help me unwind and foster my creativity.</p>
-  </section>
-
-  <!-- Honkai Star Rail API Section -->
-  <section class="info-card hsr-section">
-    <h2>Honkai Star Rail Info</h2>
-    
-    <div id="loading-indicator" class="hidden">
-      <div class="loading-spinner"></div>
-      <p>Đang tải thông tin...</p>
-    </div>
-    
-    <div id="error-message" class="hidden error-box">
-      <p id="error-text"></p>
-    </div>
-    
-    <div id="hsr-player-info" class="hidden">
-      <div class="player-basic-info">
-        <div class="player-layout-container">
-          <div class="player-left">
-            <img id="player-avatar" src="" alt="Player Avatar" class="player-avatar" />
-            <div class="player-main-info">
-              <h3 id="player-nickname"></h3>
-              <div class="player-level-info">
-                <span class="level-text">TL <span id="player-level"></span></span>
-                <span class="eq-text">EQ <span id="world-level"></span></span>
-              </div>
-              <p class="player-signature" id="player-signature"></p>
-            </div>
-          </div>
-          
-          <div class="player-right">
-            <div class="achievement-info">
-              <span class="achievement-number" id="achievement-count"></span>
-              <div class="achievement-icon">🏆</div>
-              <span class="achievement-text">Total Achievements</span>
-            </div>
-            <div class="simulated-universe-info">
-              <span class="su-number">9</span>
-              <div class="su-icon">🔺</div>
-              <span class="su-text">Simulated Universe</span>
-            </div>
-            <div class="uid-info">
-              <span class="uid-text">UID: <span id="player-uid"></span></span>
-            </div>
-          </div>
-        </div>
-      </div>
+    // Toggle audio on/off
+    audioToggle.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent triggering splash click
       
-      <div class="characters-showcase">
+      if (!hasInteracted) {
+        // First click - unmute and play
+        audio.muted = false;
+        audio.play();
+        hasInteracted = true;
+        isMuted = false;
+        audioToggle.classList.remove('muted');
+      } else {
+        // Subsequent clicks - toggle
+        isMuted = !isMuted;
         
-        <div id="characters-list" class="characters-grid">
-          <!-- Characters will be populated here -->
-        </div>
-      </div>
-    </div>
-  </section>
+        if (isMuted) {
+          audio.pause();
+          audioToggle.classList.add('muted');
+        } else {
+          audio.play();
+          audioToggle.classList.remove('muted');
+        }
+      }
+    });
 
-  <!-- My Spotify Profile Section -->
-  <section class="info-card spotify-profile-section">
-    <h2>🎧 My Spotify Profile</h2>
-    <div class="spotify-profile-card">
-      <div class="spotify-profile-info">
-        <div class="spotify-avatar">
-          <svg width="256px" height="256px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
-            <title>Spotify</title>
-            <g>
-              <path d="M127.999236,0 C57.3087105,0 0,57.3085507 0,128.000764 C0,198.696035 57.3087105,256 127.999236,256 C198.697403,256 256,198.696035 256,128.000764 C256,57.3131363 198.697403,0.00611405337 127.997707,0.00611405337 L127.999236,0 Z M186.69886,184.613841 C184.406145,188.373984 179.48445,189.566225 175.724397,187.258169 C145.671485,168.900724 107.838626,164.743168 63.2835265,174.923067 C58.990035,175.901315 54.7102999,173.211132 53.7320747,168.916009 C52.7492641,164.620887 55.428684,160.34105 59.7328748,159.362801 C108.491286,148.222996 150.314998,153.019471 184.054595,173.639116 C187.814648,175.947171 189.00686,180.853699 186.69886,184.613841 L186.69886,184.613841 Z M202.365748,149.76068 C199.476927,154.456273 193.33245,155.938931 188.640026,153.050041 C154.234012,131.90153 101.787386,125.776777 61.0916907,138.130222 C55.8138602,139.724462 50.2395052,136.749975 48.6376614,131.481189 C47.0480455,126.203233 50.0239899,120.639444 55.2926496,119.034505 C101.778216,104.929384 159.568396,111.761839 199.079523,136.042273 C203.771946,138.931163 205.254569,145.075787 202.365748,149.762209 L202.365748,149.76068 Z M203.710807,113.467659 C162.457218,88.964062 94.394144,86.7110334 55.0068244,98.6655362 C48.6819873,100.58382 41.9933726,97.0132133 40.0766627,90.6882251 C38.1599527,84.3601798 41.7274177,77.675991 48.0568402,75.7531212 C93.2707135,62.0270714 168.433562,64.6790421 215.929451,92.8755277 C221.63067,96.2520136 223.495412,103.599577 220.117478,109.281061 C216.754829,114.970188 209.38757,116.845674 203.716921,113.467659 L203.710807,113.467659 Z" fill="#1ED760"/>
-            </g>
-          </svg>
-        </div>
-        <div class="spotify-details">
-          <h3>ChizNguyen</h3>
-          <p class="spotify-username">@NguyenThanhLong</p>
-          <p class="spotify-bio">🎵 Music enthusiast | 🎮 Gamer | 💻 Developer</p>
-          <a href="https://open.spotify.com/user/31kyh2opotdtof36smvsyrx66rdy?si=41576a9683ac443b" 
-             target="_blank" 
-             class="spotify-profile-btn">
-            <svg width="16" height="16" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
-              <path d="M127.999236,0 C57.3087105,0 0,57.3085507 0,128.000764 C0,198.696035 57.3087105,256 127.999236,256 C198.697403,256 256,198.696035 256,128.000764 C256,57.3131363 198.697403,0.00611405337 127.997707,0.00611405337 L127.999236,0 Z M186.69886,184.613841 C184.406145,188.373984 179.48445,189.566225 175.724397,187.258169 C145.671485,168.900724 107.838626,164.743168 63.2835265,174.923067 C58.990035,175.901315 54.7102999,173.211132 53.7320747,168.916009 C52.7492641,164.620887 55.428684,160.34105 59.7328748,159.362801 C108.491286,148.222996 150.314998,153.019471 184.054595,173.639116 C187.814648,175.947171 189.00686,180.853699 186.69886,184.613841 L186.69886,184.613841 Z M202.365748,149.76068 C199.476927,154.456273 193.33245,155.938931 188.640026,153.050041 C154.234012,131.90153 101.787386,125.776777 61.0916907,138.130222 C55.8138602,139.724462 50.2395052,136.749975 48.6376614,131.481189 C47.0480455,126.203233 50.0239899,120.639444 55.2926496,119.034505 C101.778216,104.929384 159.568396,111.761839 199.079523,136.042273 C203.771946,138.931163 205.254569,145.075787 202.365748,149.762209 L202.365748,149.76068 Z M203.710807,113.467659 C162.457218,88.964062 94.394144,86.7110334 55.0068244,98.6655362 C48.6819873,100.58382 41.9933726,97.0132133 40.0766627,90.6882251 C38.1599527,84.3601798 41.7274177,77.675991 48.0568402,75.7531212 C93.2707135,62.0270714 168.433562,64.6790421 215.929451,92.8755277 C221.63067,96.2520136 223.495412,103.599577 220.117478,109.281061 C216.754829,114.970188 209.38757,116.845674 203.716921,113.467659 L203.710807,113.467659 Z" fill="#FFFFFF"/>
-            </svg>
-            Visit My Spotify Profile
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Spotify Playlists Section -->
-  <section class="info-card featured-playlists-section">
-    <h2>🎶 Featured Playlists</h2>
-    
-    <div class="embedded-playlists">
-      <div class="playlist-embed">
-        <iframe data-testid="embed-iframe" 
-                style="border-radius:12px" 
-                src="https://open.spotify.com/embed/playlist/50peNK1HB3HCCEWfC6nmWB?utm_source=generator" 
-                width="100%" 
-                height="352" 
-                frameBorder="0" 
-                allowfullscreen="" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                loading="lazy">
-        </iframe>
-      </div>
-      
-      <div class="playlist-embed">
-        <iframe data-testid="embed-iframe" 
-                style="border-radius:12px" 
-                src="https://open.spotify.com/embed/playlist/4zVuENJGDW2qCLJpXHgyhd?utm_source=generator" 
-                width="100%" 
-                height="352" 
-                frameBorder="0" 
-                allowfullscreen="" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                loading="lazy">
-        </iframe>
-      </div>
-    </div>
-  </section>
-
-  <!-- Static decorative images -->
-  <img class="image image1" src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2024/04/30/5308864/ff86dd232b9da94bcb3740e8e6423c49_7733017154460160147.png?x-oss-process=image%2Fformat%2Cwebp" alt="Image 1" />
-  <img class="image image2" src="https://starrail.honeyhunterworld.com/img/eidolon/raindrop-key-eidolon_icon.webp?x73583" alt="Image 2" />
-  <img class="image image3" src="https://starrail.honeyhunterworld.com/img/eidolon/moonless-midnight-eidolon_icon.webp?x73583" alt="Image 3" />
-  <img class="image image4" src="https://static.mana.wiki/starrail/1309_Rank_2.png" alt="Image 4" />
-  <img class="i5" src="https://upload-os-bbs.hoyolab.com/upload/2024/06/03/29532825/27691a14f88b2c53ad6e4ed06b348002_3742389950389271120.png?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_70" alt="Image 5" />
+    // Click anywhere to enter (except audio button)
+    splash.addEventListener('click', () => {
+      if (!hasInteracted) {
+        // First click - unmute and play audio
+        audio.muted = false;
+        audio.play();
+        hasInteracted = true;
+        isMuted = false;
+        audioToggle.classList.remove('muted');
+      } else {
+        // Second click - navigate to home page
+        splash.classList.add('fade-out');
+        
+        // Wait for fade animation to complete
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 800);
+      }
+    });
+  </script>
 </body>
 </html>
