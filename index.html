@@ -122,6 +122,31 @@
       margin-top: 40px;
     }
 
+    /* View Characters Button (splash) */
+    .view-characters {
+      margin: 20px auto 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #4a5fc1 0%, #7b42f6 100%);
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(123, 66, 246, 0.25);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      font-family: 'Momo Signature', 'Caveat', cursive;
+    }
+
+    .view-characters:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 14px 40px rgba(123, 66, 246, 0.45);
+      border-color: rgba(255, 215, 0, 0.7);
+    }
+
     /* Audio Control Button */
     .audio-control {
       position: fixed;

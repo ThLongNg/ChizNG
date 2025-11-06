@@ -242,125 +242,117 @@ class HSREnkaAPI {
     this.hidePlayerInfo();
 
     try {
-      console.log('Fetching data for UID:', uid);
-      
-      // Try multiple proxy services
-      const proxies = [
-        {
-          name: 'corsproxy.io',
-          url: `https://corsproxy.io/?${encodeURIComponent(`${this.baseURL}/${uid}`)}`
+      // Try multiple methods to fetch REAL data from Enka
+      const fetchMethods = [
+        // Method 1: Direct API call (works if CORS is enabled)
+        async () => {
+          const response = await fetch(`${this.baseURL}/${uid}`, {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+            }
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return await response.json();
         },
-        {
-          name: 'cors-anywhere',
-          url: `https://cors-anywhere.herokuapp.com/${this.baseURL}/${uid}`
+        
+        // Method 2: AllOrigins proxy
+        async () => {
+          const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`${this.baseURL}/${uid}`)}`, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const data = await response.json();
+          if (!data.contents) throw new Error('No contents in response');
+          return JSON.parse(data.contents);
         },
-        {
-          name: 'allorigins',
-          url: `https://api.allorigins.win/get?url=${encodeURIComponent(`${this.baseURL}/${uid}`)}`
+        
+        // Method 3: CORS Proxy
+        async () => {
+          const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(`${this.baseURL}/${uid}`)}`, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return await response.json();
+        },
+        
+        // Method 4: API.CODETABS proxy
+        async () => {
+          const response = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(`${this.baseURL}/${uid}`)}`, {
+            method: 'GET'
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return await response.json();
+        },
+        
+        // Method 5: ThingProxy
+        async () => {
+          const response = await fetch(`https://thingproxy.freeboard.io/fetch/${this.baseURL}/${uid}`, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return await response.json();
         }
       ];
       
       let apiData = null;
       let lastError = null;
       
-      for (const proxy of proxies) {
+      // Try each method until one succeeds
+      for (let i = 0; i < fetchMethods.length; i++) {
         try {
-          console.log(`Trying ${proxy.name}:`, proxy.url);
+          apiData = await fetchMethods[i]();
           
-          const response = await fetch(proxy.url, {
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json',
-            }
-          });
-
-          if (!response.ok) {
-            throw new Error(`${proxy.name} responded with ${response.status}`);
-          }
-
-          if (proxy.name === 'allorigins') {
-            const proxyData = await response.json();
-            if (!proxyData.contents) {
-              throw new Error('No contents from allorigins');
-            }
-            apiData = JSON.parse(proxyData.contents);
+          // Validate that we got REAL data with proper structure
+          if (apiData && apiData.detailInfo && apiData.detailInfo.uid) {
+            break;
           } else {
-            apiData = await response.json();
+            throw new Error('Invalid data structure - missing detailInfo or uid');
           }
-          
-          console.log(`${proxy.name} successful, got data:`, apiData);
-          break;
           
         } catch (error) {
-          console.log(`${proxy.name} failed:`, error.message);
           lastError = error;
+          apiData = null;
+          
+          // Add small delay before next attempt to avoid rate limiting
+          if (i < fetchMethods.length - 1) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+          }
           continue;
         }
       }
       
+      // If all methods failed, throw error (NO FALLBACK TO MOCK DATA)
       if (!apiData) {
-        // All proxies failed, use mock data for demo
-        console.log('All proxies failed, using mock data');
-        apiData = this.getMockData();
+        // Update button state to error
+        if (typeof window.updateCharacterButtonState === 'function') {
+          window.updateCharacterButtonState('error', 'Failed to load character data');
+        }
+        throw new Error(`Không thể tải dữ liệu từ Enka API. Vui lòng thử lại sau.`);
       }
 
+      // Display REAL data
+      console.log('🔍 Full API Response:', apiData);
+      console.log('🔍 Available top-level keys:', Object.keys(apiData));
+      if (apiData.detailInfo) {
+        console.log('🔍 detailInfo keys:', Object.keys(apiData.detailInfo));
+      }
       this.displayPlayerData(apiData);
       
     } catch (error) {
-      console.error('HSR API Error:', error);
-      console.error('Full error details:', {
-        message: error.message,
-        stack: error.stack
-      });
-      this.showError('Không thể kết nối đến API. Đang hiển thị dữ liệu demo.');
-      // Show mock data when all fails
-      this.displayPlayerData(this.getMockData());
+      console.error('Failed to load data from Enka API:', error);
+      this.showError(`Không thể tải dữ liệu từ Enka API. Vui lòng thử lại sau.`);
+      
     } finally {
       this.showLoading(false);
     }
   }
 
-  getMockData() {
-    return {
-      detailInfo: {
-        nickname: "Demo Player",
-        level: 70,
-        worldLevel: 6,
-        uid: "800264283",
-        signature: "Demo signature for testing",
-        finishAchievementNum: 583,
-        headIcon: 200144
-      },
-      avatarDetailList: [
-        {
-          avatarId: 1005,
-          level: 80,
-          promotion: 6,
-          skillTreeList: [1, 2, 3, 4, 5]
-        },
-        {
-          avatarId: 1213,
-          level: 80,
-          promotion: 6,
-          skillTreeList: [1, 2, 3, 4]
-        },
-        {
-          avatarId: 1102,
-          level: 75,
-          promotion: 6,
-          skillTreeList: [1, 2, 3]
-        }
-      ]
-    };
-  }
-
   displayPlayerData(data) {
     const playerInfo = data.detailInfo;
-
-    // Debug log to see data structure
-    console.log('Full API Response:', data);
-    console.log('Player Info:', playerInfo);
-    console.log('Available fields in playerInfo:', Object.keys(playerInfo));
 
     // Display player avatar from Enka API
     let playerAvatarId = null;
@@ -368,43 +360,45 @@ class HSREnkaAPI {
     // Try to get avatar ID from multiple possible fields
     if (playerInfo.headIcon) {
       playerAvatarId = playerInfo.headIcon;
-      console.log('Found player avatar ID from headIcon:', playerAvatarId);
     } else if (playerInfo.profilePicture && playerInfo.profilePicture.avatarId) {
       playerAvatarId = playerInfo.profilePicture.avatarId;
-      console.log('Found player avatar ID from profilePicture:', playerAvatarId);
+    } else if (playerInfo.avatarId) {
+      playerAvatarId = playerInfo.avatarId;
     } else {
-      // Use default avatar if no avatar found
-      playerAvatarId = 200001;
-      console.log('No avatar found, using default avatar:', playerAvatarId);
+      // Use first character avatar as fallback if available
+      const avatarList = data.detailInfo?.avatarDetailList || data.avatarDetailList;
+      if (avatarList && avatarList.length > 0) {
+        playerAvatarId = avatarList[0].avatarId;
+      } else {
+        playerAvatarId = null;
+      }
     }
-    
-    console.log('Final Avatar ID:', playerAvatarId);
     
     const playerAvatarImg = document.getElementById('player-avatar');
     
     if (playerAvatarId && playerAvatarImg) {
-      // Enka Network official avatar URLs with correct format
+      // Enka Network official avatar URLs
       const avatarUrls = [
-        // Correct Enka Network format with /Series/
+        // Primary Enka CDN paths
         `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/Series/${playerAvatarId}.png`,
         `https://enka.network/ui/hsr/SpriteOutput/AvatarIcon/Series/${playerAvatarId}.png`,
-        `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/Avatar_${playerAvatarId}.png`,
-        `https://enka.network/ui/hsr/SpriteOutput/AvatarIcon/Avatar_${playerAvatarId}.png`,
+        `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${playerAvatarId}.png`,
+        `https://enka.network/ui/hsr/SpriteOutput/AvatarIcon/${playerAvatarId}.png`,
         
-        // Legacy format without /Series/ (fallback)
-        `https://enka.network/ui/hsr/AvatarRoundIcon/Avatar_${playerAvatarId}.png`,
-        `https://enka.network/ui/hsr/AvatarIcon/Avatar_${playerAvatarId}.png`,
+        // Legacy paths
+        `https://enka.network/ui/hsr/AvatarRoundIcon/${playerAvatarId}.png`,
+        `https://enka.network/ui/hsr/AvatarIcon/${playerAvatarId}.png`,
         
-        // Alternative community sources (fallback)
-        `https://starrail.honeyhunterworld.com/img/character/${playerAvatarId}_icon.webp`,
+        // Community CDN fallbacks
         `https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/avatar/${playerAvatarId}.png`,
+        `https://starrail.honeyhunterworld.com/img/character/${playerAvatarId}_icon.webp`,
         
-        // Generate base64 placeholder with avatar ID
+        // Final fallback: SVG placeholder with avatar ID
         `data:image/svg+xml;base64,${btoa(`
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
             <circle cx="40" cy="40" r="40" fill="#4a9eff"/>
-            <text fill="#ffffff" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" dy="-0.3em" x="40" y="35">HSR</text>
-            <text fill="#ffffff" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" dy="0.3em" x="40" y="50">${playerAvatarId}</text>
+            <text fill="#fff" font-family="Arial" font-size="10" text-anchor="middle" x="40" y="35">Avatar</text>
+            <text fill="#fff" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" x="40" y="50">${playerAvatarId}</text>
           </svg>
         `)}`
       ];
@@ -413,24 +407,16 @@ class HSREnkaAPI {
       let isLoaded = false;
       
       const loadNextAvatar = () => {
-        if (isLoaded) return;
+        if (isLoaded || currentUrlIndex >= avatarUrls.length) return;
         
-        if (currentUrlIndex < avatarUrls.length - 1) { // -1 because last one is always base64
-          const currentUrl = avatarUrls[currentUrlIndex];
-          console.log(`Trying Enka avatar URL ${currentUrlIndex + 1}:`, currentUrl);
-          playerAvatarImg.src = currentUrl;
-          currentUrlIndex++;
-        } else {
-          // Use base64 placeholder as final fallback
-          playerAvatarImg.src = avatarUrls[avatarUrls.length - 1];
-          console.log('Using base64 avatar placeholder');
-          isLoaded = true;
-        }
+        const currentUrl = avatarUrls[currentUrlIndex];
+        playerAvatarImg.src = currentUrl;
+        currentUrlIndex++;
       };
       
       playerAvatarImg.onload = () => {
         if (!isLoaded) {
-          console.log('✅ Avatar loaded successfully from Enka:', playerAvatarImg.src);
+          console.log('✅ REAL Avatar loaded successfully:', playerAvatarImg.src);
           isLoaded = true;
         }
       };
@@ -445,46 +431,93 @@ class HSREnkaAPI {
       // Start loading
       loadNextAvatar();
       
-    } else {
-      // No avatar found, use generic placeholder
-      if (playerAvatarImg) {
-        playerAvatarImg.src = `data:image/svg+xml;base64,${btoa(`
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="40" cy="40" r="40" fill="#4a9eff"/>
-            <text fill="#ffffff" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" dy="0.3em" x="40" y="40">HSR</text>
-          </svg>
-        `)}`;
-        console.log('No avatar ID found, using generic placeholder');
-      }
+    } else if (playerAvatarImg) {
+      // No avatar ID found, use generic placeholder
+      console.warn('⚠️ No avatar ID available, using generic placeholder');
+      playerAvatarImg.src = `data:image/svg+xml;base64,${btoa(`
+        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="40" fill="#667799"/>
+          <text fill="#fff" font-family="Arial" font-size="16" text-anchor="middle" x="40" y="45">HSR</text>
+        </svg>
+      `)}`;
     }
 
-    // Display basic player info
-    document.getElementById('player-nickname').textContent = playerInfo.nickname || 'N/A';
-    document.getElementById('player-level').textContent = playerInfo.level || 'N/A';
-    document.getElementById('world-level').textContent = playerInfo.worldLevel || 'N/A';
-    document.getElementById('player-uid').textContent = playerInfo.uid || 'N/A';
-    document.getElementById('player-signature').textContent = playerInfo.signature || 'キャストリス、西国の果てでまた会おう。';
+    // Display REAL player info
+    document.getElementById('player-nickname').textContent = playerInfo.nickname || 'Unknown';
+    document.getElementById('player-level').textContent = playerInfo.level || '0';
+    document.getElementById('world-level').textContent = playerInfo.worldLevel || '0';
+    document.getElementById('player-uid').textContent = playerInfo.uid || this.defaultUID;
+    document.getElementById('player-signature').textContent = playerInfo.signature || 'No signature';
     
-    // Try multiple fields for achievement count
+    // Get REAL achievement count from API
     let achievementCount = 0;
-    if (playerInfo.finishAchievementNum !== undefined) {
-      achievementCount = playerInfo.finishAchievementNum;
-      console.log('Found achievements from finishAchievementNum:', achievementCount);
-    } else if (playerInfo.achievementCount !== undefined) {
-      achievementCount = playerInfo.achievementCount;
-      console.log('Found achievements from achievementCount:', achievementCount);
-    } else if (playerInfo.achievements !== undefined) {
-      achievementCount = playerInfo.achievements;
-      console.log('Found achievements from achievements:', achievementCount);
-    } else if (playerInfo.finishedAchievementNum !== undefined) {
-      achievementCount = playerInfo.finishedAchievementNum;
-      console.log('Found achievements from finishedAchievementNum:', achievementCount);
-    } else {
-      console.log('No achievement field found, using default 583');
-      achievementCount = 583; // Default fallback
+    
+    console.log('🔍 Checking for achievement count...');
+    console.log('🔍 playerInfo.recordInfo exists?', !!playerInfo.recordInfo);
+    if (playerInfo.recordInfo) {
+      console.log('🔍 recordInfo.achievementCount value:', playerInfo.recordInfo.achievementCount);
     }
     
+    // Check in recordInfo first (where Enka API stores it)
+    if (playerInfo.recordInfo && playerInfo.recordInfo.achievementCount !== undefined) {
+      achievementCount = playerInfo.recordInfo.achievementCount;
+      console.log('✅ REAL achievements from recordInfo.achievementCount:', achievementCount);
+    } else if (playerInfo.recordInfo && playerInfo.recordInfo.finishAchievementNum !== undefined) {
+      achievementCount = playerInfo.recordInfo.finishAchievementNum;
+      console.log('✅ REAL achievements from recordInfo.finishAchievementNum:', achievementCount);
+    } 
+    // Fallback to direct fields
+    else if (playerInfo.finishAchievementNum !== undefined) {
+      achievementCount = playerInfo.finishAchievementNum;
+      console.log('✅ REAL achievements from finishAchievementNum:', achievementCount);
+    } else if (playerInfo.achievementCount !== undefined) {
+      achievementCount = playerInfo.achievementCount;
+      console.log('✅ REAL achievements from achievementCount:', achievementCount);
+    } else if (playerInfo.achievements !== undefined) {
+      achievementCount = playerInfo.achievements;
+      console.log('✅ REAL achievements from achievements:', achievementCount);
+    } else if (playerInfo.finishedAchievementNum !== undefined) {
+      achievementCount = playerInfo.finishedAchievementNum;
+      console.log('✅ REAL achievements from finishedAchievementNum:', achievementCount);
+    } else {
+      console.warn('⚠️ No achievement field found in REAL data');
+      console.warn('Available recordInfo fields:', playerInfo.recordInfo ? Object.keys(playerInfo.recordInfo) : 'recordInfo is null');
+      achievementCount = 0;
+    }
+    
+    console.log('🎯 Final achievement count to display:', achievementCount);
     document.getElementById('achievement-count').textContent = achievementCount;
+
+    // Store character data and create view button
+    console.log('🔍 Checking for character data...');
+    console.log('🔍 data.avatarDetailList exists?', !!data.avatarDetailList);
+    console.log('🔍 data.detailInfo.avatarDetailList exists?', !!data.detailInfo?.avatarDetailList);
+    
+    // FIX: avatarDetailList is inside detailInfo, not at top level!
+    const avatarList = data.detailInfo?.avatarDetailList || data.avatarDetailList;
+    console.log('🔍 Final avatarList length:', avatarList ? avatarList.length : 'N/A');
+    
+    if (avatarList && avatarList.length > 0) {
+      console.log('✅ Character data loaded:', avatarList.length, 'characters');
+      
+      // Create character popup instance
+      if (!window.characterPopup) {
+        window.characterPopup = new CharacterPopup();
+      }
+      window.characterPopup.setCharacterData(avatarList);
+      
+      console.log('✅ CharacterPopup instance created and data set');
+      
+      // Enable the enhanced button in home.html (no duplicate button creation)
+      if (typeof window.enableCharacterViewButton === 'function') {
+        console.log('✅ Calling enableCharacterViewButton with', avatarList.length, 'characters');
+        window.enableCharacterViewButton(avatarList.length);
+      } else {
+        console.warn('⚠️ enableCharacterViewButton function not found - button may not enable automatically');
+      }
+    } else {
+      console.warn('⚠️ No character data found in API response');
+    }
 
     // Show player info container
     document.getElementById('hsr-player-info').classList.remove('hidden');
@@ -492,32 +525,42 @@ class HSREnkaAPI {
 
   showLoading(show) {
     const loadingIndicator = document.getElementById('loading-indicator');
-    if (show) {
-      loadingIndicator.classList.remove('hidden');
-    } else {
-      loadingIndicator.classList.add('hidden');
+    if (loadingIndicator) {
+      if (show) {
+        loadingIndicator.classList.remove('hidden');
+      } else {
+        loadingIndicator.classList.add('hidden');
+      }
     }
   }
 
   showError(message) {
     const errorContainer = document.getElementById('error-message');
     const errorText = document.getElementById('error-text');
-    errorText.textContent = message;
-    errorContainer.classList.remove('hidden');
+    if (errorContainer && errorText) {
+      errorText.textContent = message;
+      errorContainer.classList.remove('hidden');
+    }
+    console.error('Error shown to user:', message);
   }
 
   hideError() {
     const errorContainer = document.getElementById('error-message');
-    errorContainer.classList.add('hidden');
+    if (errorContainer) {
+      errorContainer.classList.add('hidden');
+    }
   }
 
   hidePlayerInfo() {
     const playerInfo = document.getElementById('hsr-player-info');
-    playerInfo.classList.add('hidden');
+    if (playerInfo) {
+      playerInfo.classList.add('hidden');
+    }
   }
 }
 
 // Initialize HSR API when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 Initializing HSR Enka API - REAL DATA MODE ONLY');
   new HSREnkaAPI();
 });
