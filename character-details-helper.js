@@ -4,7 +4,7 @@ class CharacterDetailsHelper {
   // Get eidolon names for each character
   static getEidolonNames(avatarId) {
     const eidolonData = {
-      1415: [ // Phainon
+      1415: [
         'Epics, Born on a Blank Slate',
         'A Tomorrow in Thirteen Shades',
         'By Thy Being, As I\'ve Written',
@@ -32,7 +32,7 @@ class CharacterDetailsHelper {
   // Get trace/skill names for each character
   static getTraceNames(avatarId) {
     const traceData = {
-      1415: [ // Phainon
+      1415: [ 
         'Lo, Hope Takes Flight!',
         'Bloom, Elysium of Beyond',
         'Verse ◦ Vow ∞',
