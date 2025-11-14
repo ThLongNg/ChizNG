@@ -583,42 +583,58 @@ if (loadingEl && offlineEl && playingEl) {
   const artistNameEl = document.getElementById('spotify-artist-name');
   const progressEl = document.getElementById('spotify-progress');
 
-  async function getSpotifyData() {
-    try {
-      const res = await fetch(SPOTIFY_API_URL);
-      if (!res.ok) throw new Error('Failed to fetch Spotify data');
-      
-      const data = await res.json();
+// THAY THẾ TOÀN BỘ HÀM NÀY
+async function getSpotifyData() {
+  let res; // Khai báo res ở phạm vi này
+  try {
+    res = await fetch(SPOTIFY_API_URL);
 
-      if (data.isPlaying && data.songName) {
-        loadingEl.classList.add('hidden');
-        offlineEl.classList.add('hidden');
-        playingEl.classList.remove('hidden');
-
-        // Cập nhật nội dung chỉ khi nó thay đổi
-        if (songNameEl.textContent !== data.songName) {
-          albumArtEl.src = data.albumArtUrl;
-          songLinkEl.href = data.songUrl;
-          songNameEl.textContent = data.songName;
-          artistNameEl.textContent = data.artistName;
-        }
-        
-        const progressPercent = (data.progressMs / data.durationMs) * 100;
-        progressEl.style.width = `${progressPercent}%`;
-
-      } else {
-        loadingEl.classList.add('hidden');
-        offlineEl.classList.remove('hidden');
-        playingEl.classList.add('hidden');
+    // KIỂM TRA QUAN TRỌNG: Nếu response KHÔNG OK (ví dụ: 500)
+    if (!res.ok) {
+      let errorDetails = `Lỗi ${res.status}`;
+      try {
+        // Cố gắng đọc JSON lỗi chi tiết từ backend
+        const errorData = await res.json();
+        errorDetails = errorData.details || errorData.error || `Lỗi ${res.status}`;
+      } catch (e) {
+        // Không thể đọc JSON, chỉ dùng status
       }
-      
-    } catch (error) {
-      console.error("Lỗi tải Spotify:", error);
+      // Ném lỗi với chi tiết đã đọc được
+      throw new Error(errorDetails);
+    }
+
+    const data = await res.json();
+
+    if (data.isPlaying && data.songName) {
+      loadingEl.classList.add('hidden');
+      offlineEl.classList.add('hidden');
+      playingEl.classList.remove('hidden');
+
+      if (songNameEl.textContent !== data.songName) {
+        albumArtEl.src = data.albumArtUrl;
+        songLinkEl.href = data.songUrl;
+        songNameEl.textContent = data.songName;
+        artistNameEl.textContent = data.artistName;
+      }
+
+      const progressPercent = (data.progressMs / data.durationMs) * 100;
+      progressEl.style.width = `${progressPercent}%`;
+
+    } else {
       loadingEl.classList.add('hidden');
       offlineEl.classList.remove('hidden');
       playingEl.classList.add('hidden');
     }
+
+  } catch (error) {
+    // Bây giờ error.message sẽ chứa thông tin chi tiết
+    console.error("Lỗi tải Spotify:", error.message); 
+
+    loadingEl.classList.add('hidden');
+    offlineEl.classList.remove('hidden');
+    playingEl.classList.add('hidden');
   }
+}
 
   getSpotifyData(); 
   setInterval(getSpotifyData, 5000); // Cập nhật mỗi 5 giây

@@ -63,8 +63,12 @@ export default async function handler(req, res) {
     res.setHeader('Cache-Control', 's-maxage=5, stale-while-revalidate');
     return res.status(200).json(songData);
     
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal Server Error' });
-  }
+} catch (error) {
+  console.error(error); // Vẫn log lỗi trên Vercel
+
+  // Gửi lỗi chi tiết về trình duyệt để debug
+  return res.status(500).json({ 
+    error: 'Internal Server Error',
+    details: error.message // <-- Thêm chi tiết lỗi vào đây
+  });
 }
