@@ -211,7 +211,7 @@ function createSnowflake() {
 setInterval(createSnowflake, 200);
 
 // Chizuru Glitch Text
-const chizuruChars = ['ち', 'ず', 'る', '-','グ', 'エ', 'ン'];
+const chizuruChars = ['ち', 'ず', 'る', '-', 'グ', 'エ', 'ン'];
 const chizuruContainer = document.getElementById('chizuru-glitch');
 chizuruChars.forEach((char, index) => {
   const span = document.createElement('span');
@@ -221,6 +221,9 @@ chizuruChars.forEach((char, index) => {
   chizuruContainer.appendChild(span);
 });
 
+
+
+// ... (Class HSREnkaAPI của bạn bắt đầu ở đây) ...
 // Honkai Star Rail API Integration
 class HSREnkaAPI {
   constructor() {
@@ -255,7 +258,7 @@ class HSREnkaAPI {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
           return await response.json();
         },
-        
+
         // Method 2: AllOrigins proxy
         async () => {
           const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`${this.baseURL}/${uid}`)}`, {
@@ -267,7 +270,7 @@ class HSREnkaAPI {
           if (!data.contents) throw new Error('No contents in response');
           return JSON.parse(data.contents);
         },
-        
+
         // Method 3: CORS Proxy
         async () => {
           const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(`${this.baseURL}/${uid}`)}`, {
@@ -277,7 +280,7 @@ class HSREnkaAPI {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
           return await response.json();
         },
-        
+
         // Method 4: API.CODETABS proxy
         async () => {
           const response = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(`${this.baseURL}/${uid}`)}`, {
@@ -286,7 +289,7 @@ class HSREnkaAPI {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
           return await response.json();
         },
-        
+
         // Method 5: ThingProxy
         async () => {
           const response = await fetch(`https://thingproxy.freeboard.io/fetch/${this.baseURL}/${uid}`, {
@@ -297,26 +300,26 @@ class HSREnkaAPI {
           return await response.json();
         }
       ];
-      
+
       let apiData = null;
       let lastError = null;
-      
+
       // Try each method until one succeeds
       for (let i = 0; i < fetchMethods.length; i++) {
         try {
           apiData = await fetchMethods[i]();
-          
+
           // Validate that we got REAL data with proper structure
           if (apiData && apiData.detailInfo && apiData.detailInfo.uid) {
             break;
           } else {
             throw new Error('Invalid data structure - missing detailInfo or uid');
           }
-          
+
         } catch (error) {
           lastError = error;
           apiData = null;
-          
+
           // Add small delay before next attempt to avoid rate limiting
           if (i < fetchMethods.length - 1) {
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -324,7 +327,7 @@ class HSREnkaAPI {
           continue;
         }
       }
-      
+
       // If all methods failed, throw error (NO FALLBACK TO MOCK DATA)
       if (!apiData) {
         // Update button state to error
@@ -341,11 +344,11 @@ class HSREnkaAPI {
         console.log('🔍 detailInfo keys:', Object.keys(apiData.detailInfo));
       }
       this.displayPlayerData(apiData);
-      
+
     } catch (error) {
       console.error('Failed to load data from Enka API:', error);
       this.showError(`Không thể tải dữ liệu từ Enka API. Vui lòng thử lại sau.`);
-      
+
     } finally {
       this.showLoading(false);
     }
@@ -356,7 +359,7 @@ class HSREnkaAPI {
 
     // Display player avatar from Enka API
     let playerAvatarId = null;
-    
+
     // Try to get avatar ID from multiple possible fields
     if (playerInfo.headIcon) {
       playerAvatarId = playerInfo.headIcon;
@@ -373,9 +376,9 @@ class HSREnkaAPI {
         playerAvatarId = null;
       }
     }
-    
+
     const playerAvatarImg = document.getElementById('player-avatar');
-    
+
     if (playerAvatarId && playerAvatarImg) {
       // Enka Network official avatar URLs
       const avatarUrls = [
@@ -384,15 +387,15 @@ class HSREnkaAPI {
         `https://enka.network/ui/hsr/SpriteOutput/AvatarIcon/Series/${playerAvatarId}.png`,
         `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${playerAvatarId}.png`,
         `https://enka.network/ui/hsr/SpriteOutput/AvatarIcon/${playerAvatarId}.png`,
-        
+
         // Legacy paths
         `https://enka.network/ui/hsr/AvatarRoundIcon/${playerAvatarId}.png`,
         `https://enka.network/ui/hsr/AvatarIcon/${playerAvatarId}.png`,
-        
+
         // Community CDN fallbacks
         `https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/avatar/${playerAvatarId}.png`,
         `https://starrail.honeyhunterworld.com/img/character/${playerAvatarId}_icon.webp`,
-        
+
         // Final fallback: SVG placeholder with avatar ID
         `data:image/svg+xml;base64,${btoa(`
           <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
@@ -402,35 +405,35 @@ class HSREnkaAPI {
           </svg>
         `)}`
       ];
-      
+
       let currentUrlIndex = 0;
       let isLoaded = false;
-      
+
       const loadNextAvatar = () => {
         if (isLoaded || currentUrlIndex >= avatarUrls.length) return;
-        
+
         const currentUrl = avatarUrls[currentUrlIndex];
         playerAvatarImg.src = currentUrl;
         currentUrlIndex++;
       };
-      
+
       playerAvatarImg.onload = () => {
         if (!isLoaded) {
           console.log('✅ REAL Avatar loaded successfully:', playerAvatarImg.src);
           isLoaded = true;
         }
       };
-      
+
       playerAvatarImg.onerror = () => {
         if (!isLoaded) {
           console.log(`❌ Avatar URL failed, trying next...`);
           loadNextAvatar();
         }
       };
-      
+
       // Start loading
       loadNextAvatar();
-      
+
     } else if (playerAvatarImg) {
       // No avatar ID found, use generic placeholder
       console.warn('⚠️ No avatar ID available, using generic placeholder');
@@ -448,16 +451,16 @@ class HSREnkaAPI {
     document.getElementById('world-level').textContent = playerInfo.worldLevel || '0';
     document.getElementById('player-uid').textContent = playerInfo.uid || this.defaultUID;
     document.getElementById('player-signature').textContent = playerInfo.signature || 'No signature';
-    
+
     // Get REAL achievement count from API
     let achievementCount = 0;
-    
+
     console.log('🔍 Checking for achievement count...');
     console.log('🔍 playerInfo.recordInfo exists?', !!playerInfo.recordInfo);
     if (playerInfo.recordInfo) {
       console.log('🔍 recordInfo.achievementCount value:', playerInfo.recordInfo.achievementCount);
     }
-    
+
     // Check in recordInfo first (where Enka API stores it)
     if (playerInfo.recordInfo && playerInfo.recordInfo.achievementCount !== undefined) {
       achievementCount = playerInfo.recordInfo.achievementCount;
@@ -465,7 +468,7 @@ class HSREnkaAPI {
     } else if (playerInfo.recordInfo && playerInfo.recordInfo.finishAchievementNum !== undefined) {
       achievementCount = playerInfo.recordInfo.finishAchievementNum;
       console.log('✅ REAL achievements from recordInfo.finishAchievementNum:', achievementCount);
-    } 
+    }
     // Fallback to direct fields
     else if (playerInfo.finishAchievementNum !== undefined) {
       achievementCount = playerInfo.finishAchievementNum;
@@ -484,7 +487,7 @@ class HSREnkaAPI {
       console.warn('Available recordInfo fields:', playerInfo.recordInfo ? Object.keys(playerInfo.recordInfo) : 'recordInfo is null');
       achievementCount = 0;
     }
-    
+
     console.log('🎯 Final achievement count to display:', achievementCount);
     document.getElementById('achievement-count').textContent = achievementCount;
 
@@ -492,22 +495,22 @@ class HSREnkaAPI {
     console.log('🔍 Checking for character data...');
     console.log('🔍 data.avatarDetailList exists?', !!data.avatarDetailList);
     console.log('🔍 data.detailInfo.avatarDetailList exists?', !!data.detailInfo?.avatarDetailList);
-    
+
     // FIX: avatarDetailList is inside detailInfo, not at top level!
     const avatarList = data.detailInfo?.avatarDetailList || data.avatarDetailList;
     console.log('🔍 Final avatarList length:', avatarList ? avatarList.length : 'N/A');
-    
+
     if (avatarList && avatarList.length > 0) {
       console.log('✅ Character data loaded:', avatarList.length, 'characters');
-      
+
       // Create character popup instance
       if (!window.characterPopup) {
         window.characterPopup = new CharacterPopup();
       }
       window.characterPopup.setCharacterData(avatarList);
-      
+
       console.log('✅ CharacterPopup instance created and data set');
-      
+
       // Enable the enhanced button in home.html (no duplicate button creation)
       if (typeof window.enableCharacterViewButton === 'function') {
         console.log('✅ Calling enableCharacterViewButton with', avatarList.length, 'characters');
@@ -528,6 +531,7 @@ class HSREnkaAPI {
     if (loadingIndicator) {
       if (show) {
         loadingIndicator.classList.remove('hidden');
+
       } else {
         loadingIndicator.classList.add('hidden');
       }
@@ -561,6 +565,98 @@ class HSREnkaAPI {
 
 // Initialize HSR API when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // === BẮT ĐẦU: LOGIC SPOTIFY NOW LISTENING ===
+
+const SPOTIFY_API_URL = '/api/spotify';
+
+document.addEventListener('DOMContentLoaded', () => {
+  // === BẮT ĐẦU: LOGIC SPOTIFY NOW LISTENING ===
+
+// API URL bây giờ là một đường dẫn tương đối!
+const SPOTIFY_API_URL = '/api/spotify'; 
+
+const loadingEl = document.getElementById('spotify-loading');
+const offlineEl = document.getElementById('spotify-offline');
+const playingEl = document.getElementById('spotify-playing');
+
+// Kiểm tra xem các element có tồn tại không
+if (loadingEl && offlineEl && playingEl) {
+  const albumArtEl = document.getElementById('spotify-album-art');
+  const songLinkEl = document.getElementById('spotify-song-link');
+  const songNameEl = document.getElementById('spotify-song-name');
+  const artistNameEl = document.getElementById('spotify-artist-name');
+  const progressEl = document.getElementById('spotify-progress');
+
+  async function getSpotifyData() {
+    try {
+      const res = await fetch(SPOTIFY_API_URL);
+      if (!res.ok) throw new Error('Failed to fetch Spotify data');
+      
+      const data = await res.json();
+
+      if (data.isPlaying && data.songName) {
+        loadingEl.classList.add('hidden');
+        offlineEl.classList.add('hidden');
+        playingEl.classList.remove('hidden');
+
+        // Cập nhật nội dung chỉ khi nó thay đổi
+        if (songNameEl.textContent !== data.songName) {
+          albumArtEl.src = data.albumArtUrl;
+          songLinkEl.href = data.songUrl;
+          songNameEl.textContent = data.songName;
+          artistNameEl.textContent = data.artistName;
+        }
+        
+        const progressPercent = (data.progressMs / data.durationMs) * 100;
+        progressEl.style.width = `${progressPercent}%`;
+
+      } else {
+        loadingEl.classList.add('hidden');
+        offlineEl.classList.remove('hidden');
+        playingEl.classList.add('hidden');
+      }
+      
+    } catch (error) {
+      console.error("Lỗi tải Spotify:", error);
+      loadingEl.classList.add('hidden');
+      offlineEl.classList.remove('hidden');
+      playingEl.classList.add('hidden');
+    }
+  }
+
+  getSpotifyData(); 
+  setInterval(getSpotifyData, 5000); // Cập nhật mỗi 5 giây
+}
+// === KẾT THÚC: LOGIC SPOTIFY NOW LISTENING ===
+
+  // === BẮT ĐẦU: ĐỒNG HỒ THỜI GIAN THỰC ===
+  try {
+    const clockElement = document.getElementById('dynamic-greeting');
+
+    if (clockElement) {
+      function updateClock() {
+        const now = new Date();
+
+        // Lấy giờ, phút, giây và đảm bảo chúng luôn có 2 chữ số
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+
+        // Gán vào thẻ <p>
+        clockElement.textContent = `${hours} : ${minutes} : ${seconds}`;
+      }
+
+      // Chạy 1 lần ngay khi tải trang
+      updateClock();
+
+      // Tự động cập nhật đồng hồ mỗi giây (1000ms)
+      setInterval(updateClock, 1000);
+    }
+  } catch (error) {
+    console.error("Lỗi khi chạy đồng hồ:", error);
+  }
+  // === KẾT THÚC: ĐỒNG HỒ THỜI GIAN THỰC ===
+
   console.log('🚀 Initializing HSR Enka API - REAL DATA MODE ONLY');
   new HSREnkaAPI();
 });
