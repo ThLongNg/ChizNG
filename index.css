@@ -1310,9 +1310,12 @@ h2 {
 
 #spotify-progress {
   height: 100%;
-  width: 0%;
+  width: 0%; /* Sẽ được cập nhật bởi JS */
   border-radius: 4px;
-  background: #1ED760;
+  background: linear-gradient(90deg, #f02875 0%, #f1a7e1 50%, #dd20c4 100%);
+  background-size: 200% 100%; /* Làm cho gradient lớn hơn để di chuyển */
+  animation: gradientShimmer 2s linear infinite;
+  
   transition: width 0.5s linear; 
 }
 /* === KẾT THÚC: SPOTIFY NOW LISTENING === */
