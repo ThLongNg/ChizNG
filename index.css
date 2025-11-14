@@ -1318,6 +1318,14 @@ h2 {
   
   transition: width 0.5s linear; 
 }
+@keyframes gradientShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
 /* === KẾT THÚC: SPOTIFY NOW LISTENING === */
 @media (max-width: 768px) {
 
