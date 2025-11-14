@@ -564,10 +564,6 @@ class HSREnkaAPI {
 }
 
 // Initialize HSR API when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // === BẮT ĐẦU: LOGIC SPOTIFY NOW LISTENING ===
-
-const SPOTIFY_API_URL = '/api/spotify';
 
 document.addEventListener('DOMContentLoaded', () => {
   // === BẮT ĐẦU: LOGIC SPOTIFY NOW LISTENING ===
