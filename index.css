@@ -1312,7 +1312,7 @@ h2 {
   height: 100%;
   width: 0%; /* Sẽ được cập nhật bởi JS */
   border-radius: 4px;
-  background: linear-gradient(90deg, #f02875 0%, #f1a7e1 50%, #dd20c4 100%);
+  background: linear-gradient(90deg, #fcd62f 0%, #da1929 50%, #dd20c4 100%);
   background-size: 200% 100%; /* Làm cho gradient lớn hơn để di chuyển */
   animation: gradientShimmer 2s linear infinite;
   
