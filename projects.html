@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Projects</title>
+  <link rel="icon" href="https://cdn.discordapp.com/emojis/1313856298240053268.webp?size=128" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kaisei+Tokumin&family=Prata&family=Quicksand:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <script src="character-details-helper.js" defer></script>
+  <script src="character-detail-view.js" defer></script>
+  <script src="character-detail-ingame-ui.js" defer></script>
+  <script src="character-popup.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div id="music-container">
+    <img id="cd-disk" src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg" alt="Album Cover" loading="lazy" />
+    <audio id="background-music" crossorigin="anonymous"></audio>
+  </div>
+
+  <div id="song-info-box" class="hidden">
+    <p id="song-name"></p>
+  </div>
+
+  <nav class="page-toggle" aria-label="Page switcher">
+    <a class="toggle-btn" href="home.html" data-i18n="nav.about">About Me</a>
+    <a class="toggle-btn active" href="projects.html" data-i18n="nav.projects">Projects</a>
+  </nav>
+
+  <div class="language-switcher" role="group" aria-label="Language switcher">
+    <button class="lang-btn active" type="button" data-lang="en">EN</button>
+    <button class="lang-btn" type="button" data-lang="vi">VI</button>
+    <button class="lang-btn" type="button" data-lang="ja">日本語</button>
+  </div>
+
+  <p id="dynamic-greeting"></p>
+
+  <h1 data-i18n="hero.title">Projects & Journey</h1>
+  <div class="char-container" id="chizuru-glitch" data-text="旅"></div>
+
+  <section class="info-card project-hero">
+    <h2 data-i18n="hero.heading">Bridging Business & Dev</h2>
+    <p data-i18n="hero.body">I am shaping my path toward Business Analyst and Bridge System Engineer roles—translating stakeholder needs into
+      actionable technical plans while keeping user experience delightful. Below is how I practice that craft.</p>
+    <div class="hero-actions">
+      <a class="primary-btn" href="https://github.com/ThLongNg" target="_blank" rel="noopener"
+        data-i18n="hero.primaryCta">Visit GitHub</a>
+      <a class="secondary-btn" href="mailto:longnguyenthanh0710@gmail.com" data-i18n="hero.secondaryCta">Contact Me</a>
+    </div>
+  </section>
+
+  <section class="info-card github-contributions">
+    <h2 data-i18n="contrib.heading">GitHub Contribution Graph</h2>
+    <img id="github-graph"
+      src="https://ghchart.rshah.org/c71585/ThLongNg" alt="GitHub Contribution Graph"
+      loading="lazy" style="width:100%;max-width:650px;padding-top:15px;" />
+    <p class="muted" data-i18n="contrib.caption">Daily commits, experiments & open-source contributions.</p>
+  </section>
+
+  <section class="info-card experience-section">
+    <h2 data-i18n="experience.heading">Experience & Highlights</h2>
+    <ul class="timeline-list">
+      <li class="timeline-item">
+        <div>
+          <p class="timeline-period">2025</p>
+          <h3 data-i18n="experience.2025.title">Mini Capstone Team Project</h3>
+          <p data-i18n="experience.2025.desc">Built a proof-of-concept product with my squad and practiced the full GitHub workflow—backlog planning, pull-request review, and documentation hand-off.</p>
+          <div class="skill-badges">
+            <span data-i18n="experience.2025.badge1">Teamwork</span><span data-i18n="experience.2025.badge2">GitHub Flow</span><span data-i18n="experience.2025.badge3">Mini Capstone</span>
+          </div>
+        </div>
+      </li>
+      <li class="timeline-item">
+        <div>
+          <p class="timeline-period">2024</p>
+          <h3 data-i18n="experience.2024.title">Foundations: Web Dev & Japanese</h3>
+          <p data-i18n="experience.2024.desc">Completed core HTML/CSS/JS training while self-studying Japanese to prepare for a BrSE role that bridges Vietnamese teams with Japanese clients.</p>
+          <div class="skill-badges">
+            <span data-i18n="experience.2024.badge1">HTML/CSS/JS</span><span data-i18n="experience.2024.badge2">Self-Study</span><span data-i18n="experience.2024.badge3">Japanese</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="info-card certificate-section">
+    <h2 data-i18n="certs.heading">Coursera Certificates</h2>
+    <div class="certificate-grid">
+      <article class="certificate-card">
+        <h3 data-i18n="certs.card1.title">Business Analysis Essentials</h3>
+        <p data-i18n="certs.card1.desc">Eliciting business goals, building requirement traceability, and prioritizing stakeholder value.</p>
+        <a href="https://coursera.org/share/d80a05af53981fed1f384ae63c8c78e5" target="_blank"
+          rel="noopener" data-i18n="certs.card1.cta">View Credential →</a>
+      </article>
+      <article class="certificate-card">
+        <h3 data-i18n="certs.card2.title">Requirements Gathering in Practice</h3>
+        <p data-i18n="certs.card2.desc">Structured interviews, use-case modeling, and documentation ready for engineering handoff.</p>
+        <a href="https://coursera.org/share/4e37cfaa7eed2f44bbada9e3361154d8" target="_blank"
+          rel="noopener" data-i18n="certs.card2.cta">View Credential →</a>
+      </article>
+      <article class="certificate-card">
+        <h3 data-i18n="certs.card3.title">Systems Design for Bridge SE</h3>
+        <p data-i18n="certs.card3.desc">Translating solution architecture diagrams and clarifying data contracts for offshore teams.</p>
+        <a href="https://coursera.org/share/7166fb99b4cce473cf8676fa2787cc0e" target="_blank"
+          rel="noopener" data-i18n="certs.card3.cta">View Credential →</a>
+      </article>
+      <article class="certificate-card">
+        <h3 data-i18n="certs.card4.title">Stakeholder Communication & Agile</h3>
+        <p data-i18n="certs.card4.desc">Facilitated sprint reviews, wrote BA-friendly documentation, and aligned priorities between Japan-VN squads.</p>
+        <a href="https://coursera.org/share/7d312d20a7e7a01f3fb398ebefbd4a90" target="_blank"
+          rel="noopener" data-i18n="certs.card4.cta">View Credential →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="info-card project-showcase">
+    <h2 data-i18n="projects.heading">Selected Projects</h2>
+    <div class="project-grid">
+      <article class="project-card">
+        <div class="project-head">
+          <h3 data-i18n="projects.card1.title">ChizNG Portfolio</h3>
+          <span class="project-tag" data-i18n="projects.card1.tag">Live</span>
+        </div>
+        <p data-i18n="projects.card1.desc">Personal lab for testing how requirements become UI deliverables—with API widgets, Spotify data, and publicly visible specs.</p>
+        <ul>
+          <li data-i18n="projects.card1.bullet1">Spotify Now Playing widget derived from the user story “see what I’m listening to now”</li>
+          <li data-i18n="projects.card1.bullet2">HSR Enka integration with clearly documented fallback behavior for developers</li>
+        </ul>
+        <a class="primary-btn" href="https://chiz-ng-profile.vercel.app/" target="_blank" rel="noopener" data-i18n="projects.card1.cta">Visit Site</a>
+      </article>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3 data-i18n="projects.card2.title">Mini Capstone Project</h3>
+          <span class="project-tag" data-i18n="projects.card2.tag">Team Demo</span>
+        </div>
+        <p data-i18n="projects.card2.desc">Website that showcases our teamwork process: shared backlog, GitHub version control, and demo hand-off for a mock client.</p>
+        <ul>
+          <li data-i18n="projects.card2.bullet1">Transparent commit log so the team can code in parallel</li>
+          <li data-i18n="projects.card2.bullet2">Simple role-based guardrails and QA checklist</li>
+        </ul>
+        <a class="secondary-btn" href="https://swp-edvm-mini-capstone-project.vercel.app/" target="_blank" rel="noopener" data-i18n="projects.card2.cta">View Demo</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="info-card project-cta">
+    <h2 data-i18n="cta.heading">Let’s Create Together</h2>
+    <p data-i18n="cta.body">I'm open to collaborations, open-source initiatives, and creative front-end experiments.</p>
+    <div class="hero-actions">
+      <a class="primary-btn" href="mailto:longnguyenthanh0710@gmail.com" data-i18n="cta.primaryCta">Start a Conversation</a>
+      <a class="secondary-btn" href="https://www.linkedin.com" target="_blank" rel="noopener" data-i18n="cta.secondaryCta">Connect on LinkedIn</a>
+    </div>
+  </section>
+
+  <script>
+    const translations = {
+      en: {
+        'nav.about': 'About Me',
+        'nav.projects': 'Projects',
+        'hero.title': 'Projects & Journey',
+        'hero.heading': 'Bridging Business & Dev',
+        'hero.body': 'I am shaping my path toward Business Analyst and Bridge System Engineer roles—translating stakeholder needs into actionable technical plans while keeping user experience delightful. Below is how I practice that craft.',
+        'hero.primaryCta': 'Visit GitHub',
+        'hero.secondaryCta': 'Contact Me',
+        'contrib.heading': 'GitHub Contribution Graph',
+        'contrib.caption': 'Daily commits, experiments & open-source contributions.',
+        'experience.heading': 'Experience & Highlights',
+        'experience.2025.title': 'Mini Capstone Team Project',
+        'experience.2025.desc': 'Built a proof-of-concept product with my squad and practiced the full GitHub workflow—backlog planning, pull-request review, and documentation hand-off.',
+        'experience.2025.badge1': 'Teamwork',
+        'experience.2025.badge2': 'GitHub Flow',
+        'experience.2025.badge3': 'Mini Capstone',
+        'experience.2024.title': 'Foundations: Web Dev & Japanese',
+        'experience.2024.desc': 'Completed core HTML/CSS/JS training while self-studying Japanese to prepare for a BrSE role that bridges Vietnamese teams with Japanese clients.',
+        'experience.2024.badge1': 'HTML/CSS/JS',
+        'experience.2024.badge2': 'Self-Study',
+        'experience.2024.badge3': 'Japanese',
+        'certs.heading': 'Coursera Certificates',
+        'certs.card1.title': 'Business Analysis Essentials',
+        'certs.card1.desc': 'Eliciting business goals, building requirement traceability, and prioritizing stakeholder value.',
+        'certs.card1.cta': 'View Credential →',
+        'certs.card2.title': 'Requirements Gathering in Practice',
+        'certs.card2.desc': 'Structured interviews, use-case modeling, and documentation ready for engineering handoff.',
+        'certs.card2.cta': 'View Credential →',
+        'certs.card3.title': 'Systems Design for Bridge SE',
+        'certs.card3.desc': 'Translating solution architecture diagrams and clarifying data contracts for offshore teams.',
+        'certs.card3.cta': 'View Credential →',
+        'certs.card4.title': 'Stakeholder Communication & Agile',
+        'certs.card4.desc': 'Facilitated sprint reviews, wrote BA-friendly documentation, and aligned priorities between Japan-VN squads.',
+        'certs.card4.cta': 'View Credential →',
+        'projects.heading': 'Selected Projects',
+        'projects.card1.title': 'ChizNG Portfolio',
+        'projects.card1.tag': 'Live',
+        'projects.card1.desc': 'Personal lab for testing how requirements become UI deliverables—with API widgets, Spotify data, and publicly visible specs.',
+        'projects.card1.bullet1': 'Spotify Now Playing widget derived from the user story “see what I’m listening to now”',
+        'projects.card1.bullet2': 'HSR Enka integration with clearly documented fallback behavior for developers',
+        'projects.card1.cta': 'Visit Site',
+        'projects.card2.title': 'Mini Capstone Project',
+        'projects.card2.tag': 'Team Demo',
+        'projects.card2.desc': 'Website that showcases our teamwork process: shared backlog, GitHub version control, and demo hand-off for a mock client.',
+        'projects.card2.bullet1': 'Transparent commit log so the team can code in parallel',
+        'projects.card2.bullet2': 'Simple role-based guardrails and QA checklist',
+        'projects.card2.cta': 'View Demo',
+        'cta.heading': 'Let’s Create Together',
+        'cta.body': "I'm open to collaborations, open-source initiatives, and creative front-end experiments.",
+        'cta.primaryCta': 'Start a Conversation',
+        'cta.secondaryCta': 'Connect on LinkedIn'
+      },
+      vi: {
+        'nav.about': 'Về Tôi',
+        'nav.projects': 'Dự Án',
+        'hero.title': 'Hành trình dự án của tôi',
+        'hero.heading': 'Kết nối Business & Dev',
+        'hero.body': 'Mình đang hướng đến vai trò Business Analyst và Bridge System Engineer—chuyển nhu cầu của stakeholders thành kế hoạch kỹ thuật rõ ràng và vẫn giữ trải nghiệm người dùng thú vị. Dưới đây là cách mình luyện tập mỗi ngày.',
+        'hero.primaryCta': 'Xem GitHub',
+        'hero.secondaryCta': 'Liên hệ với mình',
+        'contrib.heading': 'Biểu đồ đóng góp GitHub',
+        'contrib.caption': 'Các cam kết hằng ngày, thử nghiệm và đóng góp open-source.',
+        'experience.heading': 'Kinh nghiệm & Điểm nhấn',
+        'experience.2025.title': 'Dự án Mini Capstone',
+        'experience.2025.desc': 'Cùng đội ngũ xây dựng sản phẩm thử nghiệm và thực hành toàn bộ quy trình GitHub: lập backlog, review pull-request, bàn giao tài liệu.',
+        'experience.2025.badge1': 'Làm việc nhóm',
+        'experience.2025.badge2': 'GitHub Flow',
+        'experience.2025.badge3': 'Mini Capstone',
+        'experience.2024.title': 'Nền tảng: Web & tiếng Nhật',
+        'experience.2024.desc': 'Hoàn thành khóa HTML/CSS/JS cốt lõi và tự học tiếng Nhật để trở thành BrSE kết nối đội Việt Nam với khách hàng Nhật.',
+        'experience.2024.badge1': 'HTML/CSS/JS',
+        'experience.2024.badge2': 'Tự học',
+        'experience.2024.badge3': 'Tiếng Nhật',
+        'certs.heading': 'Chứng chỉ Coursera',
+        'certs.card1.title': 'Business Analysis Essentials',
+        'certs.card1.desc': 'Thu thập mục tiêu kinh doanh, xây dựng traceability và ưu tiên giá trị cho stakeholders.',
+        'certs.card1.cta': 'Xem chứng chỉ →',
+        'certs.card2.title': 'Requirements Gathering in Practice',
+        'certs.card2.desc': 'Phỏng vấn có cấu trúc, mô hình use-case và tài liệu sẵn sàng cho đội kỹ thuật.',
+        'certs.card2.cta': 'Xem chứng chỉ →',
+        'certs.card3.title': 'Systems Design for Bridge SE',
+        'certs.card3.desc': 'Diễn giải sơ đồ kiến trúc và làm rõ hợp đồng dữ liệu cho các đội offshore.',
+        'certs.card3.cta': 'Xem chứng chỉ →',
+        'certs.card4.title': 'Stakeholder Communication & Agile',
+        'certs.card4.desc': 'Điều phối sprint review, viết tài liệu thân thiện BA và đồng bộ ưu tiên giữa đội Nhật-Việt.',
+        'certs.card4.cta': 'Xem chứng chỉ →',
+        'projects.heading': 'Dự án tiêu biểu',
+        'projects.card1.title': 'ChizNG Portfolio',
+        'projects.card1.tag': 'Đang chạy',
+        'projects.card1.desc': 'Phòng lab cá nhân để biến yêu cầu thành sản phẩm UI—kết hợp widget API, dữ liệu Spotify và thông số công khai.',
+        'projects.card1.bullet1': 'Widget Spotify Now Playing xuất phát từ user story “cho tôi thấy mình đang nghe gì”.',
+        'projects.card1.bullet2': 'Tích hợp HSR Enka với hành vi dự phòng được ghi chú rõ cho developer.',
+        'projects.card1.cta': 'Truy cập trang',
+        'projects.card2.title': 'Mini Capstone Project',
+        'projects.card2.tag': 'Demo nhóm',
+        'projects.card2.desc': 'Website thể hiện cách đội mình làm việc: backlog chung, version control GitHub và bàn giao demo cho khách hàng giả lập.',
+        'projects.card2.bullet1': 'Lịch sử commit minh bạch giúp cả nhóm code song song.',
+        'projects.card2.bullet2': 'Quy tắc vai trò đơn giản và checklist QA.',
+        'projects.card2.cta': 'Xem demo',
+        'cta.heading': 'Cùng tạo ra điều mới',
+        'cta.body': 'Mình sẵn sàng hợp tác, đóng góp open-source và thử nghiệm front-end sáng tạo.',
+        'cta.primaryCta': 'Bắt đầu trao đổi',
+        'cta.secondaryCta': 'Kết nối trên LinkedIn'
+      },
+      ja: {
+        'nav.about': '自己紹介',
+        'nav.projects': 'プロジェクト',
+        'hero.title': 'プロジェクトと歩み',
+        'hero.heading': 'ビジネスと開発をつなぐ',
+        'hero.body': 'ビジネスアナリスト兼ブリッジSEを目指し、ステークホルダーの要望を技術計画に落とし込みつつ、使い心地も大切にしています。以下が私の実践記録です。',
+        'hero.primaryCta': 'GitHubを見る',
+        'hero.secondaryCta': '連絡する',
+        'contrib.heading': 'GitHub貢献グラフ',
+        'contrib.caption': '毎日のコミット、実験、OSSへの貢献。',
+        'experience.heading': '経験とハイライト',
+        'experience.2025.title': 'ミニCapstoneチームプロジェクト',
+        'experience.2025.desc': 'チームでPoCを構築し、バックログ計画からPRレビュー、ドキュメント引き継ぎまでGitHubワークフローを実践。',
+        'experience.2025.badge1': 'チームワーク',
+        'experience.2025.badge2': 'GitHubフロー',
+        'experience.2025.badge3': 'ミニCapstone',
+        'experience.2024.title': '基礎：Web開発と日本語',
+        'experience.2024.desc': 'HTML/CSS/JSを修了し、ベトナム-日本間を橋渡しするBrSEに備えて独学で日本語を学習。',
+        'experience.2024.badge1': 'HTML/CSS/JS',
+        'experience.2024.badge2': '独学',
+        'experience.2024.badge3': '日本語',
+        'certs.heading': 'Coursera認定',
+        'certs.card1.title': 'Business Analysis Essentials',
+        'certs.card1.desc': 'ビジネスゴールの抽出、要求トレーサビリティ、ステークホルダー価値の優先付け。',
+        'certs.card1.cta': '認定を見る →',
+        'certs.card2.title': 'Requirements Gathering in Practice',
+        'certs.card2.desc': '構造化インタビュー、ユースケース建模、エンジニアリング移管向けドキュメント。',
+        'certs.card2.cta': '認定を見る →',
+        'certs.card3.title': 'Systems Design for Bridge SE',
+        'certs.card3.desc': 'アーキテクチャ図の読み解きとオフショアチーム向けデータ契約の明確化。',
+        'certs.card3.cta': '認定を見る →',
+        'certs.card4.title': 'Stakeholder Communication & Agile',
+        'certs.card4.desc': 'スプリントレビューのファシリテート、BA向け資料作成、日越チーム間の優先順位調整。',
+        'certs.card4.cta': '認定を見る →',
+        'projects.heading': '代表的なプロジェクト',
+        'projects.card1.title': 'ChizNG Portfolio',
+        'projects.card1.tag': '稼働中',
+        'projects.card1.desc': '要件をUI成果物へ変換する個人ラボ。APIウィジェット、Spotifyデータ、公開仕様を組み合わせています。',
+        'projects.card1.bullet1': '「今聴いている曲を見たい」というユーザーストーリーから作ったSpotify Now Playingウィジェット。',
+        'projects.card1.bullet2': '開発者向けにフォールバックを明記したHSR Enka連携。',
+        'projects.card1.cta': 'サイトを見る',
+        'projects.card2.title': 'Mini Capstone Project',
+        'projects.card2.tag': 'チームデモ',
+        'projects.card2.desc': '共有バックログ、GitHub管理、モッククライアントへのデモ引き継ぎを示すチームWebサイト。',
+        'projects.card2.bullet1': '並行開発を支える透明なコミットログ。',
+        'projects.card2.bullet2': 'シンプルな役割ガイドラインとQAチェックリスト。',
+        'projects.card2.cta': 'デモを見る',
+        'cta.heading': '一緒に創りましょう',
+        'cta.body': 'コラボ、OSS活動、クリエイティブなフロントエンド実験を歓迎します。',
+        'cta.primaryCta': '相談を始める',
+        'cta.secondaryCta': 'LinkedInでつながる'
+      }
+    };
+
+    const applyTranslations = (lang) => {
+      const dictionary = translations[lang] || translations.en;
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.dataset.i18n;
+        if (dictionary[key]) {
+          el.textContent = dictionary[key];
+        }
+      });
+      document.documentElement.lang = lang;
+    };
+
+    const setActiveLanguageButton = (lang) => {
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+    };
+
+    const getPreferredLanguage = () => {
+      try {
+        return localStorage.getItem('preferredLanguage');
+      } catch (error) {
+        console.warn('localStorage is not accessible:', error);
+        return null;
+      }
+    };
+
+    const setPreferredLanguage = (lang) => {
+      try {
+        localStorage.setItem('preferredLanguage', lang);
+      } catch (error) {
+        console.warn('Unable to save language preference:', error);
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = getPreferredLanguage() || 'en';
+      applyTranslations(savedLang);
+      setActiveLanguageButton(savedLang);
+
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          if (!translations[lang]) return;
+          setPreferredLanguage(lang);
+          applyTranslations(lang);
+          setActiveLanguageButton(lang);
+        });
+      });
+    });
+  </script>
+
+  <script>
+    // Dummy script to ensure enableCharacterViewButton exists even if HSR widget is absent here
+    window.enableCharacterViewButton = window.enableCharacterViewButton || function () { };
+  </script>
+</body>
+
+</html>

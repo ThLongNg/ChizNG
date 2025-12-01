@@ -1,3 +1,52 @@
+// Custom Sakura Cursor Trail
+const supportsFinePointer = window.matchMedia('(pointer: fine)').matches;
+let cursorPetalElement = null;
+let lastTrailSpawn = 0;
+const sakuraCursorMarkup = '<img src="assets/cherryblossom-cursor.svg" alt="Sakura cursor" draggable="false" />';
+let cursorRotation = 0;
+
+const createCursorTrail = (x, y) => {
+  const petal = document.createElement('span');
+  petal.className = 'cursor-trail';
+  petal.style.left = `${x - 10}px`;
+  petal.style.top = `${y - 10}px`;
+  petal.style.setProperty('--drift-x', `${(Math.random() * 40) - 20}px`);
+  petal.style.setProperty('--petal-rotation', `${Math.random() * 360}deg`);
+  petal.innerHTML = sakuraCursorMarkup;
+  document.body.appendChild(petal);
+  setTimeout(() => petal.remove(), 1600);
+};
+
+const handlePointerMove = (event) => {
+  if (!cursorPetalElement) return;
+  cursorPetalElement.style.opacity = 1;
+  cursorPetalElement.style.left = `${event.clientX}px`;
+  cursorPetalElement.style.top = `${event.clientY}px`;
+  cursorRotation += (Math.random() * 4) - 2;
+  if (cursorRotation > 360 || cursorRotation < -360) {
+    cursorRotation %= 360;
+  }
+  cursorPetalElement.style.setProperty('--cursor-rotation', `${cursorRotation}deg`);
+
+  const now = Date.now();
+  if (now - lastTrailSpawn > 60) {
+    createCursorTrail(event.clientX, event.clientY);
+    lastTrailSpawn = now;
+  }
+};
+
+if (supportsFinePointer) {
+  cursorPetalElement = document.createElement('div');
+  cursorPetalElement.id = 'cursor-petal';
+  cursorPetalElement.innerHTML = sakuraCursorMarkup;
+  document.body.appendChild(cursorPetalElement);
+  document.body.classList.add('custom-cursor-active');
+  document.addEventListener('pointermove', handlePointerMove);
+  document.addEventListener('pointerleave', () => {
+    if (cursorPetalElement) cursorPetalElement.style.opacity = 0;
+  });
+}
+
 // Music Player - Enhanced
 const songs = [
   {
@@ -163,27 +212,71 @@ window.onload = () => {
     playSong();
   });
 
-  // Hover logic
-  let isHoveringBox = false;
+  // Toggle logic for both desktop and mobile
+  let isControlsOpen = false;
+  let closeTimeout;
 
-  cdDisk.addEventListener("mouseenter", () => {
-    controlBox.classList.add("show-controls");
-  });
+  // Function to toggle controls
+  const toggleControls = () => {
+    isControlsOpen = !isControlsOpen;
+    if (isControlsOpen) {
+      controlBox.classList.add("show-controls");
+      if (closeTimeout) clearTimeout(closeTimeout);
+    } else {
+      controlBox.classList.remove("show-controls");
+    }
+  };
 
-  cdDisk.addEventListener("mouseleave", () => {
-    setTimeout(() => {
-      if (!isHoveringBox) controlBox.classList.remove("show-controls");
-    }, 300);
-  });
+  // Check if device supports touch
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-  controlBox.addEventListener("mouseenter", () => {
-    isHoveringBox = true;
-  });
+  if (isTouchDevice) {
+    // Mobile: Toggle on click
+    cdDisk.addEventListener("click", (e) => {
+      // Prevent double-triggering from both click and existing play/pause
+      if (e.detail === 1) {
+        toggleControls();
+      }
+    });
 
-  controlBox.addEventListener("mouseleave", () => {
-    isHoveringBox = false;
-    controlBox.classList.remove("show-controls");
-  });
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!cdDisk.contains(e.target) && !controlBox.contains(e.target) && isControlsOpen) {
+        toggleControls();
+      }
+    });
+  } else {
+    // Desktop: Hover behavior
+    let isHoveringBox = false;
+
+    cdDisk.addEventListener("mouseenter", () => {
+      controlBox.classList.add("show-controls");
+      isControlsOpen = true;
+      if (closeTimeout) clearTimeout(closeTimeout);
+    });
+
+    cdDisk.addEventListener("mouseleave", () => {
+      closeTimeout = setTimeout(() => {
+        if (!isHoveringBox) {
+          controlBox.classList.remove("show-controls");
+          isControlsOpen = false;
+        }
+      }, 300);
+    });
+
+    controlBox.addEventListener("mouseenter", () => {
+      isHoveringBox = true;
+      if (closeTimeout) clearTimeout(closeTimeout);
+    });
+
+    controlBox.addEventListener("mouseleave", () => {
+      isHoveringBox = false;
+      closeTimeout = setTimeout(() => {
+        controlBox.classList.remove("show-controls");
+        isControlsOpen = false;
+      }, 300);
+    });
+  }
 };
 
 
@@ -210,16 +303,20 @@ function createSnowflake() {
 }
 setInterval(createSnowflake, 200);
 
-// Chizuru Glitch Text
-const chizuruChars = ['ち', 'ず', 'る', '-', 'グ', 'エ', 'ン'];
+// Dynamic Glitch Text from data-text attribute
 const chizuruContainer = document.getElementById('chizuru-glitch');
-chizuruChars.forEach((char, index) => {
-  const span = document.createElement('span');
-  span.className = 'char';
-  span.textContent = char;
-  span.style.animationDelay = `${index * 0.3}s`;
-  chizuruContainer.appendChild(span);
-});
+if (chizuruContainer) {
+  const glitchText = chizuruContainer.getAttribute('data-text') || 'chizuru-グエン';
+  const chizuruChars = glitchText.split('');
+  
+  chizuruChars.forEach((char, index) => {
+    const span = document.createElement('span');
+    span.className = 'char';
+    span.textContent = char;
+    span.style.animationDelay = `${index * 0.3}s`;
+    chizuruContainer.appendChild(span);
+  });
+}
 
 
 
@@ -669,6 +766,10 @@ async function getSpotifyData() {
   }
   // === KẾT THÚC: ĐỒNG HỒ THỜI GIAN THỰC ===
 
-  console.log('🚀 Initializing HSR Enka API - REAL DATA MODE ONLY');
-  new HSREnkaAPI();
+  if (document.getElementById('hsr-player-info')) {
+    console.log('🚀 Initializing HSR Enka API - REAL DATA MODE ONLY');
+    new HSREnkaAPI();
+  } else {
+    console.log('ℹ️ HSR widget not present on this page, skipping API init');
+  }
 });

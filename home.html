@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -9,7 +9,11 @@
   <link rel="stylesheet" href="index.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kaisei+Tokumin&family=Prata&display=swap"
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kaisei+Tokumin&family=Prata&family=Quicksand:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
   <script src="character-details-helper.js" defer></script>
   <script src="character-detail-view.js" defer></script>
@@ -20,7 +24,7 @@
 
 <body>
   <div id="music-container">
-    <img id="cd-disk" src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg" alt="Album Cover" />
+    <img id="cd-disk" src="https://i1.sndcdn.com/artworks-dSGst2JiG69GhP9e-2Dw1bQ-t500x500.jpg" alt="Album Cover" loading="lazy" />
     <audio id="background-music" crossorigin="anonymous"></audio>
   </div>
 
@@ -28,10 +32,21 @@
     <p id="song-name"></p>
   </div>
 
+  <nav class="page-toggle" aria-label="Page switcher">
+    <a class="toggle-btn active" href="home.html" data-i18n="nav.about">About Me</a>
+    <a class="toggle-btn" href="projects.html" data-i18n="nav.projects">Projects</a>
+  </nav>
+
+  <div class="language-switcher" role="group" aria-label="Language switcher">
+    <button class="lang-btn active" type="button" data-lang="en">EN</button>
+    <button class="lang-btn" type="button" data-lang="vi">VI</button>
+    <button class="lang-btn" type="button" data-lang="ja">日本語</button>
+  </div>
+
 <p id="dynamic-greeting"></p> 
 
-<h1>This is my Personal Profile</h1>
-  <div class="char-container" id="chizuru-glitch"></div>
+<h1 data-i18n="hero.title">This is my Personal Profile</h1>
+  <div class="char-container" id="chizuru-glitch" data-text="ちずるーグエン"></div>
 
   <!-- Featured Song Section -->
   <section class="info-card">
@@ -40,35 +55,117 @@
   </section>
 
   <section class="info-card">
-    <h2>Full Name: Nguyễn Thành Long</h2>
+    <h2 data-i18n="profile.fullName">Full Name: Nguyễn Thành Long</h2>
 
-    <h3>グエン・タイン・ロン</h3>
-    <p>--- Studied at: <a href="https://www.facebook.com/FPTU.HCM">FPT University HCM</a> ---</p>
-    <p>Birth Date: 07/10/2005</p>
-    <p>Address: Long Thanh My, TP Thu Duc, TP HCM</p>
-    <p>Phone Num: +84399092828</p>
+    <h3 data-i18n="profile.jpName">グエン・タイン・ロン</h3>
+    <p data-i18n-html="profile.education">--- Studied at: <a href="https://www.facebook.com/FPTU.HCM">FPT University HCM</a> ---</p>
+    <p data-i18n="profile.birth">Birth Date: 07/10/2005</p>
+    <p data-i18n="profile.address">Address: Long Thanh My, TP Thu Duc, TP HCM</p>
+    <p data-i18n="profile.phone">Phone Num: +84399092828</p>
+  </section>
+
+  <section class="info-card contact-info">
+    <h2 data-i18n="contact.heading">Contact Me At:</h2>
+    <div class="contact-grid" id="contact-cards">
+      <article class="contact-card" style="--contact-color: 330 74% 62%;">
+        <div class="contact-card-content">
+          <div class="contact-icon-ring">
+            <i class="fa-brands fa-facebook-f contact-icon" aria-hidden="true"></i>
+          </div>
+          <h3>Facebook</h3>
+          <p class="contact-detail">Nguyễn Thành Long</p>
+          <a class="contact-action" href="https://www.facebook.com/long.nguyen.07102005" target="_blank"
+            rel="noopener noreferrer">
+            <i class="fa-solid fa-link" aria-hidden="true"></i>
+            <span data-i18n="contact.facebook.cta">View Profile</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="contact-card" style="--contact-color: 260 80% 65%;">
+        <div class="contact-card-content">
+          <div class="contact-icon-ring">
+            <i class="fa-brands fa-discord contact-icon" aria-hidden="true"></i>
+          </div>
+          <h3>Discord</h3>
+          <p class="contact-detail">chiznguyen71</p>
+          <a class="contact-action" href="https://discord.com/users/chiznguyen71" target="_blank"
+            rel="noopener noreferrer">
+            <i class="fa-solid fa-link" aria-hidden="true"></i>
+            <span data-i18n="contact.discord.cta">Open Discord</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="contact-card" style="--contact-color: 12 85% 64%;">
+        <div class="contact-card-content">
+          <div class="contact-icon-ring">
+            <i class="fa-solid fa-envelope-open-text contact-icon" aria-hidden="true"></i>
+          </div>
+          <h3>Gmail</h3>
+          <p class="contact-detail">longnguyenthanh0710@gmail.com</p>
+          <a class="contact-action" href="mailto:longnguyenthanh0710@gmail.com">
+            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+            <span data-i18n="contact.gmail.cta">Send Email</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="contact-card" style="--contact-color: 322 82% 66%;">
+        <div class="contact-card-content">
+          <div class="contact-icon-ring">
+            <i class="fa-brands fa-instagram contact-icon" aria-hidden="true"></i>
+          </div>
+          <h3>Instagram</h3>
+          <p class="contact-detail">@l07nguyenthanh</p>
+          <a class="contact-action" href="https://www.instagram.com/l07nguyenthanh/" target="_blank"
+            rel="noopener noreferrer">
+            <i class="fa-solid fa-camera" aria-hidden="true"></i>
+            <span data-i18n="contact.instagram.cta">View Feed</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="contact-card" style="--contact-color: 210 10% 35%;">
+        <div class="contact-card-content">
+          <div class="contact-icon-ring">
+            <i class="fa-brands fa-x-twitter contact-icon" aria-hidden="true"></i>
+          </div>
+          <h3>X (Twitter)</h3>
+          <p class="contact-detail">@ChizGuen</p>
+          <a class="contact-action" href="https://x.com/ChizGuen" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            <span data-i18n="contact.twitter.cta">Visit Profile</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="contact-card" style="--contact-color: 210 64% 52%;">
+        <div class="contact-card-content">
+          <div class="contact-icon-ring">
+            <i class="fa-brands fa-github contact-icon" aria-hidden="true"></i>
+          </div>
+          <h3>GitHub</h3>
+          <p class="contact-detail">ThLongNg</p>
+          <a class="contact-action" href="https://github.com/ThLongNg" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-code" aria-hidden="true"></i>
+            <span data-i18n="contact.github.cta">Visit Repos</span>
+          </a>
+        </div>
+      </article>
+    </div>
   </section>
 
   <section class="info-card">
-    <h2>Contact Me At:</h2>
-    <ul class="contact-list">
-      <li><strong>Facebook:</strong> <a href="https://www.facebook.com/long.nguyen.07102005">Nguyễn Thành Long</a></li>
-      <li><strong>Discord:</strong> chiznguyen71</li>
-      <li><strong>Gmail:</strong> <a href="mailto:longnguyenthanh0710@gmail.com">Click here to email me!</a></li>
-      <li><strong>Github:</strong> <a href="https://github.com/ThLongNg">ThLongNg</a></li>
-    </ul>
-  </section>
-
-  <section class="info-card">
-    <h2>My Biography</h2>
-    <p>Hello! My name is Nguyễn Thành Long, and I am currently a student at FPT University in Ho Chi Minh City. I have a
+    <h2 data-i18n="bio.heading">My Biography</h2>
+    <p data-i18n="bio.body">Hello! My name is Nguyễn Thành Long, and I am currently a student at FPT University in Ho Chi Minh City. I have a
       strong enthusiasm for technology and coding, which drives me to continuously learn and grow in these fields. I
       enjoy tackling challenges and developing projects that can provide value to others. In my free time, I actively
       seek out new hobbies, and I find inspiration in listening to music and playing video games, which help me unwind
       and foster my creativity.</p>
   </section>
 <section class="info-card github-calendar-section" style="padding-bottom: 30px;">
-  <h2>GitHub Contribution Graph</h2>
+  <h2 data-i18n="github.heading">GitHub Contribution Graph</h2>
 
   <a href="https://github.com/ThLongNg" target="_blank">
     <img 
@@ -76,20 +173,21 @@
       src="https://ghchart.rshah.org/c71585/ThLongNg" 
       alt="GitHub Contribution Graph" 
       style="width: 100%; max-width: 650px; padding-top: 15px;"
+      loading="lazy"
     />
   </a>
 
-  <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 20px;">
+  <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 20px;" data-i18n="github.note">
     Nhấn vào bảng để xem chi tiết trên GitHub
   </p>
 </section>
   <!-- Honkai Star Rail API Section -->
   <section class="info-card hsr-section">
-    <h2>Honkai Star Rail Info</h2>
+    <h2 data-i18n="hsr.heading">Honkai Star Rail Info</h2>
 
     <div id="loading-indicator" class="hidden">
       <div class="loading-spinner"></div>
-      <p>Đang tải thông tin...</p>
+      <p data-i18n="hsr.loading">Đang tải thông tin...</p>
     </div>
 
     <div id="error-message" class="hidden error-box">
@@ -115,15 +213,15 @@
             <div class="achievement-info">
               <span class="achievement-number" id="achievement-count"></span>
               <div class="achievement-icon">🏆</div>
-              <span class="achievement-text">Total Achievements</span>
+              <span class="achievement-text" data-i18n="hsr.achievements">Total Achievements</span>
             </div>
             <div class="simulated-universe-info">
               <span class="su-number">9</span>
               <div class="su-icon">🔺</div>
-              <span class="su-text">Simulated Universe</span>
+              <span class="su-text" data-i18n="hsr.simulated">Simulated Universe</span>
             </div>
             <div class="uid-info">
-              <span class="uid-text">UID: <span id="player-uid"></span></span>
+              <span class="uid-text" data-i18n-html="hsr.uid">UID: <span id="player-uid"></span></span>
             </div>
           </div>
         </div>
@@ -133,7 +231,7 @@
       <div style="text-align:center; margin-top:18px;">
         <button id="view-characters-btn-home" class="view-chars-btn" disabled title="Loading character data...">
           <span class="btn-icon">🎭</span>
-          <span class="btn-text">View Characters</span>
+          <span class="btn-text" data-i18n="hsr.button">View Characters</span>
           <span class="btn-spinner"></span>
         </button>
       </div>
@@ -241,7 +339,7 @@
 
   <!-- My Spotify Profile Section -->
   <section class="info-card spotify-profile-section">
-    <h2>🎧 My Spotify Profile</h2>
+    <h2 data-i18n="spotify.profile.heading">🎧 My Spotify Profile</h2>
     <div class="spotify-profile-card">
       <div class="spotify-profile-info">
         <div class="spotify-avatar">
@@ -258,7 +356,7 @@
         <div class="spotify-details">
           <h3>ChizNguyen</h3>
           <p class="spotify-username">@NguyenThanhLong</p>
-          <p class="spotify-bio">🎵 Music enthusiast | 🎮 Gamer | 💻 Developer</p>
+          <p class="spotify-bio" data-i18n="spotify.profile.bio">🎵 Music enthusiast | 🎮 Gamer | 💻 Developer</p>
           <a href="https://open.spotify.com/user/31kyh2opotdtof36smvsyrx66rdy?si=41576a9683ac443b" target="_blank"
             class="spotify-profile-btn">
             <svg width="16" height="16" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"
@@ -267,24 +365,24 @@
                 d="M127.999236,0 C57.3087105,0 0,57.3085507 0,128.000764 C0,198.696035 57.3087105,256 127.999236,256 C198.697403,256 256,198.696035 256,128.000764 C256,57.3131363 198.697403,0.00611405337 127.997707,0.00611405337 L127.999236,0 Z M186.69886,184.613841 C184.406145,188.373984 179.48445,189.566225 175.724397,187.258169 C145.671485,168.900724 107.838626,164.743168 63.2835265,174.923067 C58.990035,175.901315 54.7102999,173.211132 53.7320747,168.916009 C52.7492641,164.620887 55.428684,160.34105 59.7328748,159.362801 C108.491286,148.222996 150.314998,153.019471 184.054595,173.639116 C187.814648,175.947171 189.00686,180.853699 186.69886,184.613841 L186.69886,184.613841 Z M202.365748,149.76068 C199.476927,154.456273 193.33245,155.938931 188.640026,153.050041 C154.234012,131.90153 101.787386,125.776777 61.0916907,138.130222 C55.8138602,139.724462 50.2395052,136.749975 48.6376614,131.481189 C47.0480455,126.203233 50.0239899,120.639444 55.2926496,119.034505 C101.778216,104.929384 159.568396,111.761839 199.079523,136.042273 C203.771946,138.931163 205.254569,145.075787 202.365748,149.762209 L202.365748,149.76068 Z M203.710807,113.467659 C162.457218,88.964062 94.394144,86.7110334 55.0068244,98.6655362 C48.6819873,100.58382 41.9933726,97.0132133 40.0766627,90.6882251 C38.1599527,84.3601798 41.7274177,77.675991 48.0568402,75.7531212 C93.2707135,62.0270714 168.433562,64.6790421 215.929451,92.8755277 C221.63067,96.2520136 223.495412,103.599577 220.117478,109.281061 C216.754829,114.970188 209.38757,116.845674 203.716921,113.467659 L203.710807,113.467659 Z"
                 fill="#FFFFFF" />
             </svg>
-            Visit My Spotify Profile
+            <span data-i18n="spotify.profile.cta">Visit My Spotify Profile</span>
           </a>
         </div>
       </div>
     </div>
   </section>
 <div class="info-card spotify-now-listening">
-  <h2>🎧 Đang Nghe</h2>
+  <h2 data-i18n="spotify.now.heading">🎧 Đang Nghe</h2>
   
   <div id="spotify-player-container">
     <div id="spotify-loading" class="spotify-card">
       <div class="loading-spinner"></div>
-      <p style="color: #6a4c93;">Đang tải bài hát...</p>
+      <p style="color: #6a4c93;" data-i18n="spotify.now.loading">Đang tải bài hát...</p>
     </div>
 
     <div id="spotify-offline" class="spotify-card hidden">
       <svg class="spotify-logo" viewBox="0 0 16 16" width="25" height="25" fill="#6a4c93"><path d="M8 0C3.582 0 0 3.582 0 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm4.707 11.707c-.19.308-.577.408-.885.218-2.5-1.54-5.63-1.89-9.31-.98-.34.09-.67-.14-.76-.48-.09-.34.14-.67.48-.76 4.01-.98 7.4-0.59 10.19 1.08.308.19.408.577.218.885zm1.22-2.12c-.23.38-.7.49-1.08.26-2.85-1.74-7.14-2.24-10.45-1.23-.41.12-.85-.11-0.97-.52-.12-.41.11-.85.52-.97 3.68-1.1 8.35-0.54 11.5 1.4.38.23.49.7.26 1.08zm.13-2.31c-3.48-2.11-9.22-2.3-12.83-1.27-.49.14-.99-.14-1.13-.63-.14-.49.14-.99.63-1.13 4.02-1.13 10.26-.89 14.12 1.4.45.27.6.85.33 1.3-.27.45-.85.6-1.3.33z"></path></svg>
-      <p style="color: #6a4c93;">Hiện không nghe gì. (Offline)</p>
+      <p style="color: #6a4c93;" data-i18n="spotify.now.offline">Hiện không nghe gì. (Offline)</p>
     </div>
     
     <div id="spotify-playing" class="spotify-card hidden">
@@ -303,7 +401,7 @@
 </div>
   <!-- Featured Spotify Playlists Section -->
   <section class="info-card featured-playlists-section">
-    <h2>🎶 Featured Playlists</h2>
+    <h2 data-i18n="spotify.playlists.heading">🎶 Featured Playlists</h2>
 
     <div class="embedded-playlists">
       <div class="playlist-embed">
@@ -329,20 +427,184 @@
   <!-- Replaced images per user request -->
   <img class="image image1"
     src="https://starrail.honeyhunterworld.com/img/eidolon/please-write-on-with-a-smile-eidolon_icon.webp"
-    alt="Image 1 " />
+    alt="Image 1" loading="lazy" />
   <img class="image image2"
     src="https://shop.ldrescdn.com/rms/ld-space/process/img/743c321c5972482590721bc9b7cee6821758792367.webp?1758792373043&x-oss-process=image/format,webp"
-    alt="Image 2" />
+    alt="Image 2" loading="lazy" />
   <img class="image image3"
     src="https://shop.ldrescdn.com/rms/ld-space/process/img/3fa2ba6995114da0a18c718bc1fe23851758792367.webp?1758792373020&x-oss-process=image/format,webp"
-    alt="Image 3" />
+    alt="Image 3" loading="lazy" />
   <img class="image image4"
     src="https://starrail.honeyhunterworld.com/img/eidolon/a-tomorrow-in-thirteen-shades-eidolon_icon.webp"
-    alt="Image 4 " />
+    alt="Image 4" loading="lazy" />
   <img class="i5"
     src="https://upload-os-bbs.hoyolab.com/upload/2024/06/03/29532825/27691a14f88b2c53ad6e4ed06b348002_3742389950389271120.png?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_70"
-    alt="Image 5" />
+    alt="Image 5" loading="lazy" />
   <script>
+    const translations = {
+      en: {
+        'nav.about': 'About Me',
+        'nav.projects': 'Projects',
+        'hero.title': 'This is my Personal Profile',
+        'profile.fullName': 'Full Name: Nguyễn Thành Long',
+        'profile.jpName': 'グエン・タイン・ロン',
+        'profile.education': '--- Studied at: <a href="https://www.facebook.com/FPTU.HCM">FPT University HCM</a> ---',
+        'profile.birth': 'Birth Date: 07/10/2005',
+        'profile.address': 'Address: Long Thanh My, TP Thu Duc, TP HCM',
+        'profile.phone': 'Phone Num: +84399092828',
+        'contact.heading': 'Contact Me At:',
+        'contact.facebook.cta': 'View Profile',
+        'contact.discord.cta': 'Open Discord',
+        'contact.gmail.cta': 'Send Email',
+        'contact.instagram.cta': 'View Feed',
+        'contact.twitter.cta': 'Visit Profile',
+        'contact.github.cta': 'Visit Repos',
+        'bio.heading': 'My Biography',
+        'bio.body': 'Hello! My name is Nguyễn Thành Long, and I am currently a student at FPT University in Ho Chi Minh City. I have a strong enthusiasm for technology and coding, which drives me to continuously learn and grow in these fields. I enjoy tackling challenges and developing projects that can provide value to others. In my free time, I actively seek out new hobbies, and I find inspiration in listening to music and playing video games, which help me unwind and foster my creativity.',
+        'github.heading': 'GitHub Contribution Graph',
+        'github.note': 'Click the graph to view details on GitHub',
+        'hsr.heading': 'Honkai Star Rail Info',
+        'hsr.loading': 'Loading player data...',
+        'hsr.achievements': 'Total Achievements',
+        'hsr.simulated': 'Simulated Universe',
+        'hsr.uid': 'UID: <span id="player-uid"></span>',
+        'hsr.button': 'View Characters',
+        'spotify.profile.heading': '🎧 My Spotify Profile',
+        'spotify.profile.bio': '🎵 Music enthusiast | 🎮 Gamer | 💻 Developer',
+        'spotify.profile.cta': 'Visit My Spotify Profile',
+        'spotify.now.heading': '🎧 Now Listening',
+        'spotify.now.loading': 'Loading track...',
+        'spotify.now.offline': 'Not listening to anything right now (Offline)',
+        'spotify.playlists.heading': '🎶 Featured Playlists'
+      },
+      vi: {
+        'nav.about': 'Về Tôi',
+        'nav.projects': 'Dự Án',
+        'hero.title': 'Đây là hồ sơ cá nhân của tôi',
+        'profile.fullName': 'Họ và tên: Nguyễn Thành Long',
+        'profile.jpName': 'グエン・タイン・ロン',
+        'profile.education': '--- Học tại: <a href="https://www.facebook.com/FPTU.HCM">ĐH FPT TP.HCM</a> ---',
+        'profile.birth': 'Ngày sinh: 07/10/2005',
+        'profile.address': 'Địa chỉ: Long Thanh Mỹ, TP Thủ Đức, TP HCM',
+        'profile.phone': 'SĐT: +84399092828',
+        'contact.heading': 'Liên hệ với tôi tại:',
+        'contact.facebook.cta': 'Xem hồ sơ',
+        'contact.discord.cta': 'Mở Discord',
+        'contact.gmail.cta': 'Gửi email',
+        'contact.instagram.cta': 'Xem trang',
+        'contact.twitter.cta': 'Đến trang cá nhân',
+        'contact.github.cta': 'Xem kho mã',
+        'bio.heading': 'Tiểu sử',
+        'bio.body': 'Xin chào! Mình là Nguyễn Thành Long, hiện đang là sinh viên Đại học FPT TP.HCM. Niềm đam mê công nghệ và lập trình luôn thôi thúc mình học hỏi và phát triển mỗi ngày. Mình thích chinh phục thử thách, tạo ra những dự án mang lại giá trị cho mọi người và vẫn dành thời gian khám phá sở thích mới. Âm nhạc và trò chơi điện tử giúp mình thư giãn và nuôi dưỡng sự sáng tạo.',
+        'github.heading': 'Biểu đồ đóng góp GitHub',
+        'github.note': 'Nhấn vào bảng để xem chi tiết trên GitHub',
+        'hsr.heading': 'Thông tin Honkai Star Rail',
+        'hsr.loading': 'Đang tải thông tin người chơi...',
+        'hsr.achievements': 'Tổng số thành tựu',
+        'hsr.simulated': 'Vũ Trụ Mô Phỏng',
+        'hsr.uid': 'UID: <span id="player-uid"></span>',
+        'hsr.button': 'Xem nhân vật',
+        'spotify.profile.heading': '🎧 Hồ sơ Spotify của tôi',
+        'spotify.profile.bio': '🎵 Yêu âm nhạc | 🎮 Gamer | 💻 Lập trình viên',
+        'spotify.profile.cta': 'Xem hồ sơ Spotify',
+        'spotify.now.heading': '🎧 Đang nghe',
+        'spotify.now.loading': 'Đang tải bài hát...',
+        'spotify.now.offline': 'Hiện không nghe gì (Offline)',
+        'spotify.playlists.heading': '🎶 Playlist nổi bật'
+      },
+      ja: {
+        'nav.about': '自己紹介',
+        'nav.projects': 'プロジェクト',
+        'hero.title': 'これは私の個人プロフィールです',
+        'profile.fullName': '氏名: Nguyễn Thành Long',
+        'profile.jpName': 'グエン・タイン・ロン',
+        'profile.education': '--- 在学先: <a href="https://www.facebook.com/FPTU.HCM">FPT大学ホーチミン校</a> ---',
+        'profile.birth': '生年月日: 2005年10月7日',
+        'profile.address': '住所: ホーチミン市トゥードゥック市ロンタインミー',
+        'profile.phone': '電話番号: +84399092828',
+        'contact.heading': 'お問い合わせ',
+        'contact.facebook.cta': 'プロフィールを見る',
+        'contact.discord.cta': 'Discordを開く',
+        'contact.gmail.cta': 'メールを送る',
+        'contact.instagram.cta': 'フィードを見る',
+        'contact.twitter.cta': 'プロフィールへ',
+        'contact.github.cta': 'リポジトリを見る',
+        'bio.heading': '自己紹介文',
+        'bio.body': 'こんにちは。Nguyễn Thành Long と申します。ホーチミン市のFPT大学で学びながら、テクノロジーとプログラミングへの情熱を原動力に日々成長しています。価値あるプロジェクトづくりや新しい挑戦が大好きで、音楽とゲームは創造力を養い、リラックスさせてくれる大切な時間です。',
+        'github.heading': 'GitHub 貢献グラフ',
+        'github.note': 'クリックするとGitHubで詳細を確認できます',
+        'hsr.heading': '崩壊:スターレイル情報',
+        'hsr.loading': 'プレイヤーデータを読み込み中...',
+        'hsr.achievements': '実績合計',
+        'hsr.simulated': '模擬宇宙',
+        'hsr.uid': 'UID: <span id="player-uid"></span>',
+        'hsr.button': 'キャラクターを見る',
+        'spotify.profile.heading': '🎧 Spotifyプロフィール',
+        'spotify.profile.bio': '🎵 音楽好き | 🎮 ゲーマー | 💻 デベロッパー',
+        'spotify.profile.cta': 'Spotifyプロフィールへ',
+        'spotify.now.heading': '🎧 再生中',
+        'spotify.now.loading': '曲を読み込み中...',
+        'spotify.now.offline': '現在は再生していません (オフライン)',
+        'spotify.playlists.heading': '🎶 注目のプレイリスト'
+      }
+    };
+
+    const applyTranslations = (lang) => {
+      const dictionary = translations[lang] || translations.en;
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.dataset.i18n;
+        if (dictionary[key]) {
+          el.textContent = dictionary[key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+        const key = el.dataset.i18nHtml;
+        if (dictionary[key]) {
+          el.innerHTML = dictionary[key];
+        }
+      });
+      document.documentElement.lang = lang;
+    };
+
+    const setActiveLanguageButton = (lang) => {
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+    };
+
+    const getPreferredLanguage = () => {
+      try {
+        return localStorage.getItem('preferredLanguage');
+      } catch (error) {
+        console.warn('localStorage is not accessible:', error);
+        return null;
+      }
+    };
+
+    const setPreferredLanguage = (lang) => {
+      try {
+        localStorage.setItem('preferredLanguage', lang);
+      } catch (error) {
+        console.warn('Unable to save language preference:', error);
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = getPreferredLanguage() || 'en';
+      applyTranslations(savedLang);
+      setActiveLanguageButton(savedLang);
+
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          if (!translations[lang]) return;
+          setPreferredLanguage(lang);
+          applyTranslations(lang);
+          setActiveLanguageButton(lang);
+        });
+      });
+    });
+
     // Define global functions IMMEDIATELY (before any deferred scripts run)
     // This ensures script.js can call these functions even before DOM is ready
     
