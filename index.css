@@ -566,7 +566,9 @@ h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-height: 100%;
+  width: min(45vw, 320px);
+  max-height: 45vh;
+  height: auto;
   opacity: 0.2;
 }
 
