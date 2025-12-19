@@ -70,6 +70,98 @@ document.addEventListener('DOMContentLoaded', () => {
   initViewCounter();
 });
 
+// Wheel snap between sections + focus effect
+const initWheelSectionSnap = () => {
+  const cards = Array.from(document.querySelectorAll('.info-card'))
+    // ignore empty/hidden cards just in case
+    .filter((el) => el && el.offsetParent !== null);
+
+  if (cards.length < 2) return;
+
+  let activeIndex = 0;
+  let isAnimating = false;
+  let lastWheelAt = 0;
+  const WHEEL_COOLDOWN_MS = 650;
+
+  const clampIndex = (index) => Math.max(0, Math.min(cards.length - 1, index));
+
+  const applyFocusClasses = (index) => {
+    const i = clampIndex(index);
+    activeIndex = i;
+
+    cards.forEach((card, idx) => {
+      card.classList.toggle('is-active', idx === i);
+      card.classList.toggle('is-adjacent', idx === i - 1 || idx === i + 1);
+      card.classList.toggle('is-distant', Math.abs(idx - i) >= 2);
+    });
+  };
+
+  const scrollToIndex = (index) => {
+    const i = clampIndex(index);
+    const target = cards[i];
+    if (!target) return;
+
+    isAnimating = true;
+    applyFocusClasses(i);
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    window.setTimeout(() => {
+      isAnimating = false;
+    }, 700);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      let best = null;
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+      }
+      if (!best) return;
+
+      const idx = cards.indexOf(best.target);
+      if (idx >= 0) applyFocusClasses(idx);
+    },
+    {
+      threshold: [0.25, 0.4, 0.55, 0.7],
+      rootMargin: '-35% 0px -55% 0px',
+    }
+  );
+
+  cards.forEach((card) => observer.observe(card));
+  applyFocusClasses(0);
+
+  window.addEventListener(
+    'wheel',
+    (event) => {
+      // Allow normal scroll when interacting with forms/inputs.
+      const tag = (event.target?.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+      if (event.ctrlKey) return; // allow zoom
+
+      const now = Date.now();
+      if (isAnimating || (now - lastWheelAt) < WHEEL_COOLDOWN_MS) {
+        event.preventDefault();
+        return;
+      }
+
+      const delta = event.deltaY;
+      if (Math.abs(delta) < 12) return;
+
+      event.preventDefault();
+      lastWheelAt = now;
+
+      if (delta > 0) scrollToIndex(activeIndex + 1);
+      else scrollToIndex(activeIndex - 1);
+    },
+    { passive: false }
+  );
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  initWheelSectionSnap();
+});
+
 const handlePointerMove = (event) => {
   if (!cursorPetalElement) return;
   cursorPetalElement.style.opacity = 1;
