@@ -17,6 +17,59 @@ const createCursorTrail = (x, y) => {
   setTimeout(() => petal.remove(), 1600);
 };
 
+// View counter (requires /api/views + Upstash env vars on Vercel)
+const VIEW_COUNTER_STORAGE_KEY = 'chizng:viewCounter:lastHitMs';
+const VIEW_COUNTER_MIN_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
+
+const shouldHitViewCounter = () => {
+  try {
+    const lastHit = Number.parseInt(localStorage.getItem(VIEW_COUNTER_STORAGE_KEY) || '0', 10);
+    return Number.isNaN(lastHit) || (Date.now() - lastHit) > VIEW_COUNTER_MIN_INTERVAL_MS;
+  } catch {
+    return true;
+  }
+};
+
+const markViewCounterHit = () => {
+  try {
+    localStorage.setItem(VIEW_COUNTER_STORAGE_KEY, String(Date.now()));
+  } catch {
+    // ignore
+  }
+};
+
+const initViewCounter = async () => {
+  const countEl = document.getElementById('site-view-count');
+  if (!countEl) return;
+
+  // Don’t count hidden/background loads.
+  if (document.visibilityState && document.visibilityState !== 'visible') return;
+
+  const shouldHit = shouldHitViewCounter();
+
+  try {
+    const response = await fetch(`/api/views?scope=site`, {
+      method: shouldHit ? 'POST' : 'GET',
+      headers: { 'Accept': 'application/json' },
+    });
+
+    const data = await response.json().catch(() => null);
+    if (!response.ok || !data || typeof data.total !== 'number') {
+      countEl.textContent = '—';
+      return;
+    }
+
+    countEl.textContent = data.total.toLocaleString();
+    if (shouldHit) markViewCounterHit();
+  } catch (error) {
+    countEl.textContent = '—';
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  initViewCounter();
+});
+
 const handlePointerMove = (event) => {
   if (!cursorPetalElement) return;
   cursorPetalElement.style.opacity = 1;

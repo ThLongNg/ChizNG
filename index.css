@@ -107,6 +107,31 @@ body {
   box-shadow: 0 8px 18px rgba(199, 21, 133, 0.25);
 }
 
+.view-counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto 25px auto;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(199, 21, 133, 0.3);
+  box-shadow: 0 10px 25px rgba(199, 21, 133, 0.12);
+  color: #c71585;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.view-counter__icon {
+  line-height: 1;
+}
+
+.view-counter__count {
+  min-width: 2ch;
+}
+
 #cursor-petal {
   position: fixed;
   width: 38px;
