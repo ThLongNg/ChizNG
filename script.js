@@ -19,7 +19,7 @@ const createCursorTrail = (x, y) => {
 
 // View counter (requires /api/views + Upstash env vars on Vercel)
 const VIEW_COUNTER_STORAGE_KEY = 'chizng:viewCounter:lastHitMs';
-const VIEW_COUNTER_MIN_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
+const VIEW_COUNTER_MIN_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
 
 const shouldHitViewCounter = () => {
   try {

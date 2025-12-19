@@ -51,13 +51,19 @@ async function upstashCommand(command) {
     throw new Error('Missing UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN');
   }
 
-  const response = await fetch(`${UPSTASH_REDIS_REST_URL}/command`, {
+  const baseUrl = UPSTASH_REDIS_REST_URL.replace(/\/+$/, '');
+  const segments = (command || []).map((part) => encodeURIComponent(String(part)));
+  if (segments.length === 0) {
+    throw new Error('Upstash command is empty');
+  }
+
+  // Upstash Redis REST API uses the URL path to express the command, e.g.
+  // POST {REST_URL}/SET/mykey/myvalue
+  const response = await fetch(`${baseUrl}/${segments.join('/')}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${UPSTASH_REDIS_REST_TOKEN}`,
-      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(command),
   });
 
   const data = await response.json().catch(() => ({}));
