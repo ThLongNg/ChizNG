@@ -3,11 +3,13 @@ import Navigation from '../components/Navigation';
 import { PHOTOS as FALLBACK_PHOTOS } from '../config/galleryPhotos';
 import { useSakuraSnow } from '../hooks/useSakuraSnow';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useLanguageContext } from '../context/LanguageContext';
 import './GalleryPage.css';
 
 const GalleryPage = () => {
   useSakuraSnow();
   useScrollReveal();
+  const { t } = useLanguageContext();
 
   const [photos, setPhotos]     = useState([]);
   const [status, setStatus]     = useState('loading'); // loading | ok | fallback
@@ -43,19 +45,20 @@ const GalleryPage = () => {
     else if (e.key === 'Escape') close();
   };
 
+  const subtitle =
+    status === 'loading'
+      ? t('gallery.page.subtitle.loading')
+      : status === 'fallback'
+      ? t('gallery.page.subtitle.fallback')
+      : t('gallery.page.subtitle.loaded').replace('{n}', photos.length);
+
   return (
     <div className="gallery-page">
       <Navigation />
 
       <header className="gallery-header">
-        <h1 className="gallery-title">&#x1F4F7; Gallery</h1>
-        <p className="gallery-subtitle">
-          {status === 'loading'
-            ? '\u0110ang t\u1EA3i \u1EA3nh\u2026'
-            : status === 'fallback'
-            ? '\u1EA2nh m\u1EABu \u2014 ch\u01B0a k\u1EBFt n\u1ED1i Google Drive'
-            : `${photos.length} \u1EA3nh \u2014 b\u1EA5m \u0111\u1EC3 xem l\u1EDBn`}
-        </p>
+        <h1 className="gallery-title">{t('gallery.page.title')}</h1>
+        <p className="gallery-subtitle">{subtitle}</p>
       </header>
 
       {status === 'loading' && (
@@ -106,7 +109,7 @@ const GalleryPage = () => {
           <button
             className="lb-btn lb-btn--prev"
             onClick={(e) => { e.stopPropagation(); prev(); }}
-            aria-label="Previous"
+            aria-label={t('gallery.page.prev')}
           >&#x2039;</button>
 
           <div className="lb-content" onClick={(e) => e.stopPropagation()}>
@@ -126,9 +129,13 @@ const GalleryPage = () => {
           <button
             className="lb-btn lb-btn--next"
             onClick={(e) => { e.stopPropagation(); next(); }}
-            aria-label="Next"
+            aria-label={t('gallery.page.next')}
           >&#x203A;</button>
-          <button className="lb-btn lb-btn--close" onClick={close} aria-label="Close">&#x2715;</button>
+          <button
+            className="lb-btn lb-btn--close"
+            onClick={close}
+            aria-label={t('gallery.page.close')}
+          >&#x2715;</button>
         </div>
       )}
     </div>
