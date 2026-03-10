@@ -1,0 +1,86 @@
+/* ProjectsPage specific styles */
+/* TODO: Copy relevant styles from original index.css */
+
+.projects-page {
+  min-height: 100vh;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #ffb3d9, #ff8fab);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(199, 21, 133, 0.3);
+}
+
+.secondary-btn {
+  background: transparent;
+  color: #c71585;
+  border: 2px solid #c71585;
+}
+
+.secondary-btn:hover {
+  background: rgba(199, 21, 133, 0.1);
+  transform: translateY(-2px);
+}
+
+.timeline-list {
+  list-style: none;
+  padding: 0;
+}
+
+.timeline-item {
+  margin: 20px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+}
+
+.timeline-period {
+  color: #c71585;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.skill-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.skill-badges span {
+  background: linear-gradient(135deg, #ffb3d9, #c9a0dc);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+}
+
+.certificate-grid,
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}

@@ -1,0 +1,136 @@
+/* ── Spotify Corner Widget — always visible ───────────────────── */
+.sp-corner {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9985;
+  max-width: 300px;
+  width: calc(100vw - 48px);
+}
+
+/* Base widget card */
+.sp-widget {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.58) 0%,
+    rgba(255, 228, 252, 0.44) 50%,
+    rgba(238, 222, 255, 0.42) 100%
+  );
+  backdrop-filter: blur(18px) saturate(1.9) brightness(1.04);
+  -webkit-backdrop-filter: blur(18px) saturate(1.9) brightness(1.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 8px 24px rgba(199, 21, 133, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  font-family: 'Poppins', sans-serif;
+  color: #6a4c93;
+  animation: sp-fadein 0.5s ease both;
+}
+
+@keyframes sp-fadein {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Spotify green logo */
+.sp-widget__icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+/* ── Loading / Offline states ─────────────────────────── */
+.sp-widget--loading,
+.sp-widget--offline {
+  font-size: 0.82rem;
+  font-weight: 600;
+  opacity: 0.82;
+}
+
+.sp-widget__text {
+  flex: 1;
+}
+
+/* Mini spinner for loading state */
+.sp-mini-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(199, 21, 133, 0.25);
+  border-top-color: #c71585;
+  border-radius: 50%;
+  animation: sp-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes sp-spin { to { transform: rotate(360deg); } }
+
+/* ── Playing state ──────────────────────────────────── */
+.sp-widget--playing {
+  gap: 12px;
+  align-items: center;
+}
+
+.sp-widget__art {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(199, 21, 133, 0.28);
+}
+
+.sp-widget__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sp-widget__song {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #c71585;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.sp-widget__song:hover { opacity: 0.72; }
+
+.sp-widget__artist {
+  margin: 1px 0 5px;
+  font-size: 0.74rem;
+  color: #6a4c93;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-widget__bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(106, 76, 147, 0.18);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.sp-widget__fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #c71585, #a855f7);
+  transition: width 1s linear;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .sp-corner {
+    bottom: 16px;
+    left: 12px;
+    max-width: calc(100vw - 24px);
+  }
+}
+

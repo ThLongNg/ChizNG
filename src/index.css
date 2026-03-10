@@ -1,3 +1,6 @@
+﻿@import url('https://fonts.cdnfonts.com/css/momo-signature');
+@import url('https://fonts.googleapis.com/css2?family=Yomogi&display=swap');
+
 /* Reset & Base Styling */
 body,
 h1,
@@ -147,32 +150,35 @@ body {
 }
 
 
-/* Scroll-to-section focus effect */
+/* ── Scroll-reveal (replaces wheel-snap) ──────────────────────────
+   Cards start invisible and fly up into place as they enter view.
+   The `.card-hidden` / `.card-revealed` classes are toggled by
+   useScrollReveal.js via IntersectionObserver.
+   ────────────────────────────────────────────────────────────────── */
 .info-card {
-  transform: translateZ(0) scale(0.985);
-  opacity: 0.92;
-  filter: saturate(0.98);
-  transition: transform 0.45s ease, opacity 0.45s ease, filter 0.45s ease;
-  will-change: transform;
-}
-
-.info-card.is-active {
-  transform: translateZ(0) scale(1.03);
+  /* always-visible baseline (before JS hook runs or JS disabled) */
   opacity: 1;
-  filter: saturate(1.02);
-  z-index: 3;
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.55s ease;
+  will-change: opacity, transform, filter;
 }
 
-.info-card.is-adjacent {
-  transform: translateZ(0) scale(0.985);
-  opacity: 0.86;
-  z-index: 2;
+/* State: waiting to be revealed */
+.info-card.card-hidden {
+  opacity: 0;
+  transform: translateY(48px) scale(0.97);
+  filter: blur(6px);
 }
 
-.info-card.is-distant {
-  transform: translateZ(0) scale(0.965);
-  opacity: 0.78;
-  z-index: 1;
+/* State: in viewport – animate to natural position */
+.info-card.card-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
 }
 
 #cursor-petal {
@@ -283,15 +289,34 @@ a:focus {
   border-radius: 2px;
 }
 
-/* Info Card */
+/* ═══════════════════════════════════════════════
+   Info Card — Crystal / Prism Glassmorphism
+   ═══════════════════════════════════════════════ */
 section.info-card {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
-  margin: 20px auto;
+  padding: 28px 24px;
+  /* multi-stop gradient imitating refracting crystal facets */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.60) 0%,
+      rgba(255, 225, 248, 0.40) 20%,
+      rgba(238, 220, 255, 0.38) 40%,
+      rgba(225, 240, 255, 0.38) 60%,
+      rgba(255, 235, 245, 0.42) 80%,
+      rgba(255, 255, 255, 0.58) 100%
+    );
+  border-radius: 22px;
+  margin: 22px auto;
   width: 90%;
   max-width: 800px;
-  box-shadow: 0 6px 20px rgba(199, 21, 133, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
+  /* layered shadows: soft outer glow + sharp inner highlight */
+  box-shadow:
+    0 8px 32px rgba(199, 21, 133, 0.18),
+    0 2px 8px rgba(150, 100, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(199, 21, 133, 0.07),
+    inset 1px 0 0 rgba(255, 255, 255, 0.6),
+    inset -1px 0 0 rgba(199, 21, 133, 0.05);
   color: #6a4c93;
   font-size: 1rem;
   display: flex;
@@ -299,9 +324,93 @@ section.info-card {
   justify-content: center;
   align-items: center;
   text-align: center;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  border: 1px solid rgba(255, 179, 217, 0.6);
-  backdrop-filter: blur(10px);
+  transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.4s ease;
+  /* translucent crystal border */
+  border: 1.5px solid rgba(255, 255, 255, 0.72);
+  outline: 1px solid rgba(199, 21, 133, 0.12);
+  backdrop-filter: blur(18px) saturate(1.9) brightness(1.04);
+  -webkit-backdrop-filter: blur(18px) saturate(1.9) brightness(1.04);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Prismatic light-sweep sheen — now a continuous looping animation */
+section.info-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent        0%,
+    transparent       30%,
+    rgba(255,255,255,0.12) 42%,
+    rgba(255,210,240,0.14) 48%,
+    rgba(220,200,255,0.14) 52%,
+    rgba(200,230,255,0.10) 58%,
+    transparent       70%,
+    transparent      100%
+  );
+  background-size: 260% 100%;
+  background-position: 120% 0;
+  animation: cardShimmer 4.5s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+@keyframes cardShimmer {
+  0%   { background-position:  160% 0; }
+  50%  { background-position:  -60% 0; }
+  100% { background-position:  160% 0; }
+}
+
+/* Ensure child content sits above the sheen (exclude sparkle spans) */
+section.info-card > *:not(.card-sparkle) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Bling sparkle particles ─────────────────────────────────────────
+   Spawned by useCardBling.js as <span class="card-sparkle">
+   All values driven by CSS custom properties set inline.
+   ─────────────────────────────────────────────── */
+.card-sparkle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  transform: translate(-50%, -50%) rotate(var(--bling-rot, 0deg)) scale(0);
+  animation: blingPop var(--bling-dur, 1s) ease-in-out forwards;
+}
+
+/* 4-pointed star via clip-path */
+.card-sparkle[data-type="star4"] {
+  background: var(--bling-color, rgba(255,255,255,0.9));
+  clip-path: polygon(
+    50%  0%,  55% 45%,
+    100% 50%, 55% 55%,
+    50% 100%, 45% 55%,
+    0%  50%,  45% 45%
+  );
+  border-radius: 0;
+}
+
+/* 6-pointed star via two-layer approach */
+.card-sparkle[data-type="star6"] {
+  background: var(--bling-color, rgba(255,255,255,0.9));
+  clip-path: polygon(
+    50%  0%, 61% 35%, 98% 35%,
+    68% 57%, 79% 91%, 50% 70%,
+    21% 91%, 32% 57%,  2% 35%,
+    39% 35%
+  );
+  border-radius: 0;
+}
+
+@keyframes blingPop {
+  0%   { transform: translate(-50%,-50%) rotate(var(--bling-rot,0deg)) scale(0);   opacity: 0; }
+  25%  { transform: translate(-50%,-50%) rotate(var(--bling-rot,0deg)) scale(1.2); opacity: 1; }
+  55%  { transform: translate(-50%,-50%) rotate(calc(var(--bling-rot,0deg) + 45deg)) scale(0.9); opacity: 0.9; }
+  100% { transform: translate(-50%,-50%) rotate(calc(var(--bling-rot,0deg) + 90deg)) scale(0);   opacity: 0; }
 }
 
 section.info-card p {
@@ -324,10 +433,22 @@ section.info-card h2 {
 .contact-info {
   width: min(100%, 980px);
   margin: 0 auto;
-  padding: 16px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 236, 248, 0.95));
-  border: 1px solid rgba(199, 21, 133, 0.2);
-  box-shadow: 0 18px 45px rgba(199, 21, 133, 0.18);
+  padding: 20px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.65) 0%,
+      rgba(255, 230, 252, 0.48) 40%,
+      rgba(240, 225, 255, 0.46) 70%,
+      rgba(255, 255, 255, 0.62) 100%
+    );
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 18px 45px rgba(199, 21, 133, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(199, 21, 133, 0.06);
+  backdrop-filter: blur(20px) saturate(2) brightness(1.05);
+  -webkit-backdrop-filter: blur(20px) saturate(2) brightness(1.05);
 }
 
 .contact-grid {
@@ -341,16 +462,47 @@ section.info-card h2 {
 .contact-card {
   position: relative;
   border-radius: 26px;
-  border: 1px solid rgba(255, 179, 217, 0.55);
+  border: 1.5px solid rgba(255, 255, 255, 0.78);
+  outline: 1px solid rgba(199, 21, 133, 0.12);
   padding: 34px 22px 26px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.78));
-  box-shadow: 0 16px 40px rgba(199, 21, 133, 0.15);
-  overflow: visible;
+  /* faceted crystal gradient */
+  background:
+    linear-gradient(
+      150deg,
+      rgba(255, 255, 255, 0.70) 0%,
+      hsl(var(--contact-color, 330 70% 60%) / 0.10) 35%,
+      rgba(220, 210, 255, 0.22) 60%,
+      rgba(255, 255, 255, 0.65) 100%
+    );
+  box-shadow:
+    0 16px 40px rgba(199, 21, 133, 0.15),
+    0 2px 8px rgba(150, 100, 255, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(199, 21, 133, 0.06);
+  overflow: hidden;
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   min-height: 250px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  backdrop-filter: blur(14px) saturate(1.8);
+  -webkit-backdrop-filter: blur(14px) saturate(1.8);
+}
+
+/* Crystal card sheen overlay */
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.30) 0%,
+    transparent 45%,
+    hsl(var(--contact-color, 330 70% 60%) / 0.08) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 .contact-card::after {
@@ -358,13 +510,17 @@ section.info-card h2 {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   pointer-events: none;
+  z-index: 2;
 }
 
 .contact-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 22px 50px rgba(199, 21, 133, 0.25);
+  transform: translateY(-8px) scale(1.015);
+  box-shadow:
+    0 24px 55px rgba(199, 21, 133, 0.26),
+    0 4px 12px rgba(150, 100, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 .contact-card-content {
@@ -375,6 +531,8 @@ section.info-card h2 {
   text-align: center;
   width: 100%;
   flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-icon-ring {
@@ -445,13 +603,60 @@ section.info-card h2 {
 }
 
 
-/* Chizuru Glitch Effect */
-.char-container {
+/* ── Chizuru vertical side columns ───────────────────────────────
+   Two fixed strips on left/right edges of the viewport.
+   Characters reveal gradually as the user scrolls.
+   Font: Yomogi (Japanese handwriting)
+   ────────────────────────────────────────────────────────────────── */
+.chizuru-left,
+.chizuru-right {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 9980;
+  pointer-events: none;
+  user-select: none;
+}
 
+.chizuru-left  { left: 14px; }
+.chizuru-right { right: 14px; }
+
+.chizuru-char {
+  font-family: 'Yomogi', 'Kaisei Tokumin', cursive;
+  /* base size — JS overrides dynamically as chars reveal */
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+  line-height: 1.15;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 0.05em;
+  background: linear-gradient(180deg, #c71585 0%, #9b42d6 55%, #ff8fab 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* start hidden — JS drives opacity/transform/font-size */
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.35s ease, transform 0.35s ease, font-size 0.4s ease;
+  filter: drop-shadow(0 0 10px rgba(199, 21, 133, 0.30));
+}
+
+/* Hide on very narrow screens where they'd overlap content */
+@media (max-width: 540px) {
+  .chizuru-left,
+  .chizuru-right { display: none; }
+}
+
+/* Chizuru Glitch Effect — legacy horizontal container (kept for h1/h3 reuse) */
+.char-container {
   flex-direction: column;
   align-items: center;
   gap: 30px;
   margin: 40px 0;
+  display: none; /* replaced by side columns */
 }
 
 h3 {
@@ -490,6 +695,45 @@ h2 {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+/* ── Greeting marquee ─────────────────────────────────────────── */
+.greeting-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 520px;
+  width: 90%;
+  margin: 0 auto 8px;
+  border-radius: 999px;
+  padding: 6px 0;
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.2px solid rgba(199, 21, 133, 0.22);
+  box-shadow: 0 2px 16px rgba(199, 21, 133, 0.10);
+  mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
+.greeting-marquee__track {
+  display: inline-block;
+  animation: marqueeScroll 22s linear infinite;
+}
+
+.greeting-marquee__track span {
+  display: inline-block;
+  padding-right: 1.6rem;
+  font-size: 1.1rem;
+  font-family: 'Kaisei Tokumin', serif;
+  font-weight: 700;
+  color: #c71585;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+  line-height: 2.2;
+}
+
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 #dynamic-greeting {
   font-size: 2.2rem;
   font-family: 'Kaisei Tokumin', serif;
@@ -498,6 +742,7 @@ h2 {
   margin-bottom: -15px;
   text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
   line-height: 1.2;
+  display: none; /* hidden — replaced by .greeting-marquee */
 }
 .char-container .char::before {
   content: 'guem';
@@ -651,27 +896,23 @@ h2 {
 }
 
 @keyframes fallAndSpin {
-  0% {
-    transform: translate(0, -10px) rotate(0deg);
-    opacity: 0.5;
-  }
+  0%   { transform: translate(0, -10px) rotate(0deg);   opacity: 0.5; }
+  25%  { transform: translate(15px, 25vh) rotate(40deg); }
+  50%  { transform: translate(-15px, 50vh) rotate(0deg); }
+  75%  { transform: translate(15px, 75vh) rotate(-25deg); }
+  100% { transform: translate(0, 100vh) rotate(0deg);    opacity: 0.8; }
+}
 
-  25% {
-    transform: translate(15px, 25vh) rotate(40deg);
-  }
+/* Burst petals — fly upward on fast scroll */
+.snowflake--burst {
+  z-index: 9000;
+  animation: sakuraBurst var(--dur, 1.6s) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
 
-  50% {
-    transform: translate(-15px, 50vh) rotate(0deg);
-  }
-
-  75% {
-    transform: translate(15px, 75vh) rotate(-25deg);
-  }
-
-  100% {
-    transform: translate(0, 100vh) rotate(0deg);
-    opacity: 0.8;
-  }
+@keyframes sakuraBurst {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1);   opacity: 1; }
+  40%  { opacity: 1; }
+  100% { transform: translate(var(--burst-dx, 0px), var(--burst-dy, -180px)) rotate(540deg) scale(0.3); opacity: 0; }
 }
 
 /* Audio Wave Visualizer */
@@ -679,7 +920,7 @@ h2 {
   position: fixed;
   top: 50%;
   left: calc(100% + 10px);
-  /* n?m b�n ph?i cd-disk */
+  /* n?m bï¿½n ph?i cd-disk */
   transform: translateY(-50%);
   width: 120px;
   height: 60px;
@@ -1739,40 +1980,40 @@ h2 {
     transform: rotate(360deg);
   }
 }
-/* === BẮT ĐẦU: SPOTIFY NOW LISTENING (Fixed Corner) === */
+/* === Báº®T Äáº¦U: SPOTIFY NOW LISTENING (Fixed Corner) === */
 
 .spotify-now-listening {
-  /* === Vị trí mới === */
+  /* === Vá»‹ trÃ­ má»›i === */
   position: fixed;
   bottom: 20px;
   left: 20px;
-  z-index: 1000; /* Nổi lên trên mọi thứ */
+  z-index: 1000; /* Ná»•i lÃªn trÃªn má»i thá»© */
 
-  /* === Ghi đè style của .info-card === */
-  width: auto; /* Tự động co giãn */
-  max-width: 380px; /* Giới hạn chiều rộng (bạn có thể điều chỉnh) */
-  margin: 0; /* Xóa margin 'auto' */
-  padding: 0; /* Xóa padding của info-card */
+  /* === Ghi Ä‘Ã¨ style cá»§a .info-card === */
+  width: auto; /* Tá»± Ä‘á»™ng co giÃ£n */
+  max-width: 380px; /* Giá»›i háº¡n chiá»u rá»™ng (báº¡n cÃ³ thá»ƒ Ä‘iá»u chá»‰nh) */
+  margin: 0; /* XÃ³a margin 'auto' */
+  padding: 0; /* XÃ³a padding cá»§a info-card */
   
-  /* === Ẩn nền của thẻ section bên ngoài === */
+  /* === áº¨n ná»n cá»§a tháº» section bÃªn ngoÃ i === */
   background: none;
   backdrop-filter: none;
   border: none;
   box-shadow: none;
 }
 
-/* Ẩn tiêu đề h2 đi */
+/* áº¨n tiÃªu Ä‘á» h2 Ä‘i */
 .spotify-now-listening h2 {
   display: none;
 }
 
-/* Bỏ margin của player-container */
+/* Bá» margin cá»§a player-container */
 #spotify-player-container {
   margin: 0;
-  max-width: 100%; /* Đảm bảo nó vừa vặn */
+  max-width: 100%; /* Äáº£m báº£o nÃ³ vá»«a váº·n */
 }
 
-/* Giữ lại .spotify-card làm nền chính */
+/* Giá»¯ láº¡i .spotify-card lÃ m ná»n chÃ­nh */
 .spotify-card {
   display: flex;
   align-items: center;
@@ -1783,7 +2024,7 @@ h2 {
   border-radius: 12px;
   padding: 15px;
   transition: all 0.3s ease;
-  /* Thêm box-shadow để nó nổi bật trên nền */
+  /* ThÃªm box-shadow Ä‘á»ƒ nÃ³ ná»•i báº­t trÃªn ná»n */
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
@@ -1791,7 +2032,7 @@ h2 {
   display: none;
 }
 
-/* Thẻ Loading/Offline */
+/* Tháº» Loading/Offline */
 #spotify-loading, #spotify-offline {
   justify-content: center;
   font-weight: 500;
@@ -1800,10 +2041,10 @@ h2 {
   color: #6a4c93;
   opacity: 0.8;
   margin: 0;
-  padding: 0 !important; /* Ghi đè CSS chung */
+  padding: 0 !important; /* Ghi Ä‘Ã¨ CSS chung */
 }
 #spotify-loading .loading-spinner {
-  border-top-color: #1DB954; /* Màu xanh Spotify */
+  border-top-color: #1DB954; /* MÃ u xanh Spotify */
   border-left-color: rgba(106, 76, 147, 0.2);
   border-right-color: rgba(106, 76, 147, 0.2);
   border-bottom-color: rgba(106, 76, 147, 0.2);
@@ -1812,11 +2053,11 @@ h2 {
   margin: 0 10px 0 0;
 }
 .spotify-logo {
-  fill: #6a4c93; /* Đổi màu logo cho hợp */
+  fill: #6a4c93; /* Äá»•i mÃ u logo cho há»£p */
   opacity: 0.6;
 }
 
-/* Thẻ Đang Chơi */
+/* Tháº» Äang ChÆ¡i */
 #spotify-album-art {
   width: 90px;
   height: 90px;
@@ -1827,7 +2068,7 @@ h2 {
 }
 
 .spotify-card:hover #spotify-album-art {
-    transform: scale(1.05); /* Phóng to nhẹ khi di chuột */
+    transform: scale(1.05); /* PhÃ³ng to nháº¹ khi di chuá»™t */
 }
 
 @keyframes spotifyGlow {
@@ -1866,7 +2107,7 @@ h2 {
   color: #6a4c93;
   opacity: 0.9; 
   margin: 5px 0 14px 0;
-  padding: 0 !important; /* Ghi đè CSS chung */
+  padding: 0 !important; /* Ghi Ä‘Ã¨ CSS chung */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1874,7 +2115,7 @@ h2 {
 
 .spotify-progress-bar {
   width: 100%;
-  height: 8px; /* Dày hơn */
+  height: 8px; /* DÃ y hÆ¡n */
   border-radius: 4px;
   background: rgba(106, 76, 147, 0.2);
   overflow: hidden;
@@ -1882,10 +2123,10 @@ h2 {
 
 #spotify-progress {
   height: 100%;
-  width: 0%; /* Sẽ được cập nhật bởi JS */
+  width: 0%; /* Sáº½ Ä‘Æ°á»£c cáº­p nháº­t bá»Ÿi JS */
   border-radius: 4px;
   background: linear-gradient(90deg, #9257ff 0%, #ff4a69 50%, #dd20c4 100%);
-  background-size: 200% 100%; /* Làm cho gradient lớn hơn để di chuyển */
+  background-size: 200% 100%; /* LÃ m cho gradient lá»›n hÆ¡n Ä‘á»ƒ di chuyá»ƒn */
   animation: gradientShimmer 2s linear infinite;
   
   transition: width 0.5s linear; 
@@ -1898,47 +2139,47 @@ h2 {
     background-position: -200% 0;
   }
 }
-/* === KẾT THÚC: SPOTIFY NOW LISTENING === */
+/* === Káº¾T THÃšC: SPOTIFY NOW LISTENING === */
 @media (max-width: 768px) {
 
-  /* == CÀI ĐẶT CƠ BẢN & CHỮ VIẾT == */
+  /* == CÃ€I Äáº¶T CÆ  Báº¢N & CHá»® VIáº¾T == */
 
   html,
   body {
     overflow-x: hidden;
-    /* Ngăn cuộn ngang ngoài ý muốn */
+    /* NgÄƒn cuá»™n ngang ngoÃ i Ã½ muá»‘n */
   }
 
   body {
     padding: 20px 10px;
-    /* Giảm padding tổng thể */
+    /* Giáº£m padding tá»•ng thá»ƒ */
     -webkit-text-size-adjust: 100%;
-    /* Ngăn iOS tự động phóng to chữ */
+    /* NgÄƒn iOS tá»± Ä‘á»™ng phÃ³ng to chá»¯ */
   }
 
   h1 {
     font-size: 3.2rem;
-    /* Giảm mạnh h1 */
+    /* Giáº£m máº¡nh h1 */
     margin-top: 10px;
   }
 
   h3,
   h2 {
     font-size: 1.75rem;
-    /* Giảm h2, h3 */
+    /* Giáº£m h2, h3 */
   }
 
   .char-container .char {
     font-size: 42px;
-    /* Giảm kích thước chữ "glitch" */
+    /* Giáº£m kÃ­ch thÆ°á»›c chá»¯ "glitch" */
   }
 
-  /* == ẨN HÌNH ẢNH TRANG TRÍ == */
+  /* == áº¨N HÃŒNH áº¢NH TRANG TRÃ == */
   .image {
     display: none;
   }
 
-  /* == THẺ THÔNG TIN CHUNG == */
+  /* == THáºº THÃ”NG TIN CHUNG == */
   section.info-card {
     width: 95%;
     padding: 15px;
@@ -1947,11 +2188,11 @@ h2 {
   section.info-card p {
     padding: 0 10px 15px 10px;
     font-size: 0.95rem;
-    /* Tinh chỉnh kích thước chữ */
+    /* Tinh chá»‰nh kÃ­ch thÆ°á»›c chá»¯ */
     line-height: 1.5;
   }
 
-  /* == BỘ ĐIỀU KHIỂN NHẠC (SỬA LỖI LỚN) == */
+  /* == Bá»˜ ÄIá»€U KHIá»‚N NHáº C (Sá»¬A Lá»–I Lá»šN) == */
 
   #cd-disk {
     bottom: 15px;
@@ -1960,54 +2201,54 @@ h2 {
     height: 45px;
   }
 
-  /* * Thay đổi quan trọng: 
-    * Căn giữa hộp điều khiển khi nó xuất hiện,
-    * thay vì neo nó vào lề phải.
+  /* * Thay Ä‘á»•i quan trá»ng: 
+    * CÄƒn giá»¯a há»™p Ä‘iá»u khiá»ƒn khi nÃ³ xuáº¥t hiá»‡n,
+    * thay vÃ¬ neo nÃ³ vÃ o lá» pháº£i.
   */
   #music-controls {
     display: none;
-    /* Vẫn ẩn theo mặc định */
+    /* Váº«n áº©n theo máº·c Ä‘á»‹nh */
     position: fixed;
     bottom: 75px;
-    /* Đặt vị trí NỔI LÊN TRÊN đĩa CD */
+    /* Äáº·t vá»‹ trÃ­ Ná»”I LÃŠN TRÃŠN Ä‘Ä©a CD */
     left: 50%;
-    /* Căn giữa theo chiều ngang */
+    /* CÄƒn giá»¯a theo chiá»u ngang */
     transform: translateX(-50%);
-    /* Hoàn tất việc căn giữa */
+    /* HoÃ n táº¥t viá»‡c cÄƒn giá»¯a */
 
     width: 90vw;
-    /* Chiếm 90% chiều rộng màn hình */
+    /* Chiáº¿m 90% chiá»u rá»™ng mÃ n hÃ¬nh */
     max-width: 300px;
-    /* Nhưng không quá 300px */
+    /* NhÆ°ng khÃ´ng quÃ¡ 300px */
 
-    /* Ghi đè các giá trị desktop */
+    /* Ghi Ä‘Ã¨ cÃ¡c giÃ¡ trá»‹ desktop */
     right: auto;
     min-width: unset;
   }
 
   #music-controls.show-controls {
     display: flex;
-    /* Vẫn dùng class này để hiện */
+    /* Váº«n dÃ¹ng class nÃ y Ä‘á»ƒ hiá»‡n */
     opacity: 1;
     pointer-events: auto;
   }
 
   #wave-container {
     display: none;
-    /* Ẩn sóng nhạc trên mobile */
+    /* áº¨n sÃ³ng nháº¡c trÃªn mobile */
   }
 
-  /* == PHẦN HONKAI STAR RAIL (HSR) == */
+  /* == PHáº¦N HONKAI STAR RAIL (HSR) == */
 
   .hsr-section h2 {
     font-size: 1.6rem;
   }
 
-  /* Chuyển form thành 1 cột */
+  /* Chuyá»ƒn form thÃ nh 1 cá»™t */
   .hsr-input-container {
     flex-direction: column;
     align-items: stretch;
-    /* Kéo dãn input/button */
+    /* KÃ©o dÃ£n input/button */
     gap: 12px;
     width: 100%;
   }
@@ -2015,12 +2256,12 @@ h2 {
   #uid-input,
   #fetch-hsr-btn {
     width: 100%;
-    /* Đảm bảo full-width */
+    /* Äáº£m báº£o full-width */
     box-sizing: border-box;
-    /* Quan trọng để padding không phá vỡ layout */
+    /* Quan trá»ng Ä‘á»ƒ padding khÃ´ng phÃ¡ vá»¡ layout */
   }
 
-  /* Chuyển thông tin người chơi thành 1 cột */
+  /* Chuyá»ƒn thÃ´ng tin ngÆ°á»i chÆ¡i thÃ nh 1 cá»™t */
   .player-layout-container {
     flex-direction: column;
     align-items: center;
@@ -2029,7 +2270,7 @@ h2 {
 
   .player-left {
     flex-direction: column;
-    /* Xếp chồng avatar và tên */
+    /* Xáº¿p chá»“ng avatar vÃ  tÃªn */
     justify-content: center;
     text-align: center;
     width: 100%;
@@ -2052,20 +2293,20 @@ h2 {
 
   .player-level-info {
     justify-content: center;
-    /* Căn giữa thông tin level */
+    /* CÄƒn giá»¯a thÃ´ng tin level */
   }
 
   .achievement-info,
   .simulated-universe-info {
     width: 100%;
     max-width: 300px;
-    /* Giới hạn chiều rộng cho đẹp mắt */
+    /* Giá»›i háº¡n chiá»u rá»™ng cho Ä‘áº¹p máº¯t */
     justify-content: center;
   }
 
-  /* == PHẦN SPOTIFY == */
+  /* == PHáº¦N SPOTIFY == */
 
-  /* Hồ sơ Spotify */
+  /* Há»“ sÆ¡ Spotify */
   .spotify-profile-card {
     padding: 20px 15px;
     margin: 15px auto 0;
@@ -2085,10 +2326,10 @@ h2 {
 
   .spotify-details h3 {
     font-size: 1.5rem;
-    /* Ghi đè h3 chung */
+    /* Ghi Ä‘Ã¨ h3 chung */
   }
 
-  /* Playlist Nổi Bật (Embed) - FIXED OVERFLOW */
+  /* Playlist Ná»•i Báº­t (Embed) - FIXED OVERFLOW */
   .embedded-playlists {
     flex-direction: column;
     overflow-x: hidden;
@@ -2141,9 +2382,9 @@ h2 {
     font-size: 0.85rem;
   }
 
-  /* Lưới Playlist & Form */
+  /* LÆ°á»›i Playlist & Form */
   .playlists-grid {
-    /* Cho phép 1 cột (màn hình < 300px) hoặc 2 cột */
+    /* Cho phÃ©p 1 cá»™t (mÃ n hÃ¬nh < 300px) hoáº·c 2 cá»™t */
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 15px;
   }
@@ -2152,7 +2393,7 @@ h2 {
   .form-actions {
     flex-direction: column;
     align-items: stretch;
-    /* Kéo dãn các nút */
+    /* KÃ©o dÃ£n cÃ¡c nÃºt */
   }
 
   .spotify-btn,
@@ -2169,20 +2410,21 @@ h2 {
     padding: 15px;
   }
   .player-card {
-    /* Đây là thẻ player (màu tím/đỏ) */
-    height: auto !important; /* QUAN TRỌNG: Xóa chiều cao cố định */
+    /* ÄÃ¢y lÃ  tháº» player (mÃ u tÃ­m/Ä‘á») */
+    height: auto !important; /* QUAN TRá»ŒNG: XÃ³a chiá»u cao cá»‘ Ä‘á»‹nh */
     padding: 15px;
   }
   
   .player-card .song-list {
-    /* Danh sách bài hát bên trong thẻ */
-    max-height: 250px; /* Giới hạn chiều cao nếu danh sách quá dài */
-    overflow-y: auto;  /* Thêm cuộn nếu cần */
+    /* Danh sÃ¡ch bÃ i hÃ¡t bÃªn trong tháº» */
+    max-height: 250px; /* Giá»›i háº¡n chiá»u cao náº¿u danh sÃ¡ch quÃ¡ dÃ i */
+    overflow-y: auto;  /* ThÃªm cuá»™n náº¿u cáº§n */
   }
 
   .music-player {
-    /* Container bọc ngoài các thẻ player */
+    /* Container bá»c ngoÃ i cÃ¡c tháº» player */
     padding: 15px 5px; 
-    gap: 20px; /* Giảm khoảng cách giữa 2 thẻ */
+    gap: 20px; /* Giáº£m khoáº£ng cÃ¡ch giá»¯a 2 tháº» */
   }
 }
+

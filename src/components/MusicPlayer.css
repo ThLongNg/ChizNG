@@ -1,0 +1,191 @@
+/* MusicPlayer Component Styles */
+
+#music-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9997;
+}
+
+#cd-disk {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: float 3s ease-in-out infinite;
+}
+
+#cd-disk:hover {
+  transform: scale(1.05);
+}
+
+#cd-disk.playing {
+  animation: rotate 3s linear infinite, float 3s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+#song-info-box {
+  position: fixed;
+  bottom: 110px;
+  left: 20px;
+  background: rgba(199, 21, 133, 0.9);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  max-width: 300px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 9996;
+  box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3);
+}
+
+#song-info-box.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#song-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: left;
+}
+
+/* Wave Visualizer */
+#wave-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 0 10px;
+  z-index: 9995;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(199, 21, 133, 0.1), transparent);
+}
+
+.wave-bar {
+  flex: 1;
+  min-width: 3px;
+  height: 4%;
+  background: linear-gradient(to top, #c71585, #ff6ba9);
+  border-radius: 2px 2px 0 0;
+  transition: height 0.1s ease;
+  opacity: 0.7;
+}
+
+/* Music Controls */
+#music-controls {
+  position: fixed;
+  bottom: 120px;
+  left: 20px;
+  background: linear-gradient(135deg, rgba(255, 182, 217, 0.95), rgba(216, 181, 232, 0.95));
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 15px 20px;
+  box-shadow: 0 8px 25px rgba(199, 21, 133, 0.3);
+  border: 2px solid rgba(255, 182, 217, 0.5);
+  z-index: 9996;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#music-controls.show-controls {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+#music-controls label {
+  display: block;
+  color: #c71585;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+#music-controls input[type="range"] {
+  width: 100%;
+  margin: 5px 0 15px 0;
+}
+
+#music-controls button {
+  background: linear-gradient(135deg, #c71585, #ff6ba9);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(199, 21, 133, 0.3);
+}
+
+#music-controls button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(199, 21, 133, 0.4);
+}
+
+#music-controls button:active {
+  transform: translateY(0);
+}
+
+/* Desktop hover behavior */
+@media (hover: hover) {
+  #cd-disk:hover ~ #music-controls,
+  #music-controls:hover {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  #music-container {
+    bottom: 15px;
+    left: 15px;
+  }
+
+  #cd-disk {
+    width: 60px;
+    height: 60px;
+  }
+
+  #music-controls {
+    left: 10px;
+    right: 10px;
+    bottom: 90px;
+    width: auto;
+  }
+
+  #wave-container {
+    height: 40px;
+  }
+}
