@@ -189,6 +189,33 @@
 .lb-btn--next:hover { transform: translateY(-50%) scale(1.1); }
 .lb-btn--close { top: 18px; right: 18px; font-size: 1rem; }
 
+/* ── Video play button overlay ──────────────────────────────── */
+.gallery-item__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.gallery-item--video:hover .gallery-item__play {
+  transform: scale(1.18);
+}
+
+/* ── Lightbox video iframe ──────────────────────────────────── */
+.lb-video {
+  width: min(90vw, 900px);
+  height: min(70vh, 506px);
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
 /* ── Loading skeleton ───────────────────────────────────────── */
 .gallery-skeleton {
   border-radius: 18px;

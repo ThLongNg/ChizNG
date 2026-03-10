@@ -12,27 +12,17 @@ const GalleryPage = () => {
   const { t } = useLanguageContext();
 
   const [photos, setPhotos]     = useState([]);
-  const [status, setStatus]     = useState('loading'); // loading | ok | fallback
+  const [status, setStatus]     = useState('loading');
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
     fetch('/api/gallery')
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
+      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((data) => {
-        if (data.photos && data.photos.length > 0) {
-          setPhotos(data.photos);
-        } else {
-          setPhotos(FALLBACK_PHOTOS);
-        }
+        setPhotos(data.photos?.length > 0 ? data.photos : FALLBACK_PHOTOS);
         setStatus('ok');
       })
-      .catch(() => {
-        setPhotos(FALLBACK_PHOTOS);
-        setStatus('fallback');
-      });
+      .catch(() => { setPhotos(FALLBACK_PHOTOS); setStatus('fallback'); });
   }, []);
 
   const close = () => setLightbox(null);
@@ -46,11 +36,9 @@ const GalleryPage = () => {
   };
 
   const subtitle =
-    status === 'loading'
-      ? t('gallery.page.subtitle.loading')
-      : status === 'fallback'
-      ? t('gallery.page.subtitle.fallback')
-      : t('gallery.page.subtitle.loaded').replace('{n}', photos.length);
+    status === 'loading' ? t('gallery.page.subtitle.loading')
+    : status === 'fallback' ? t('gallery.page.subtitle.fallback')
+    : t('gallery.page.subtitle.loaded').replace('{n}', photos.length);
 
   return (
     <div className="gallery-page">
@@ -63,9 +51,7 @@ const GalleryPage = () => {
 
       {status === 'loading' && (
         <div className="gallery-grid">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="gallery-skeleton" />
-          ))}
+          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="gallery-skeleton" />)}
         </div>
       )}
 
@@ -74,20 +60,34 @@ const GalleryPage = () => {
           {photos.map((photo, idx) => (
             <button
               key={idx}
-              className={`gallery-item${photo.wide ? ' gallery-item--wide' : ''} info-card`}
+              className={`gallery-item${photo.wide ? ' gallery-item--wide' : ''}${photo.isVideo ? ' gallery-item--video' : ''} info-card`}
               onClick={() => setLightbox(idx)}
-              aria-label={photo.title || `Photo ${idx + 1}`}
+              aria-label={photo.title || `Item ${idx + 1}`}
             >
-              <img
-                src={photo.src}
-                alt={photo.title || ''}
-                loading="lazy"
-                decoding="async"
-                className="gallery-item__img"
-              />
+              {photo.isVideo ? (
+                <>
+                  <img
+                    src={photo.thumb || photo.src}
+                    alt={photo.title || ''}
+                    loading="lazy"
+                    decoding="async"
+                    className="gallery-item__img"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                  <div className="gallery-item__play">&#x25B6;</div>
+                </>
+              ) : (
+                <img
+                  src={photo.src}
+                  alt={photo.title || ''}
+                  loading="lazy"
+                  decoding="async"
+                  className="gallery-item__img"
+                />
+              )}
               {(photo.title || photo.caption) && (
                 <div className="gallery-item__overlay">
-                  {photo.title && <span className="gallery-item__title">{photo.title}</span>}
+                  {photo.title   && <span className="gallery-item__title">{photo.title}</span>}
                   {photo.caption && <span className="gallery-item__caption">{photo.caption}</span>}
                 </div>
               )}
@@ -106,18 +106,24 @@ const GalleryPage = () => {
           tabIndex={-1}
           ref={(el) => el?.focus()}
         >
-          <button
-            className="lb-btn lb-btn--prev"
-            onClick={(e) => { e.stopPropagation(); prev(); }}
-            aria-label={t('gallery.page.prev')}
-          >&#x2039;</button>
+          <button className="lb-btn lb-btn--prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label={t('gallery.page.prev')}>&#x2039;</button>
 
           <div className="lb-content" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={photos[lightbox].srcFull || photos[lightbox].src}
-              alt={photos[lightbox].title || ''}
-              className="lb-img"
-            />
+            {photos[lightbox].isVideo ? (
+              <iframe
+                src={photos[lightbox].srcFull}
+                className="lb-video"
+                allow="autoplay"
+                allowFullScreen
+                title={photos[lightbox].title || 'Video'}
+              />
+            ) : (
+              <img
+                src={photos[lightbox].srcFull || photos[lightbox].src}
+                alt={photos[lightbox].title || ''}
+                className="lb-img"
+              />
+            )}
             {(photos[lightbox].title || photos[lightbox].caption) && (
               <div className="lb-info">
                 {photos[lightbox].title   && <strong>{photos[lightbox].title}</strong>}
@@ -126,16 +132,8 @@ const GalleryPage = () => {
             )}
           </div>
 
-          <button
-            className="lb-btn lb-btn--next"
-            onClick={(e) => { e.stopPropagation(); next(); }}
-            aria-label={t('gallery.page.next')}
-          >&#x203A;</button>
-          <button
-            className="lb-btn lb-btn--close"
-            onClick={close}
-            aria-label={t('gallery.page.close')}
-          >&#x2715;</button>
+          <button className="lb-btn lb-btn--next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label={t('gallery.page.next')}>&#x203A;</button>
+          <button className="lb-btn lb-btn--close" onClick={close} aria-label={t('gallery.page.close')}>&#x2715;</button>
         </div>
       )}
     </div>
