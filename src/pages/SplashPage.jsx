@@ -56,9 +56,8 @@ const SplashPage = () => {
     }
   };
 
-  const handleVolumeChange = (e) => {
+  const handleVolumeClick = (e, newVolume) => {
     e.stopPropagation();
-    const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
     if (audioRef.current) {
       audioRef.current.volume = newVolume;
@@ -107,16 +106,16 @@ const SplashPage = () => {
       </audio>
 
       <div className="audio-wrapper" onClick={(e) => e.stopPropagation()}>
-        <div className="volume-slider-container">
-          <input 
-            type="range" 
-            min="0" 
-            max="1" 
-            step="0.01" 
-            value={volume}
-            className="volume-slider"
-            onChange={handleVolumeChange}
-          />
+        <div className="volume-bars-container">
+          {[0.16, 0.33, 0.5, 0.66, 0.83, 1].map((level, index) => (
+            <div 
+              key={index}
+              className={`volume-bar ${volume >= level - 0.01 ? 'active' : ''}`}
+              style={{ height: `${20 + index * 16}%` }}
+              onClick={(e) => handleVolumeClick(e, level)}
+              title={`Volume ${Math.round(level * 100)}%`}
+            />
+          ))}
         </div>
         <div 
           className={`audio-control ${isMuted ? 'muted' : ''}`} 
