@@ -161,7 +161,7 @@ const GalleryPage = () => {
                 className={`gallery-filter-btn${filter === f ? ' gallery-filter-btn--active' : ''}`}
                 onClick={() => setFilter(f)}
               >
-                {f === 'all' ? '&#x1F4F7; All' : f === 'photo' ? '&#x1F5BC; Photos' : '&#x1F3A5; Videos'}
+                {f === 'all' ? '📷 All' : f === 'photo' ? '🖼️ Photos' : '🎥 Videos'}
               </button>
             ))}
           </div>
