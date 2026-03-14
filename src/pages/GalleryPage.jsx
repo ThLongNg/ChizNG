@@ -1,44 +1,148 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Navigation from '../components/Navigation';
 import { PHOTOS as FALLBACK_PHOTOS } from '../config/galleryPhotos';
 import { useSakuraSnow } from '../hooks/useSakuraSnow';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useLanguageContext } from '../context/LanguageContext';
+import ScrollToTop from '../components/ScrollToTop';
 import './GalleryPage.css';
 
+/* ── Inline 3D tilt on a single card ───────────────────────── */
+const GalleryItem = ({ photo, idx, onClick }) => {
+  const ref = useRef(null);
+
+  const onMove = useCallback((e) => {
+    const el = ref.current;
+    if (!el) return;
+    const { left, top, width, height } = el.getBoundingClientRect();
+    const x = ((e.clientX - left) / width  - 0.5) * 14;
+    const y = ((e.clientY - top)  / height - 0.5) * -14;
+    el.style.transform = `perspective(700px) rotateX(${y}deg) rotateY(${x}deg) scale(1.04)`;
+    el.style.boxShadow = `${-x * 1.5}px ${y * 1.5}px 32px rgba(199,21,133,0.28)`;
+  }, []);
+
+  const onLeave = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.5s ease';
+    el.style.transform  = '';
+    el.style.boxShadow  = '';
+    setTimeout(() => { if (el) el.style.transition = ''; }, 500);
+  }, []);
+
+  return (
+    <button
+      ref={ref}
+      className={`gallery-item${photo.wide ? ' gallery-item--wide' : ''}${photo.isVideo ? ' gallery-item--video' : ''} info-card`}
+      style={{ '--i': idx }}
+      onClick={() => onClick(idx)}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      aria-label={photo.title || `Item ${idx + 1}`}
+    >
+      {photo.isVideo ? (
+        <>
+          <img src={photo.thumb || photo.src} alt={photo.title || ''} loading="lazy" decoding="async" className="gallery-item__img" onError={(e) => { e.target.style.display='none'; }} />
+          <div className="gallery-item__play">&#x25B6;</div>
+        </>
+      ) : (
+        <img src={photo.src} alt={photo.title || ''} loading="lazy" decoding="async" className="gallery-item__img" />
+      )}
+      {(photo.title || photo.caption) && (
+        <div className="gallery-item__overlay">
+          {photo.title   && <span className="gallery-item__title">{photo.title}</span>}
+          {photo.caption && <span className="gallery-item__caption">{photo.caption}</span>}
+        </div>
+      )}
+    </button>
+  );
+};
+
+/* ── Lightbox ───────────────────────────────────────────────── */
+const Lightbox = ({ photos, index, onClose, onPrev, onNext }) => {
+  const touchX = useRef(null);
+
+  const onTouchStart = (e) => { touchX.current = e.touches[0].clientX; };
+  const onTouchEnd   = (e) => {
+    if (touchX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    if (dx >  50) onPrev();
+    if (dx < -50) onNext();
+    touchX.current = null;
+  };
+
+  const onKey = useCallback((e) => {
+    if (e.key === 'ArrowLeft')  onPrev();
+    if (e.key === 'ArrowRight') onNext();
+    if (e.key === 'Escape')     onClose();
+  }, [onPrev, onNext, onClose]);
+
+  const photo = photos[index];
+
+  return (
+    <div
+      className="gallery-lightbox"
+      onClick={onClose}
+      onKeyDown={onKey}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      role="dialog"
+      aria-modal="true"
+      tabIndex={-1}
+      ref={(el) => el?.focus()}
+    >
+      <button className="lb-btn lb-btn--prev" onClick={(e) => { e.stopPropagation(); onPrev(); }} aria-label="Previous">&#x2039;</button>
+
+      <div className="lb-content" onClick={(e) => e.stopPropagation()}>
+        {photo.isVideo ? (
+          <iframe src={photo.srcFull} className="lb-video" allow="autoplay" allowFullScreen title={photo.title || 'Video'} />
+        ) : (
+          <img src={photo.srcFull || photo.src} alt={photo.title || ''} className="lb-img" />
+        )}
+        {(photo.title || photo.caption) && (
+          <div className="lb-info">
+            {photo.title   && <strong>{photo.title}</strong>}
+            {photo.caption && <span>{photo.caption}</span>}
+          </div>
+        )}
+        <div className="lb-counter">{index + 1} / {photos.length}</div>
+      </div>
+
+      <button className="lb-btn lb-btn--next" onClick={(e) => { e.stopPropagation(); onNext(); }} aria-label="Next">&#x203A;</button>
+      <button className="lb-btn lb-btn--close" onClick={onClose} aria-label="Close">&#x2715;</button>
+    </div>
+  );
+};
+
+/* ── Page ───────────────────────────────────────────────────── */
 const GalleryPage = () => {
   useSakuraSnow();
-  useScrollReveal();
   const { t } = useLanguageContext();
 
   const [photos, setPhotos]     = useState([]);
   const [status, setStatus]     = useState('loading');
   const [lightbox, setLightbox] = useState(null);
+  const [filter, setFilter]     = useState('all'); // all | photo | video
 
   useEffect(() => {
     fetch('/api/gallery')
-      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
-      .then((data) => {
-        setPhotos(data.photos?.length > 0 ? data.photos : FALLBACK_PHOTOS);
-        setStatus('ok');
-      })
+      .then((r) => { if (!r.ok) throw new Error(); return r.json(); })
+      .then((data) => { setPhotos(data.photos?.length > 0 ? data.photos : FALLBACK_PHOTOS); setStatus('ok'); })
       .catch(() => { setPhotos(FALLBACK_PHOTOS); setStatus('fallback'); });
   }, []);
 
-  const close = () => setLightbox(null);
-  const prev  = () => setLightbox((i) => (i - 1 + photos.length) % photos.length);
-  const next  = () => setLightbox((i) => (i + 1) % photos.length);
+  const filtered = photos.filter((p) =>
+    filter === 'all' ? true : filter === 'video' ? p.isVideo : !p.isVideo
+  );
+  const hasVideo = photos.some((p) => p.isVideo);
 
-  const onKey = (e) => {
-    if (e.key === 'ArrowLeft') prev();
-    else if (e.key === 'ArrowRight') next();
-    else if (e.key === 'Escape') close();
-  };
+  const close = () => setLightbox(null);
+  const prev  = () => setLightbox((i) => (i - 1 + filtered.length) % filtered.length);
+  const next  = () => setLightbox((i) => (i + 1) % filtered.length);
 
   const subtitle =
-    status === 'loading' ? t('gallery.page.subtitle.loading')
+    status === 'loading'  ? t('gallery.page.subtitle.loading')
     : status === 'fallback' ? t('gallery.page.subtitle.fallback')
-    : t('gallery.page.subtitle.loaded').replace('{n}', photos.length);
+    : t('gallery.page.subtitle.loaded').replace('{n}', filtered.length);
 
   return (
     <div className="gallery-page">
@@ -47,95 +151,42 @@ const GalleryPage = () => {
       <header className="gallery-header">
         <h1 className="gallery-title">{t('gallery.page.title')}</h1>
         <p className="gallery-subtitle">{subtitle}</p>
+
+        {/* Filter tabs — only show if there are videos */}
+        {status === 'ok' && hasVideo && (
+          <div className="gallery-filters">
+            {['all','photo','video'].map((f) => (
+              <button
+                key={f}
+                className={`gallery-filter-btn${filter === f ? ' gallery-filter-btn--active' : ''}`}
+                onClick={() => setFilter(f)}
+              >
+                {f === 'all' ? '&#x1F4F7; All' : f === 'photo' ? '&#x1F5BC; Photos' : '&#x1F3A5; Videos'}
+              </button>
+            ))}
+          </div>
+        )}
       </header>
 
       {status === 'loading' && (
         <div className="gallery-grid">
-          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="gallery-skeleton" />)}
+          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="gallery-skeleton" style={{ '--i': i }} />)}
         </div>
       )}
 
       {status !== 'loading' && (
-        <main className="gallery-grid" aria-label="Photo gallery">
-          {photos.map((photo, idx) => (
-            <button
-              key={idx}
-              className={`gallery-item${photo.wide ? ' gallery-item--wide' : ''}${photo.isVideo ? ' gallery-item--video' : ''} info-card`}
-              onClick={() => setLightbox(idx)}
-              aria-label={photo.title || `Item ${idx + 1}`}
-            >
-              {photo.isVideo ? (
-                <>
-                  <img
-                    src={photo.thumb || photo.src}
-                    alt={photo.title || ''}
-                    loading="lazy"
-                    decoding="async"
-                    className="gallery-item__img"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                  />
-                  <div className="gallery-item__play">&#x25B6;</div>
-                </>
-              ) : (
-                <img
-                  src={photo.src}
-                  alt={photo.title || ''}
-                  loading="lazy"
-                  decoding="async"
-                  className="gallery-item__img"
-                />
-              )}
-              {(photo.title || photo.caption) && (
-                <div className="gallery-item__overlay">
-                  {photo.title   && <span className="gallery-item__title">{photo.title}</span>}
-                  {photo.caption && <span className="gallery-item__caption">{photo.caption}</span>}
-                </div>
-              )}
-            </button>
+        <main className="gallery-masonry" aria-label="Photo gallery">
+          {filtered.map((photo, idx) => (
+            <GalleryItem key={idx} photo={photo} idx={idx} onClick={(i) => setLightbox(i)} />
           ))}
         </main>
       )}
 
       {lightbox !== null && (
-        <div
-          className="gallery-lightbox"
-          onClick={close}
-          onKeyDown={onKey}
-          role="dialog"
-          aria-modal="true"
-          tabIndex={-1}
-          ref={(el) => el?.focus()}
-        >
-          <button className="lb-btn lb-btn--prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label={t('gallery.page.prev')}>&#x2039;</button>
-
-          <div className="lb-content" onClick={(e) => e.stopPropagation()}>
-            {photos[lightbox].isVideo ? (
-              <iframe
-                src={photos[lightbox].srcFull}
-                className="lb-video"
-                allow="autoplay"
-                allowFullScreen
-                title={photos[lightbox].title || 'Video'}
-              />
-            ) : (
-              <img
-                src={photos[lightbox].srcFull || photos[lightbox].src}
-                alt={photos[lightbox].title || ''}
-                className="lb-img"
-              />
-            )}
-            {(photos[lightbox].title || photos[lightbox].caption) && (
-              <div className="lb-info">
-                {photos[lightbox].title   && <strong>{photos[lightbox].title}</strong>}
-                {photos[lightbox].caption && <span>{photos[lightbox].caption}</span>}
-              </div>
-            )}
-          </div>
-
-          <button className="lb-btn lb-btn--next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label={t('gallery.page.next')}>&#x203A;</button>
-          <button className="lb-btn lb-btn--close" onClick={close} aria-label={t('gallery.page.close')}>&#x2715;</button>
-        </div>
+        <Lightbox photos={filtered} index={lightbox} onClose={close} onPrev={prev} onNext={next} />
       )}
+
+      <ScrollToTop />
     </div>
   );
 };
