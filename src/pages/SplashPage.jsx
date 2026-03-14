@@ -85,7 +85,7 @@ const SplashPage = () => {
         Your browser does not support the video tag.
       </video>
 
-      <audio ref={audioRef} loop muted>
+      <audio ref={audioRef} loop muted autoPlay>
         <source src={MEDIA_URLS.splashAudio} type="audio/mp4" />
       </audio>
 
@@ -117,7 +117,9 @@ const SplashPage = () => {
       <div className="content">
         <h1>Welcome to My Profile</h1>
         <p>✨ Discover my journey ✨</p>
-        <div className="click-hint">Click anywhere to enter</div>
+        <div className="click-hint">
+          {!hasInteracted ? "Tap anywhere to unmute" : "Click again to enter"}
+        </div>
       </div>
     </div>
   );
