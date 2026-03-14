@@ -9,6 +9,7 @@ import { useDynamicGreeting } from '../hooks/useDynamicGreeting';
 import { useLanguageContext } from '../context/LanguageContext';
 import { useCardTilt } from '../hooks/useCardTilt';
 import SpotifyCornerPopup from '../components/SpotifyCornerPopup';
+import ScrollToTop from '../components/ScrollToTop';
 import './HomePage.css';
 
 const CONTACTS = [
@@ -110,6 +111,7 @@ const HomePage = () => {
 
       {/* Spotify corner popup — fixed bottom-left, no backend needed */}
       <SpotifyCornerPopup />
+      <ScrollToTop />
 
       <div className="view-counter" aria-label="Total site views">
         <span className="view-counter__icon" aria-hidden="true">👁</span>
@@ -273,7 +275,7 @@ const HomePage = () => {
       <img className="image image2" src="https://shop.ldrescdn.com/rms/ld-space/process/img/743c321c5972482590721bc9b7cee6821758792367.webp?1758792373043&x-oss-process=image/format,webp" alt="" loading="lazy" aria-hidden="true" />
       <img className="image image3" src="https://shop.ldrescdn.com/rms/ld-space/process/img/3fa2ba6995114da0a18c718bc1fe23851758792367.webp?1758792373020&x-oss-process=image/format,webp" alt="" loading="lazy" aria-hidden="true" />
       <img className="image image4" src="https://starrail.honeyhunterworld.com/img/eidolon/a-tomorrow-in-thirteen-shades-eidolon_icon.webp" alt="" loading="lazy" aria-hidden="true" />
-      <img className="i5" src="assets/cyrene.png" alt="Cyrene sticker" loading="lazy" />
+      <img className="i5" src="./assets/cyrene.png" alt="Cyrene sticker" loading="lazy" />
     </div>
   );
 };
