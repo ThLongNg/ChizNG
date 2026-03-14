@@ -3,8 +3,8 @@
 
 export const MEDIA_URLS = {
   // Splash Page
-  splashVideo: '/Cyrene_ video.mp4', // TODO: Upload to cloud and replace
-  splashAudio: '/Cyrene-audio.m4a', // TODO: Upload to cloud and replace
+  splashVideo: 'https://res.cloudinary.com/dbjejsbh7/video/upload/v1773456639/Cyrene__video_vspvsz.mp4', // TODO: Upload to cloud and replace
+  splashAudio: 'https://res.cloudinary.com/dbjejsbh7/video/upload/v1773456700/suiheisen_mrkk1f.mp4', // TODO: Upload to cloud and replace
 
   // Images
   cursorSvg: '/assets/cherryblossom-cursor.svg',
