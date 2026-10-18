@@ -128,20 +128,7 @@ const HomePage = () => {
       </div>
       <h1>{t('hero.title')}</h1>
 
-      {/* Featured Song Section */}
-      <section className="info-card" id="section-featured-song">
-        <iframe
-          style={{ borderRadius: '12px' }}
-          src="https://open.spotify.com/embed/track/7eqjbcOZTgZbV0lX2ghtfV?utm_source=generator"
-          width="100%"
-          height="152"
-          frameBorder="0"
-          allowFullScreen
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-          title="Featured Song"
-        />
-      </section>
+
 
       {/* Card 1: Profile Section — Identity & Verified Credentials */}
       <section className="info-card contact-info profile-card-elevated" id="section-profile">
@@ -257,7 +244,20 @@ const HomePage = () => {
           </div>
         )}
       </section>
-
+      {/* Featured Song Section */}
+      <section className="info-card" id="section-featured-song">
+        <iframe
+          style={{ borderRadius: '12px' }}
+          src="https://open.spotify.com/embed/track/7eqjbcOZTgZbV0lX2ghtfV?utm_source=generator"
+          width="100%"
+          height="152"
+          frameBorder="0"
+          allowFullScreen
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title="Featured Song"
+        />
+      </section>
       {/* Contact Section */}
       <section className="info-card contact-info" id="section-contact">
         <h2>{t('contact.heading')}</h2>

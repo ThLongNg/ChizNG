@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './SpotifyCornerPopup.css';
 
-const SPOTIFY_API_URL = '/api/spotify';
+const SPOTIFY_API_URL = import.meta.env.VITE_SPOTIFY_API_URL || '/api/spotify';
 const POLL_INTERVAL = 5000;
 
 /**

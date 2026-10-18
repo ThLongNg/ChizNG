@@ -62,31 +62,17 @@
 }
 
 /* ── Elevated Profile & Self-PR Dossier ───────────────────────── */
-.profile-card-elevated,
-.pr-card-elevated {
-  width: min(100%, 980px);
-  margin: 32px auto;
+.profile-card-elevated {
   text-align: left;
   padding: 44px 38px;
-  border-radius: 24px;
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-.profile-card-elevated:hover,
-.pr-card-elevated:hover {
-  border-color: rgba(255, 255, 255, 0.95);
-  box-shadow:
-    0 24px 55px rgba(199, 21, 133, 0.24),
-    0 4px 14px rgba(150, 100, 255, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(199, 21, 133, 0.08);
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
 }
 
 @media (max-width: 768px) {
-  .profile-card-elevated,
-  .pr-card-elevated {
+  .profile-card-elevated {
     padding: 28px 20px;
-    margin: 20px auto;
   }
 }
 
@@ -203,26 +189,13 @@ body[data-lang="ja"] .profile-name {
 
 /* ── Verified Facts Ledger (Card 1: Profile) ─────────────────── */
 .profile-ledger-full {
-  background:
-    linear-gradient(
-      150deg,
-      rgba(255, 255, 255, 0.75) 0%,
-      rgba(255, 235, 250, 0.38) 45%,
-      rgba(235, 225, 255, 0.32) 75%,
-      rgba(255, 255, 255, 0.70) 100%
-    );
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  outline: 1px solid rgba(199, 21, 133, 0.10);
-  border-radius: 20px;
-  padding: 24px 28px;
-  box-shadow:
-    0 12px 32px rgba(199, 21, 133, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(14px) saturate(1.8);
-  -webkit-backdrop-filter: blur(14px) saturate(1.8);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 22px 28px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   margin-bottom: 22px;
   text-align: left;
 }
@@ -230,7 +203,7 @@ body[data-lang="ja"] .profile-name {
 @media (max-width: 768px) {
   .profile-ledger-full {
     padding: 16px 18px;
-    gap: 8px;
+    gap: 12px;
   }
 }
 
@@ -239,20 +212,14 @@ body[data-lang="ja"] .profile-name {
   justify-content: space-between;
   align-items: baseline;
   gap: 16px;
-  padding: 10px 14px;
-  border-radius: 10px;
+  padding-bottom: 12px;
   border-bottom: 1px solid rgba(184, 50, 90, 0.08);
   font-size: 1rem;
-  transition: background 0.25s ease, transform 0.2s ease;
-}
-
-.profile-fact-row:hover {
-  background: rgba(255, 235, 248, 0.45);
-  transform: translateX(4px);
 }
 
 .profile-fact-row:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .fact-label {
@@ -288,6 +255,20 @@ body[data-lang="ja"] .profile-name {
 }
 
 /* ── Card 2: Dedicated Self-PR Presentation ──────────────────── */
+.pr-card-elevated {
+  text-align: left;
+  padding: 44px 38px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+}
+
+@media (max-width: 768px) {
+  .pr-card-elevated {
+    padding: 28px 20px;
+  }
+}
+
 .pr-card-elevated h2 {
   font-family: var(--font-heading);
   font-size: clamp(2.4rem, 4.5vw, 3.2rem);
@@ -312,23 +293,10 @@ body[data-lang="ja"] .pr-card-elevated h2 {
 }
 
 .pr-pitch-block {
-  background:
-    linear-gradient(
-      150deg,
-      rgba(255, 255, 255, 0.75) 0%,
-      rgba(255, 235, 250, 0.38) 45%,
-      rgba(235, 225, 255, 0.32) 75%,
-      rgba(255, 255, 255, 0.70) 100%
-    );
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  outline: 1px solid rgba(199, 21, 133, 0.10);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
   padding: 24px 28px;
-  box-shadow:
-    0 12px 32px rgba(199, 21, 133, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(14px) saturate(1.8);
-  -webkit-backdrop-filter: blur(14px) saturate(1.8);
 }
 
 @media (max-width: 768px) {
@@ -367,41 +335,21 @@ body[data-lang="ja"] .pr-pitch-text {
 }
 
 .pr-pillar-card {
-  position: relative;
-  border-radius: 20px;
-  border: 1.5px solid rgba(255, 255, 255, 0.78);
-  outline: 1px solid rgba(199, 21, 133, 0.12);
-  padding: 26px 22px;
-  background:
-    linear-gradient(
-      150deg,
-      rgba(255, 255, 255, 0.72) 0%,
-      rgba(255, 230, 248, 0.35) 35%,
-      rgba(230, 220, 255, 0.30) 60%,
-      rgba(255, 255, 255, 0.68) 100%
-    );
-  box-shadow:
-    0 14px 35px rgba(199, 21, 133, 0.12),
-    0 2px 8px rgba(150, 100, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(199, 21, 133, 0.06);
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(184, 50, 90, 0.12);
+  border-radius: 12px;
+  padding: 22px 22px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   text-align: left;
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-  backdrop-filter: blur(14px) saturate(1.8);
-  -webkit-backdrop-filter: blur(14px) saturate(1.8);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .pr-pillar-card:hover {
-  transform: translateY(-8px) scale(1.015);
-  border-color: rgba(255, 255, 255, 0.95);
-  box-shadow:
-    0 24px 55px rgba(199, 21, 133, 0.24),
-    0 4px 12px rgba(150, 100, 255, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transform: translateY(-3px);
+  border-color: rgba(184, 50, 90, 0.3);
+  box-shadow: 0 8px 24px rgba(184, 50, 90, 0.08);
 }
 
 .pr-pillar-title {
@@ -431,88 +379,6 @@ body[data-lang="ja"] .pr-pillar-desc {
   font-family: var(--font-jp-book);
   font-size: 0.96rem;
   line-height: 1.85;
-}
-
-/* ── Japanese Vertical PR Presentation ───────────────────────── */
-.japanese-pr-book-container {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: stretch;
-  gap: 28px;
-  padding: 32px 30px;
-  background:
-    linear-gradient(
-      150deg,
-      rgba(255, 255, 255, 0.78) 0%,
-      rgba(255, 240, 248, 0.45) 50%,
-      rgba(255, 255, 255, 0.72) 100%
-    );
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  outline: 1px solid rgba(199, 21, 133, 0.12);
-  border-radius: 20px;
-  box-shadow:
-    0 16px 40px rgba(199, 21, 133, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(14px) saturate(1.8);
-  -webkit-backdrop-filter: blur(14px) saturate(1.8);
-  overflow-x: auto;
-  min-height: 380px;
-}
-
-.japanese-vertical-content {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 32px;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  font-family: var(--font-jp-book);
-  color: var(--color-text-main);
-}
-
-.jp-vertical-paragraph {
-  font-family: var(--font-jp-book);
-  font-size: 1.12rem;
-  line-height: 2.1;
-  letter-spacing: 0.12em;
-  margin: 0;
-  text-align: justify;
-}
-
-.japanese-book-spine {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 14px;
-  border-left: 2px solid rgba(184, 50, 90, 0.25);
-  writing-mode: vertical-rl;
-}
-
-.book-spine-text {
-  font-family: var(--font-jp-book);
-  font-size: 0.88rem;
-  letter-spacing: 0.18em;
-  color: var(--color-primary);
-  font-weight: 600;
-}
-
-.japanese-book-seal {
-  display: flex;
-  align-items: flex-end;
-  padding: 10px;
-}
-
-.seal-text {
-  font-family: var(--font-jp-book);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #b8325a;
-  border: 2px solid #b8325a;
-  border-radius: 6px;
-  padding: 8px 4px;
-  writing-mode: vertical-rl;
-  letter-spacing: 0.1em;
-  background: rgba(255, 240, 245, 0.6);
-  box-shadow: 0 2px 8px rgba(184, 50, 90, 0.2);
 }
 
 /* ── Dignified Contextual Navigation ──────────────────────────── */
