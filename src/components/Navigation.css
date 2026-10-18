@@ -12,7 +12,7 @@
 }
 
 .toggle-btn {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.95rem;
   padding: 8px 18px;

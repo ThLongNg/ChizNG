@@ -84,10 +84,10 @@ const HomePage = () => {
   const hour = new Date().getHours();
   const timeKey = hour >= 5 && hour < 12 ? 'morning' : hour >= 12 && hour < 17 ? 'afternoon' : hour >= 17 && hour < 21 ? 'evening' : 'night';
   const allGreetings = {
-    morning:   ['\uD83C\uDF38 Good Morning!', '\uD83C\uDF38 Chào buổi sáng!', '\uD83C\uDF38 おはようございます！'],
+    morning: ['\uD83C\uDF38 Good Morning!', '\uD83C\uDF38 Chào buổi sáng!', '\uD83C\uDF38 おはようございます！'],
     afternoon: ['\u2600\uFE0F Good Afternoon!', '\u2600\uFE0F Chào buổi chiều!', '\u2600\uFE0F こんにちは！'],
-    evening:   ['\uD83C\uDF19 Good Evening!', '\uD83C\uDF19 Chào buổi tối!', '\uD83C\uDF19 こんばんは！'],
-    night:     ['\uD83C\uDF03 Good Night!', '\uD83C\uDF03 Chúc ngủ ngon!', '\uD83C\uDF03 おやすみなさい！'],
+    evening: ['\uD83C\uDF19 Good Evening!', '\uD83C\uDF19 Chào buổi tối!', '\uD83C\uDF19 こんばんは！'],
+    night: ['\uD83C\uDF03 Good Night!', '\uD83C\uDF03 Chúc ngủ ngon!', '\uD83C\uDF03 おやすみなさい！'],
   };
   const marqueeItems = allGreetings[timeKey];
 
@@ -132,7 +132,7 @@ const HomePage = () => {
       <section className="info-card" id="section-featured-song">
         <iframe
           style={{ borderRadius: '12px' }}
-          src="https://open.spotify.com/embed/track/6efouvscdEILOB0bpJB8GM?utm_source=generator"
+          src="https://open.spotify.com/embed/track/7eqjbcOZTgZbV0lX2ghtfV?utm_source=generator"
           width="100%"
           height="152"
           frameBorder="0"
@@ -143,19 +143,119 @@ const HomePage = () => {
         />
       </section>
 
-      {/* Profile Section */}
-      <section className="info-card" id="section-profile">
-        <h2>{t('profile.fullName')}</h2>
-        <h3>{t('profile.jpName')}</h3>
-        <p>
-          --- Studied at:{' '}
-          <a href="https://www.facebook.com/FPTU.HCM" target="_blank" rel="noopener noreferrer">
-            {t('profile.education')}
-          </a>{' '}
-          ---
-        </p>
-        <p>{t('profile.birth')}</p>
-        <p>{t('profile.address')}</p>
+      {/* Card 1: Profile Section — Identity & Verified Credentials */}
+      <section className="info-card contact-info profile-card-elevated" id="section-profile">
+        <header className="profile-dossier-header">
+          <div className="profile-identity">
+            <span className="profile-jp-accent">{t('profile.jpName')}</span>
+            <h2 className="profile-name">{t('profile.fullName')}</h2>
+            <p className="profile-headline">{t('profile.role')}</p>
+            <div className="profile-origin-meta">
+              <span className="profile-meta-line">{t('profile.education')}</span>
+              <span className="profile-meta-line profile-goal-highlight">{t('profile.goal')}</span>
+            </div>
+          </div>
+          <div className="profile-avatar-frame" aria-label="Profile Avatar">
+            <img
+              src="https://res.cloudinary.com/dbjejsbh7/image/upload/f_auto/q_auto/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88_2026-10-18_232946_t5rvx6.png"
+              alt="Nguyễn Thành Long Avatar"
+              className="profile-avatar-img"
+              loading="lazy"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://cdn.discordapp.com/emojis/1313856298240053268.webp?size=256';
+              }}
+            />
+          </div>
+        </header>
+
+        {/* Verified Facts Ledger */}
+        <div className="profile-ledger-full">
+          <div className="profile-fact-row">
+            <span className="fact-label">{t('profile.education.label')}</span>
+            <span className="fact-value">
+              <a href="https://www.facebook.com/FPTU.HCM" target="_blank" rel="noopener noreferrer">
+                {t('profile.education')}
+              </a>
+            </span>
+          </div>
+          <div className="profile-fact-row">
+            <span className="fact-label">{t('profile.goal.label')}</span>
+            <span className="fact-value fact-highlight">{t('profile.goal')}</span>
+          </div>
+          <div className="profile-fact-row">
+            <span className="fact-label">{t('profile.japanese.label')}</span>
+            <span className="fact-value">{t('profile.japanese')}</span>
+          </div>
+          <div className="profile-fact-row">
+            <span className="fact-label">{t('profile.skills.label')}</span>
+            <span className="fact-value">{t('profile.skills')}</span>
+          </div>
+          <div className="profile-fact-row">
+            <span className="fact-label">{t('profile.birth.label')}</span>
+            <span className="fact-value">{t('profile.birth')}</span>
+          </div>
+          <div className="profile-fact-row">
+            <span className="fact-label">{t('profile.address.label')}</span>
+            <span className="fact-value">{t('profile.address')}</span>
+          </div>
+        </div>
+
+        {/* Dignified Contextual Navigation */}
+        <footer className="profile-footer-links">
+          <Link to="/projects" className="profile-action-link">
+            {t('profile.linkProjects')}
+          </Link>
+          <a href="#section-contact" className="profile-action-link profile-link-secondary">
+            {t('profile.linkContact')}
+          </a>
+        </footer>
+      </section>
+
+      {/* Card 2: Self-PR Section — Dedicated PR Presentation */}
+      <section className={`info-card contact-info pr-card-elevated ${lang === 'ja' ? 'pr-ja-vertical-mode' : ''}`} id="section-pr">
+        <h2>{t('profile.prHeading')}</h2>
+
+        {lang === 'ja' ? (
+          <div className="japanese-pr-book-container">
+            <div className="japanese-book-spine" aria-hidden="true">
+              <span className="book-spine-text">FPT大学 ・ ソフトウェア工学科 ・ 自己PR</span>
+            </div>
+            <div className="japanese-vertical-content">
+              {t('bio.body').split('\n\n').map((paragraph, index) => (
+                <p key={index} className="jp-vertical-paragraph">{paragraph}</p>
+              ))}
+            </div>
+            <div className="japanese-book-seal" aria-hidden="true">
+              <span className="seal-text">グエン 印</span>
+            </div>
+          </div>
+        ) : (
+          <div className="pr-content-wrapper">
+            {/* Executive PR Pitch */}
+            <div className="pr-pitch-block">
+              <p className="pr-pitch-text">
+                {t('profile.prPitch')}
+              </p>
+            </div>
+
+            {/* 3 Core Value Pillars */}
+            <div className="pr-pillars-grid">
+              <article className="pr-pillar-card">
+                <h3 className="pr-pillar-title">{t('profile.pillar1.title')}</h3>
+                <p className="pr-pillar-desc">{t('profile.pillar1.desc')}</p>
+              </article>
+              <article className="pr-pillar-card">
+                <h3 className="pr-pillar-title">{t('profile.pillar2.title')}</h3>
+                <p className="pr-pillar-desc">{t('profile.pillar2.desc')}</p>
+              </article>
+              <article className="pr-pillar-card">
+                <h3 className="pr-pillar-title">{t('profile.pillar3.title')}</h3>
+                <p className="pr-pillar-desc">{t('profile.pillar3.desc')}</p>
+              </article>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Contact Section */}
@@ -183,12 +283,6 @@ const HomePage = () => {
             </article>
           ))}
         </div>
-      </section>
-
-      {/* Bio Section */}
-      <section className="info-card" id="section-bio">
-        <h2>{t('bio.heading')}</h2>
-        <p>{t('bio.body')}</p>
       </section>
 
       {/* GitHub Section */}
@@ -270,12 +364,7 @@ const HomePage = () => {
         </Link>
       </section>
 
-      {/* Decorative images */}
-      <img className="image image1" src="https://starrail.honeyhunterworld.com/img/eidolon/please-write-on-with-a-smile-eidolon_icon.webp" alt="" loading="lazy" aria-hidden="true" />
-      <img className="image image2" src="https://shop.ldrescdn.com/rms/ld-space/process/img/743c321c5972482590721bc9b7cee6821758792367.webp?1758792373043&x-oss-process=image/format,webp" alt="" loading="lazy" aria-hidden="true" />
-      <img className="image image3" src="https://shop.ldrescdn.com/rms/ld-space/process/img/3fa2ba6995114da0a18c718bc1fe23851758792367.webp?1758792373020&x-oss-process=image/format,webp" alt="" loading="lazy" aria-hidden="true" />
-      <img className="image image4" src="https://starrail.honeyhunterworld.com/img/eidolon/a-tomorrow-in-thirteen-shades-eidolon_icon.webp" alt="" loading="lazy" aria-hidden="true" />
-      <img className="i5" src="./assets/cyrene.png" alt="Cyrene sticker" loading="lazy" />
+
     </div>
   );
 };

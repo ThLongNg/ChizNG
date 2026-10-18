@@ -1,4 +1,4 @@
-﻿/* ══════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════════════════
    GALLERY PAGE
 ══════════════════════════════════════════════════════════════ */
 .gallery-page {
@@ -29,7 +29,7 @@
 }
 
 .gallery-subtitle {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.95rem;
   opacity: 0.72;
   color: #6a4c93;
@@ -47,7 +47,7 @@
 }
 
 .gallery-filter-btn {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.82rem;
   font-weight: 600;
   padding: 6px 18px;
@@ -140,14 +140,14 @@
 }
 
 .gallery-item__title {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.92rem;
   font-weight: 700;
   color: #fff;
 }
 
 .gallery-item__caption {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   color: rgba(255,255,255,0.75);
 }
@@ -260,7 +260,7 @@
   margin-top: 14px;
   text-align: center;
   color: rgba(255,255,255,0.88);
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -271,7 +271,7 @@
 
 .lb-counter {
   margin-top: 8px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   color: rgba(255,255,255,0.45);
   letter-spacing: 0.05em;

@@ -1,5 +1,31 @@
-﻿@import url('https://fonts.cdnfonts.com/css/momo-signature');
-@import url('https://fonts.googleapis.com/css2?family=Yomogi&display=swap');
+:root {
+  /* Typography: EB Garamond for normal text, Great Vibes for decorative headings */
+  --font-sans: 'EB Garamond', Georgia, serif;
+  --font-body: 'EB Garamond', Georgia, serif;
+  --font-heading: 'Great Vibes', cursive;
+
+  /* Authentic Japanese Typography: New Tegomin (手書き・木版風明朝体) */
+  --font-jp-book: 'New Tegomin', 'Shippori Mincho', 'Noto Serif JP', serif;
+  --font-serif: var(--font-heading);
+
+  /* Refined Japanese Sakura & Sumi Palette */
+  --color-primary: #b8325a;
+  --color-primary-hover: #9c2246;
+  --color-primary-soft: rgba(184, 50, 90, 0.08);
+  --color-primary-border: rgba(184, 50, 90, 0.22);
+  --color-accent: #6b4d7e;
+  --color-accent-soft: rgba(107, 77, 126, 0.09);
+
+  /* High-Contrast Readability (WCAG AAA compliant) */
+  --color-text-main: #231c26;
+  --color-text-secondary: #5a4f61;
+  --color-text-muted: #85788d;
+
+  /* Elegant Glass Surfaces */
+  --card-bg: rgba(255, 255, 255, 0.84);
+  --card-border: rgba(255, 255, 255, 0.92);
+  --card-shadow: 0 12px 32px -4px rgba(184, 50, 90, 0.07), 0 4px 16px rgba(35, 28, 38, 0.04);
+}
 
 /* Reset & Base Styling */
 body,
@@ -16,19 +42,62 @@ html {
   scroll-behavior: smooth;
 }
 
-
 body {
-  font-family: "Kaisei Tokumin", sans-serif;
-  background: linear-gradient(45deg, #fbd6d4, #f7b6cc, #e8b7d8, #f7c5f9, #e8b7d8, #f7b6cc);
-  background-size: 300% 300%;
-  animation: gentleDrift 10s ease infinite;
-  color: #4a4a4a;
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 226, 238, 0.6) 0%, transparent 45%),
+    radial-gradient(circle at 86% 50%, rgba(240, 228, 255, 0.5) 0%, transparent 45%),
+    radial-gradient(circle at 50% 88%, rgba(255, 235, 245, 0.65) 0%, transparent 50%),
+    linear-gradient(180deg, #fdf8fa 0%, #f7edf2 100%);
+  background-attachment: fixed;
+  color: var(--color-text-main);
   text-align: center;
   padding: 40px 20px;
   overflow-x: hidden;
-  font-size: 16px;
+  font-size: 17.5px;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Japanese Mode: Authentic PR Book Editorial Mincho with New Tegomin */
+body[data-lang="ja"] {
+  font-family: var(--font-jp-book);
+  line-height: 1.85;
+  letter-spacing: 0.035em;
+}
+
+body[data-lang="ja"] h1 {
+  font-family: var(--font-jp-book);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  letter-spacing: 0.1em;
+}
+
+body[data-lang="ja"] h2,
+body[data-lang="ja"] section.info-card h2 {
+  font-family: var(--font-jp-book);
+  font-weight: 700;
+  font-size: 1.85rem;
+  letter-spacing: 0.08em;
+}
+
+body[data-lang="ja"] h3 {
+  font-family: var(--font-jp-book);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+body[data-lang="ja"] p,
+body[data-lang="ja"] span,
+body[data-lang="ja"] a,
+body[data-lang="ja"] button {
+  font-family: var(--font-jp-book);
+}
+
+body[data-lang="ja"] .profile-jp-badge {
+  font-family: var(--font-jp-book);
 }
 
 @media (pointer: fine) {
@@ -42,76 +111,79 @@ body {
   justify-content: center;
   align-items: center;
   gap: 12px;
-  margin: 10px auto 25px auto;
-  padding: 10px 16px;
+  margin: 10px auto 20px auto;
+  padding: 8px 14px;
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 179, 217, 0.5);
-  box-shadow: 0 10px 25px rgba(199, 21, 133, 0.18);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(184, 50, 90, 0.15);
+  box-shadow: 0 4px 18px rgba(184, 50, 90, 0.08);
+  backdrop-filter: blur(10px);
 }
 
 .toggle-btn {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   padding: 8px 18px;
   border-radius: 999px;
   border: 1px solid transparent;
-  color: #c71585;
-  transition: all 0.3s ease;
+  color: var(--color-primary);
+  transition: all 0.25s ease;
   background: transparent;
+  cursor: pointer;
 }
 
 .toggle-btn:hover,
 .toggle-btn:focus {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.8);
   outline: none;
-  border-color: rgba(199, 21, 133, 0.4);
+  border-color: var(--color-primary-border);
 }
 
 .toggle-btn.active {
-  background: linear-gradient(135deg, #ffb3d9, #ff8fab);
+  background: linear-gradient(135deg, #b8325a, #8f2343);
   color: #fff;
-  border-color: rgba(199, 21, 133, 0.5);
-  box-shadow: 0 10px 20px rgba(199, 21, 133, 0.35);
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(184, 50, 90, 0.28);
 }
 
 .language-switcher {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   margin: 0 auto 25px auto;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(199, 21, 133, 0.3);
-  box-shadow: 0 10px 25px rgba(199, 21, 133, 0.12);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(184, 50, 90, 0.18);
+  box-shadow: 0 4px 16px rgba(184, 50, 90, 0.06);
+  backdrop-filter: blur(10px);
 }
 
 .lang-btn {
   border: none;
   background: transparent;
-  color: #c71585;
-  font-family: 'Poppins', sans-serif;
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   padding: 6px 14px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
 }
 
 .lang-btn:hover,
 .lang-btn:focus {
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.75);
   outline: none;
 }
 
 .lang-btn.active {
-  background: linear-gradient(135deg, #ffb3d9, #ff8fab);
+  background: linear-gradient(135deg, #b8325a, #8f2343);
   color: #fff;
-  box-shadow: 0 8px 18px rgba(199, 21, 133, 0.25);
+  box-shadow: 0 4px 14px rgba(184, 50, 90, 0.28);
 }
 
 .view-counter {
@@ -122,16 +194,17 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(247, 67, 238, 0.11);
-  border: 1px solid rgba(199, 21, 133, 0.3);
-  box-shadow: 0 10px 25px rgba(199, 21, 133, 0.12);
-  color: #c71585;
-  font-family: 'Poppins', sans-serif;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(184, 50, 90, 0.2);
+  box-shadow: 0 4px 16px rgba(184, 50, 90, 0.08);
+  backdrop-filter: blur(10px);
+  color: var(--color-primary);
+  font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 @media (max-width: 420px) {
@@ -259,77 +332,57 @@ ul {
 
 h1 {
   text-align: center;
-  font-size: 5rem;
-  font-family: 'Great Vibes', cursive;
+  font-size: clamp(3.2rem, 6.5vw, 4.8rem);
+  font-family: var(--font-heading);
   font-weight: 400;
-  letter-spacing: 2px;
-  background: linear-gradient(190deg, #c71585, #9b59b6, #3498db);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin-top: 30px;
-  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6);
+  letter-spacing: 1px;
+  color: var(--color-primary);
+  margin: 20px auto 12px;
+  line-height: 1.25;
+  text-shadow: 0 2px 10px rgba(184, 50, 90, 0.12);
 }
 
 a {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 500;
-  color: #ff8fab;
+  color: var(--color-primary);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
 }
 
 a:hover {
-  color: #c71585;
+  color: var(--color-primary-hover);
+  text-decoration: underline;
 }
 
 a:focus {
-  outline: 2px solid #c71585;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 /* ═══════════════════════════════════════════════
-   Info Card — Crystal / Prism Glassmorphism
+   Info Card — Refined Japanese Glassmorphism
    ═══════════════════════════════════════════════ */
 section.info-card {
-  padding: 28px 24px;
-  /* multi-stop gradient imitating refracting crystal facets */
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.60) 0%,
-      rgba(255, 225, 248, 0.40) 20%,
-      rgba(238, 220, 255, 0.38) 40%,
-      rgba(225, 240, 255, 0.38) 60%,
-      rgba(255, 235, 245, 0.42) 80%,
-      rgba(255, 255, 255, 0.58) 100%
-    );
-  border-radius: 22px;
-  margin: 22px auto;
+  padding: 30px 26px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  margin: 24px auto;
   width: 90%;
-  max-width: 800px;
-  /* layered shadows: soft outer glow + sharp inner highlight */
-  box-shadow:
-    0 8px 32px rgba(199, 21, 133, 0.18),
-    0 2px 8px rgba(150, 100, 255, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(199, 21, 133, 0.07),
-    inset 1px 0 0 rgba(255, 255, 255, 0.6),
-    inset -1px 0 0 rgba(199, 21, 133, 0.05);
-  color: #6a4c93;
+  max-width: 820px;
+  box-shadow: var(--card-shadow);
+  color: var(--color-text-main);
   font-size: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.4s ease;
-  /* translucent crystal border */
-  border: 1.5px solid rgba(255, 255, 255, 0.72);
-  outline: 1px solid rgba(199, 21, 133, 0.12);
-  backdrop-filter: blur(18px) saturate(1.9) brightness(1.04);
-  -webkit-backdrop-filter: blur(18px) saturate(1.9) brightness(1.04);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
 }
@@ -414,20 +467,34 @@ section.info-card > *:not(.card-sparkle) {
 }
 
 section.info-card p {
-  padding: 0px 20px 20px 20px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.05rem;
-  line-height: 1.8;
-  letter-spacing: 0.3px;
+  padding: 0 16px 16px 16px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.76;
+  letter-spacing: 0.01em;
+  color: var(--color-text-secondary);
 }
 
 section.info-card h2 {
-  font-family: 'Great Vibes', cursive;
-  color: #c71585;
-  font-size: 2rem;
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  font-size: 2.3rem;
   font-weight: 400;
   letter-spacing: 1px;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+  position: relative;
+  display: inline-block;
+}
+
+section.info-card h2::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--color-primary);
+  margin: 6px auto 0;
+  opacity: 0.45;
+  border-radius: 2px;
 }
 
 .contact-info {
@@ -563,7 +630,7 @@ section.info-card h2 {
 }
 
 .contact-detail {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
   color: rgba(74, 74, 74, 0.9);
   line-height: 1.5;
@@ -580,7 +647,7 @@ section.info-card h2 {
   margin-top: auto;
   padding: 10px 20px;
   border-radius: 999px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.95rem;
   border: 1px solid rgba(199, 21, 133, 0.35);
@@ -626,22 +693,17 @@ section.info-card h2 {
 .chizuru-right { right: 14px; }
 
 .chizuru-char {
-  font-family: 'Yomogi', 'Kaisei Tokumin', cursive;
-  /* base size — JS overrides dynamically as chars reveal */
+  font-family: 'Shippori Mincho', 'Noto Sans JP', serif;
   font-size: clamp(1.8rem, 3.5vw, 3.2rem);
   line-height: 1.15;
   writing-mode: vertical-rl;
   text-orientation: upright;
   letter-spacing: 0.05em;
-  background: linear-gradient(180deg, #c71585 0%, #9b42d6 55%, #ff8fab 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  /* start hidden — JS drives opacity/transform/font-size */
+  color: var(--color-primary);
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 0.35s ease, transform 0.35s ease, font-size 0.4s ease;
-  filter: drop-shadow(0 0 10px rgba(199, 21, 133, 0.30));
+  filter: drop-shadow(0 2px 10px rgba(184, 50, 90, 0.25));
 }
 
 /* Hide on very narrow screens where they'd overlap content */
@@ -660,40 +722,29 @@ section.info-card h2 {
 }
 
 h3 {
-  font-family: 'Kaisei Tokumin', serif;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #6a4c93;
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-accent);
 }
 
 h2 {
   position: relative;
-  font-size: 2rem;
-  font-weight: bold;
-  background: linear-gradient(270deg, #ff0080, #f40531, #462afa, #97d619);
-  background-size: 600% 600%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 6s ease infinite, fadeIn 1s ease forwards;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  opacity: 1;
 }
 
 .char-container .char {
   position: relative;
-  font-size: 4.5rem;
-  font-family: 'Great Vibes', cursive;
-  letter-spacing: 5px;
+  font-size: 3.5rem;
+  font-family: var(--font-serif);
+  letter-spacing: 2px;
   font-weight: bold;
-  background: linear-gradient(270deg, #ff0080, #bb047b, #2afadf, #00ffb9);
-  background-size: 600% 600%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 6s ease infinite, fadeIn 1s ease forwards;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  color: var(--color-primary);
+  opacity: 1;
 }
 /* ── Greeting marquee ─────────────────────────────────────────── */
 .greeting-marquee {
@@ -1064,18 +1115,18 @@ h2 {
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #9381ff, #bfaeff, #9381ff);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(147, 129, 255, 0.6), transparent);
   opacity: 0.9;
 }
 
 .hsr-section h2 {
-  font-family: 'Great Vibes', cursive;
+  font-family: var(--font-serif);
   color: #ffffff;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 20px;
-  text-shadow: 0 0 15px rgba(147, 129, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
-  font-weight: 400;
+  text-shadow: 0 0 15px rgba(147, 129, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
 }
 
 .hsr-input-container {
@@ -1155,8 +1206,8 @@ h2 {
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid rgba(231, 123, 191, 0.2);
-  border-top: 3px solid #e77bbf;
+  border: 3px solid rgba(184, 50, 90, 0.15);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 10px;
@@ -1220,12 +1271,8 @@ h2 {
 }
 
 .player-basic-info span {
-  color: #ffffff;
+  color: #f3f0ff;
   font-weight: 700;
-  background: linear-gradient(135deg, #c9c1f7, #fdfeff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* Player Layout Container */
@@ -1296,12 +1343,8 @@ h2 {
 
 .level-text span,
 .eq-text span {
-  background: linear-gradient(135deg, #f9b3ff, #cafdc3);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #d4ffd6;
   font-weight: 700;
-  text-shadow: none;
 }
 
 .player-signature {
@@ -1367,10 +1410,7 @@ h2 {
 }
 
 .uid-text span {
-  background: linear-gradient(135deg, #ddd9f8, #f3efff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #f3efff;
   font-weight: 600;
 }
 
@@ -1441,17 +1481,11 @@ h2 {
 
 .spotify-details h3 {
   margin: 0 0 5px 0;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(45deg, #ffffff, #f0f0f0);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 0.5px;
-  font-family: 'Prata', serif;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  font-family: var(--font-sans);
 }
 
 .spotify-username {
@@ -1844,7 +1878,7 @@ h2 {
   justify-content: center;
   padding: 10px 20px;
   border-radius: 999px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
@@ -1962,8 +1996,8 @@ h2 {
 
 /* Loading Spinner for Spotify */
 .loading-spinner {
-  border: 3px solid rgba(29, 185, 84, 0.3);
-  border-top: 3px solid #1DB954;
+  border: 3px solid rgba(29, 185, 84, 0.25);
+  border-top-color: #1DB954;
   border-radius: 50%;
   width: 30px;
   height: 30px;

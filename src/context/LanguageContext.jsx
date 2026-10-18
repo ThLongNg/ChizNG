@@ -10,6 +10,11 @@ export const LanguageProvider = ({ children }) => {
 
   const [lang, setLangState] = useState(getInitialLang);
 
+  React.useEffect(() => {
+    document.documentElement.lang = lang;
+    document.body.setAttribute('data-lang', lang);
+  }, [lang]);
+
   const setLang = useCallback((newLang) => {
     if (!TRANSLATIONS[newLang]) return;
     try { localStorage.setItem('preferredLanguage', newLang); } catch { /* ignore */ }
